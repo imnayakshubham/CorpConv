@@ -12,7 +12,7 @@ export const defaultHeaders = {
 
 export const appKey = "corpconv-root"
 
-export const socketEndPoint = "http://localhost:5000";
+export const socketEndPoint = import.meta.env.VITE_APP_SOCKET_ENDPOINT;
 
 export const categoriesList = {
     company_review: "Company Review",
