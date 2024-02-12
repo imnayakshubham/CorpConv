@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Empty, Segmented } from 'antd'
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUsersRequest } from '../../../store/action/users';
@@ -61,7 +61,7 @@ export const Users = () => {
                 {fetchUsersStatus[tab] === AsyncStates.LOADING ? (
                     listlenArray.map((array, index) => <SkeletonUserCardLoading key={index} />)
                 ) : (
-                    !!usersListData.length ? (
+                    usersListData.length ? (
                         usersListData.map((user) => <UserCard user={user} tab={tab} from="users" key={user._id} />)
                     ) : (
                         <Empty />

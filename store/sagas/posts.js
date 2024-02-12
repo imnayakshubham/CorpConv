@@ -1,10 +1,10 @@
-import { call, put, select, take, takeLatest } from "redux-saga/effects";
+import { call, put, select, takeLatest } from "redux-saga/effects";
 import { addPostFailure, addPostRequest, addPostSuccess, fetchPostsFailure, fetchPostsSuccess, fetchPostsRequest, upvotePostRequest, upvotePostSuccess, upvotePostFailure, commentRequest, commentSuccess, commentFailure, replyToCommentSuccess, replyToCommentFailure, replyToCommentRequest, likeCommentRequest, likeCommentSuccess, likeCommentFailure, deleteCommentSuccess, deleteCommentFailure, deleteCommentRequest, editPostRequest, editPostSuccess, editPostFailure, deletePostRequest, deletePostSuccess, deletePostFailure } from "../action/posts";
 import { addPostApi, commentApi, deleteCommentApi, deletePosttApi, likeCommentApi, replyCommentApi, updatePostApi, upvotePostApi } from "../../services/apis";
 import { defaultHeaders } from "../../constants";
 import { sendGet } from "../../src/utils/sendApiRequest";
 
-function* addPostSaga({ payload }: any) {
+function* addPostSaga({ payload }) {
 
     try {
         const token = yield select((state) => state.login.loginResponse.token);
@@ -40,7 +40,7 @@ function* fetchPostsSaga() {
     }
 }
 
-function* upvotePostSaga({ payload }: any) {
+function* upvotePostSaga({ payload }) {
     try {
         const token = yield select((state) => state.login.loginResponse.token);
         const headers = {
@@ -59,7 +59,7 @@ function* upvotePostSaga({ payload }: any) {
 
 }
 
-function* commentSaga({ payload }: any) {
+function* commentSaga({ payload }) {
     try {
         const token = yield select((state) => state.login.loginResponse.token);
         const headers = {
@@ -77,7 +77,7 @@ function* commentSaga({ payload }: any) {
     }
 }
 
-function* replyToCommentSaga({ payload }: any) {
+function* replyToCommentSaga({ payload }) {
     try {
         const token = yield select((state) => state.login.loginResponse.token);
         const headers = {
@@ -96,7 +96,7 @@ function* replyToCommentSaga({ payload }: any) {
     }
 }
 
-function* likeCommentSaga({ payload }: any) {
+function* likeCommentSaga({ payload }) {
     try {
         const token = yield select((state) => state.login.loginResponse.token);
         const headers = {
@@ -114,7 +114,7 @@ function* likeCommentSaga({ payload }: any) {
     }
 }
 
-function* deleteCommentSaga({ payload }: any) {
+function* deleteCommentSaga({ payload }) {
     try {
         const token = yield select((state) => state.login.loginResponse.token);
         const headers = {
@@ -132,7 +132,7 @@ function* deleteCommentSaga({ payload }: any) {
     }
 }
 
-function* editPostSaga({ payload }: any) {
+function* editPostSaga({ payload }) {
     try {
         const token = yield select((state) => state.login.loginResponse.token);
         const headers = {
@@ -151,7 +151,7 @@ function* editPostSaga({ payload }: any) {
 }
 
 
-function* deletePostSaga({ payload }: any) {
+function* deletePostSaga({ payload }) {
     try {
         const token = yield select((state) => state.login.loginResponse.token);
         const headers = {

@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
 import "./PostList.css"
 import DOMPurify from 'dompurify';
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { fromNow } from "@/utils/helperFn";
 import { commentRequest, deleteCommentRequest, deletePostRequest, likeCommentRequest, replyToCommentRequest, upvotePostRequest } from '../../../../store/action/posts'
 import { useEffect, useState } from "react";
@@ -10,8 +9,7 @@ import { Button } from "@/components/ui/button";
 import { UserAvatar } from "@/components/UserAvatar/UserAvatar";
 import { MoreVertical, PlusCircle, Reply, Trash } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { AsyncStates } from '../../../../constants'
-import { categoriesList } from "../CreatePost/CreatePost";
+import { AsyncStates, categoriesList } from '../../../../constants'
 
 const UpVoteIcon = ({ size = 20, fill = "none" }) => {
     return <svg
@@ -32,17 +30,17 @@ const UpVoteIcon = ({ size = 20, fill = "none" }) => {
 
 
 
-export const PostList = ({ setPostModalData }: any) => {
+export const PostList = ({ setPostModalData }) => {
     const { loginResponse: userInfo } = useSelector(state => state.login)
     const posts = useSelector((state) => state.posts.postsList)
     const dispatch = useDispatch();
     const [viewedParentCommentsIds, setViewedParentCommentsIds] = useState(new Set())
 
-    const handleUpvote = (postId: string) => {
+    const handleUpvote = (postId) => {
         dispatch(upvotePostRequest({ post_id: postId }))
     }
 
-    const handleParentComment = (post_id: string) => {
+    const handleParentComment = (post_id) => {
         setViewedParentCommentsIds((prev) => {
             const newSet = new Set(prev);
 
@@ -190,19 +188,17 @@ export function CommentForm({
     parentId = null,
     postId,
     commentId = null,
-    error,
     onSubmit,
-    autoFocus = false,
     initialValue = "",
-}: any) {
+}) {
     const commentStatus = useSelector(state => state.posts.commentStatus)
     const replyToCommentStatus = useSelector(state => state.posts.replyToCommentStatus)
 
 
 
     const [message, setMessage] = useState(initialValue)
-    const [prefix, setPrefix] = useState<PrefixType>('@');
-    const onSearch = (_: string, newPrefix: PrefixType) => {
+    const [prefix, setPrefix] = useState('@');
+    const onSearch = (_, newPrefix) => {
         console.log(_, newPrefix)
         setPrefix(newPrefix);
     };

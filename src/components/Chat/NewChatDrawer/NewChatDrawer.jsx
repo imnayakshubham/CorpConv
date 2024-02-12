@@ -1,5 +1,5 @@
 import { Drawer, Input, notification } from 'antd'
-import React, { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { ArrowLeft } from 'lucide-react';
 import UserListItem from './UserListItem';
 import { useDebounce } from '../../../utils/useDebounce';

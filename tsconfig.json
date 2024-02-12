@@ -10,6 +10,7 @@
       "@/*": [
         "./src/*",
       ],
+      "./src/*": ["src/*"],
       "@components/*": ["components/*"],
     },
 
@@ -20,6 +21,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
+    "allowJs": true,
 
     /* Linting */
     "strict": true,
@@ -27,6 +29,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "src/utils"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "include": ["src/**/*.ts", "src/**/*.tsx","src/**/*.js", "src/**/*.jsx"],
+  "exclude": ["node_modules"],
 }

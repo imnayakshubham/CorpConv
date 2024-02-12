@@ -92,7 +92,7 @@ export const Navbar = () => {
                     <Link to="/" className="nav-logo">CorpConvo</Link>
                 </div>
                 <div className="navbar__right">
-                    {!!userInfo?.token ? <>
+                    {userInfo?.token ? <>
                         <Link to="/chats" className="nav-logo js-anchor-link">Chats</Link>
                         <Dropdown menu={{ items }} trigger={['click']}
                             placement="bottomLeft"

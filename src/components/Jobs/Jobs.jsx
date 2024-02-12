@@ -1,24 +1,20 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { AddJobLink } from './AddJobLink/AddJobLink'
 import { useDispatch, useSelector } from 'react-redux'
 import { createBookmarkRequest, createBookmarkSuccess, createJobSuccess, deleteJobRequest, editJobSuccess, fetchJobsRequest, likeDislikeRequest, likeDislikeSuccess } from '../../../store/action/jobs'
 import './Jobs.css'
-import { Avatar, Badge, Button } from 'antd'
-import Meta from 'antd/es/card/Meta'
+import { Avatar, Button } from 'antd'
 import { Pencil, Trash, Bookmark, Copy, ExternalLink } from 'lucide-react';
-import { CheckOutlined } from '@ant-design/icons'
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '../ui/card'
 import { fromNow } from '@/utils/helperFn'
 
 const HandHeart = ({ liked }) => {
-    return <svg className={`${liked ? "job_liked" : ""}`} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-hand-heart"><path d="M11 14h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 16" /><path d="m7 20 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9" /><path d="m2 15 6 6" /><path d="M19.5 8.5c.7-.7 1.5-1.6 1.5-2.7A2.73 2.73 0 0 0 16 4a2.78 2.78 0 0 0-5 1.8c0 1.2.8 2 1.5 2.8L16 12Z" /></svg>
+    return <svg className={`${liked ? "job_liked" : ""} lucide lucide-hand-heart`} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 14h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 16" /><path d="m7 20 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9" /><path d="m2 15 6 6" /><path d="M19.5 8.5c.7-.7 1.5-1.6 1.5-2.7A2.73 2.73 0 0 0 16 4a2.78 2.78 0 0 0-5 1.8c0 1.2.8 2 1.5 2.8L16 12Z" /></svg>
 }
 
 
 export const Jobs = ({ from, user_id = null }) => {
     const socket = useSelector((state) => state.common.socketInstance)
     const jobs = useSelector((state) => state.jobs.jobsList)
-    const fetchJobsStatus = useSelector((state) => state.jobs.fetchJobsStatus)
 
     const [openAddJobModal, setOpenAddJobModal] = useState({
         isModalOpen: false,
@@ -151,7 +147,7 @@ export const Jobs = ({ from, user_id = null }) => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {jobs.map((job) => {
                     const jobData = job.job_data
-                    return <div className="bg-white p-4 rounded-lg shadow-md flex gap-2 flex-col h-full w-full">
+                    return <div className="bg-white p-4 rounded-lg shadow-md flex gap-2 flex-col h-full w-full" key={job._id} >
                         <div className="flex-1">
                             <div className='flex gap-2'>
                                 <Avatar src={jobData.image} />

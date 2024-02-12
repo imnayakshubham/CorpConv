@@ -5,17 +5,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { addPostSuccess, fetchPostsRequest, upvotePostSuccess } from '../../../store/action/posts'
 import { PostList } from './PostList/PostList'
 
-export type PostModalDataType = {
-    showModel: boolean,
-    data: any | null,
-    mode: "create" | "edit"
-}
-
 
 export const Posts = () => {
     const socket = useSelector((state) => state.common.socketInstance)
 
-    const [postModalData, setPostModalData] = useState<PostModalDataType>({
+    const [postModalData, setPostModalData] = useState({
         showModel: false,
         data: null,
         mode: "create"

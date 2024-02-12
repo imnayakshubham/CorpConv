@@ -1,15 +1,15 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { getUserInfoClear, getUserInfoRequest } from '../../../store/action/users.js';
-import { AsyncStates } from '../../../constants/index.js';
-import { UserNameAvatar } from '../UserNameAvatar/UserNameAvatar.js';
 import "./UserProfile.css"
-import { SkeletonUserCardLoading } from '../SkeletonUserCardLoading/SkeletonUserCardLoading.js';
-import { Jobs } from '../Jobs/Jobs.js';
+import { Jobs } from '../Jobs/Jobs.jsx';
 import { Button, Tooltip } from 'antd';
 import { followUserRequest } from '../../../store/action/users.js'
 import { UserAddOutlined, UserDeleteOutlined } from '@ant-design/icons'
+import { UserNameAvatar } from '../UserNameAvatar/UserNameAvatar.tsx';
+import { SkeletonUserCardLoading } from '../SkeletonUserCardLoading/SkeletonUserCardLoading.tsx';
+import { AsyncStates } from '../../../constants';
 
 
 
@@ -35,7 +35,7 @@ export const UserProfile = () => {
         if (location.state?.id) {
             setuserProfileDetails(location.state)
         } else {
-            if (!!params?.id?.length) {
+            if (params?.id?.length) {
                 if (loggedInUser?._id !== params.id) {
                     console.log("fetching user details")
                     fetchUserDetails(params?.id)
@@ -76,7 +76,7 @@ export const UserProfile = () => {
                                     <Button
                                         onClick={(e) => {
                                             e.stopPropagation()
-                                            dispatch(followUserRequest({ senderId: loggedInUser._id, receiverId: userProfileDetails._id, tab }))
+                                            dispatch(followUserRequest({ senderId: loggedInUser._id, receiverId: userProfileDetails._id }))
                                         }}>
                                         <UserDeleteOutlined /> {"Withdraw Follow Request"}
                                     </Button>
@@ -88,7 +88,7 @@ export const UserProfile = () => {
                                         onClick={(e) => {
                                             e.stopPropagation()
                                             // socket.emit("send_follow_request", { senderId: loggedInUser._id, receiverId: user._id, tab })
-                                            dispatch(followUserRequest({ senderId: loggedInUser._id, receiverId: userProfileDetails._id, tab }))
+                                            dispatch(followUserRequest({ senderId: loggedInUser._id, receiverId: userProfileDetails._id }))
                                         }}>
                                         <UserAddOutlined /> {"Follow"}
                                     </Button>

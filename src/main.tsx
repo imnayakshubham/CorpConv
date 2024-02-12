@@ -1,13 +1,13 @@
 import ReactDOM from 'react-dom/client'
-import App from './App.tsx'
 import './index.css'
+import App from "@/App.jsx"
 import { persistor, store } from '../store/configSaga.js';
 
 import { PersistGate } from 'redux-persist/integration/react'
 import { Provider } from 'react-redux';
 import { createBrowserHistory } from "history"
+import { HistoryRouter } from './HistoryRouter.jsx';
 
-import { HistoryRouter } from './HistoryRouter.tsx';
 
 export const history = createBrowserHistory()
 

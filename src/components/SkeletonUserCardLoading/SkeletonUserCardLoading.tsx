@@ -1,4 +1,3 @@
-import React from 'react'
 import "./SkeletonUserCardLoading.css"
 
 export const SkeletonUserCardLoading = () => {

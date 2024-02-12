@@ -13,7 +13,7 @@ export const UpdateProfile = () => {
         const bio = values.user_bio?.trim()
         const payload = {
             _id: loginResponse._id,
-            user_bio: !!bio?.length ? bio : null,
+            user_bio: bio?.length ? bio : null,
             user_job_experience: values.user_job_experience,
             user_job_role: values.user_job_role?.trim()
         }

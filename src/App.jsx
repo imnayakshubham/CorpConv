@@ -1,5 +1,5 @@
 import { Routes, Route, useNavigate } from 'react-router-dom'
-import { Jobs } from './components/Jobs/Jobs.js';
+import { Jobs } from './components/Jobs/Jobs.jsx';
 
 import "./App.css";
 import { useEffect } from 'react';
@@ -7,15 +7,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import io from "socket.io-client"
 import { socketEndPoint } from "../constants/index.ts";
 import { socketSave } from "../store/action/common.js";
-import { UserProfile } from './components/UserProfile/UserProfile.tsx';
+import { UserProfile } from './components/UserProfile/UserProfile.jsx';
 import { PrivateRoutes } from './components/PrivateRoutes/PrivateRoutes.tsx';
-import { PageWrapper } from './components/PageWrapper/PageWrapper.tsx';
-import { UpdateProfile } from './components/UpdateProfile/UpdateProfile.tsx';
-import { ChatWrapper } from './components/ChatContainer/ChatWrapper.tsx';
-import { Users } from './components/Users/Users.tsx';
-import { Posts } from './components/Posts/Posts.tsx';
-import { LandingPage } from './components/LandingPage/LandingPage.tsx';
-
+import { PageWrapper } from './components/PageWrapper/PageWrapper.jsx';
+import { UpdateProfile } from './components/UpdateProfile/UpdateProfile.jsx';
+import { ChatWrapper } from './components/ChatContainer/ChatWrapper.jsx';
+import { Users } from './components/Users/Users.jsx';
+import { Posts } from './components/Posts/Posts.jsx';
+import { LandingPage } from './components/LandingPage/LandingPage.jsx';
 
 function App() {
   const loginResponse = useSelector((state) => state.login.loginResponse)
@@ -48,7 +47,7 @@ function App() {
     socket.on("follow_request_send_notication", (payload) => {
       console.log(payload)
     })
-  }, [socket]);
+  }, [socket, loginResponse]);
 
   return (
     <>

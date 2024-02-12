@@ -1,4 +1,3 @@
-import React, { useState } from 'react'
 import { ChatSidebar } from "../Chat/ChatSidebar/ChatSidebar"
 import "./ChatWrapper.css"
 import { ChatContainer } from '../Chat/Chat/ChatContainer'
@@ -13,7 +12,6 @@ export const ChatWrapper = () => {
             <section className='content'>
                 <ChatContainer />
             </section>
-
         </section>
     )
 }

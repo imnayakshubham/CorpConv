@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { Button, Form, Input, Modal } from 'antd'
 import { useDispatch, useSelector } from 'react-redux';
 import { createJobClear, createJobRequest, editJobClear, editJobRequest } from '../../../../store/action/jobs';

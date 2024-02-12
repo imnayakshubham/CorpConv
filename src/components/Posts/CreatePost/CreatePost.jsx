@@ -1,32 +1,15 @@
-import { Dispatch, useEffect } from "react"
-import { PostModalDataType } from "../Posts"
+import { useEffect } from "react"
 import "./CreatePost.css"
-import { Form, Input, Modal, Tabs } from "antd"
+import { Form, Modal, Tabs } from "antd"
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useDispatch, useSelector } from "react-redux";
 import { addPostRequest, editPostRequest } from "../../../../store/action/posts";
-import { AsyncStates } from "../../../../constants";
+import { AsyncStates, categoriesList } from "../../../../constants";
 import { Button } from "@/components/ui/button"
 
 
-type CreatePostModalPropsType = {
-    setPostModalData: Dispatch<React.SetStateAction<PostModalDataType>>,
-    postModalData: PostModalDataType
-
-}
-
-export const categoriesList = {
-    company_review: "Company Review",
-    random: "Random",
-    reading: "Reading",
-    learning: "Learning",
-    thoughts: "Thoughts",
-    project: "Project",
-    Watching: "Watching",
-}
-
-export const CreatePost = ({ setPostModalData, postModalData }: CreatePostModalPropsType) => {
+export const CreatePost = ({ setPostModalData, postModalData }) => {
     const [postForm] = Form.useForm()
     const dispatch = useDispatch()
     const addPostStatus = useSelector((state) => state.posts.addPostStatus)
@@ -58,9 +41,9 @@ export const CreatePost = ({ setPostModalData, postModalData }: CreatePostModalP
             })
             postForm.resetFields()
         }
-    }, [editPostStatus, setPostModalData, addPostStatus])
+    }, [editPostStatus, setPostModalData, addPostStatus, postForm])
 
-    const handlePost = (values: any) => {
+    const handlePost = (values) => {
         if (postModalData.mode === "edit") {
             dispatch(editPostRequest({ _id: postModalData.data._id, ...values }))
         } else {

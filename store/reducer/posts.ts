@@ -27,8 +27,8 @@ const defaultState = {
 };
 
 
-const postsReducer = handleActions({
-    [AddPostActionTypes.REQUEST]: (state, action) => {
+const postsReducer = handleActions<any>({
+    [AddPostActionTypes.REQUEST]: (state) => {
         return {
             ...state,
             addPostStatus: AsyncStates.LOADING,
@@ -57,7 +57,7 @@ const postsReducer = handleActions({
             addPostError: null,
         }
     },
-    [FetchPostsActionTypes.REQUEST]: (state, action) => {
+    [FetchPostsActionTypes.REQUEST]: (state) => {
         return {
             ...state,
             fetchPostsStatus: AsyncStates.LOADING,
@@ -86,7 +86,7 @@ const postsReducer = handleActions({
             fetchPostsError: null,
         }
     },
-    [UpvotePostActionTypes.REQUEST]: (state, action) => {
+    [UpvotePostActionTypes.REQUEST]: (state) => {
         return {
             ...state,
             postUpvoteStatus: AsyncStates.LOADING,
@@ -99,7 +99,7 @@ const postsReducer = handleActions({
             ...state,
             postUpvoteStatus: AsyncStates.SUCCESS,
             postUpvoteError: null,
-            postsList: state.postsList.map((post) => {
+            postsList: state.postsList.map((post: any) => {
                 if (post._id === action.payload._id) {
                     return action.payload
                 }
@@ -121,7 +121,7 @@ const postsReducer = handleActions({
             postUpvoteError: null,
         }
     },
-    [CommentActionTypes.REQUEST]: (state, action) => {
+    [CommentActionTypes.REQUEST]: (state) => {
         return {
             ...state,
             commentStatus: AsyncStates.LOADING,
@@ -134,7 +134,7 @@ const postsReducer = handleActions({
             ...state,
             commentStatus: AsyncStates.SUCCESS,
             commentError: null,
-            postsList: state.postsList.map((post) => {
+            postsList: state.postsList.map((post: any) => {
                 if (post._id === action.payload._id) {
                     return action.payload
                 }
@@ -156,7 +156,7 @@ const postsReducer = handleActions({
             commentError: null,
         }
     },
-    [ReplyToCommentActionTypes.REQUEST]: (state, action) => {
+    [ReplyToCommentActionTypes.REQUEST]: (state) => {
         return {
             ...state,
             replyToCommentStatus: AsyncStates.LOADING,
@@ -168,7 +168,7 @@ const postsReducer = handleActions({
             ...state,
             replyToCommentStatus: AsyncStates.SUCCESS,
             replyToCommentError: null,
-            postsList: state.postsList.map((post) => {
+            postsList: state.postsList.map((post: any) => {
                 if (post._id === action.payload._id) {
                     return action.payload
                 }
@@ -190,7 +190,7 @@ const postsReducer = handleActions({
             replyToCommentError: null,
         }
     },
-    [LikeCommentActionTypes.REQUEST]: (state, action) => {
+    [LikeCommentActionTypes.REQUEST]: (state) => {
         return {
             ...state,
             likeCommentStatus: AsyncStates.LOADING,
@@ -202,7 +202,7 @@ const postsReducer = handleActions({
             ...state,
             likeCommentStatus: AsyncStates.SUCCESS,
             likeCommentError: null,
-            postsList: state.postsList.map((post) => {
+            postsList: state.postsList.map((post: any) => {
                 if (post._id === action.payload._id) {
                     return action.payload
                 }
@@ -224,7 +224,7 @@ const postsReducer = handleActions({
             likeCommentError: null,
         }
     },
-    [DeleteCommentActionTypes.REQUEST]: (state, action) => {
+    [DeleteCommentActionTypes.REQUEST]: (state,) => {
         return {
             ...state,
             deleteCommentStatus: AsyncStates.LOADING,
@@ -236,7 +236,7 @@ const postsReducer = handleActions({
             ...state,
             deleteCommentStatus: AsyncStates.SUCCESS,
             deleteCommentError: null,
-            postsList: state.postsList.map((post) => {
+            postsList: state.postsList.map((post: any) => {
                 if (post._id === action.payload._id) {
                     return action.payload
                 }
@@ -258,7 +258,7 @@ const postsReducer = handleActions({
             deleteCommentError: null,
         }
     },
-    [EditPostActionTypes.REQUEST]: (state, action) => {
+    [EditPostActionTypes.REQUEST]: (state) => {
         return {
             ...state,
             editPostStatus: AsyncStates.LOADING,
@@ -270,7 +270,7 @@ const postsReducer = handleActions({
             ...state,
             editPostStatus: AsyncStates.SUCCESS,
             editPostError: null,
-            postsList: state.postsList.map((post) => {
+            postsList: state.postsList.map((post: any) => {
                 if (post._id === action.payload._id) {
                     return action.payload
                 }
@@ -292,7 +292,7 @@ const postsReducer = handleActions({
             editPostError: null,
         }
     },
-    [DeletePostActionTypes.REQUEST]: (state, action) => {
+    [DeletePostActionTypes.REQUEST]: (state) => {
         return {
             ...state,
             deletePostStatus: AsyncStates.LOADING,
@@ -304,7 +304,7 @@ const postsReducer = handleActions({
             ...state,
             deletePostStatus: AsyncStates.SUCCESS,
             deletePostError: null,
-            postsList: state.postsList.filter((post) => post._id !== action.payload)
+            postsList: state.postsList.filter((post: any) => post._id !== action.payload)
         }
     },
     [DeletePostActionTypes.FAILURE]: (state, action) => {

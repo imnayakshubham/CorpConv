@@ -1,4 +1,3 @@
-// Create Job sAGA ACTION
 
 import { createActions } from "redux-actions";
 
