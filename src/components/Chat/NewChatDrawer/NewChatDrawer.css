@@ -1,0 +1,21 @@
+.user__list__container,
+.new__chat__container {
+    display: flex;
+    gap: 0.5rem;
+    flex-direction: column;
+}
+
+
+.user__container {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: #E8E8E8;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+}
+
+.user__container:hover {
+    background-color: rgb(211, 211, 211);
+}

@@ -1,0 +1,22 @@
+.navbar,
+.navbar__right {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+#navigation-menu {
+    padding: 0.5rem 1rem;
+    border-bottom: 1px solid #e2e8f0;
+    position: sticky;
+    top: 0%;
+    backdrop-filter: blur(2px);
+    z-index: 100;
+}
+
+
+a {
+    text-decoration: none;
+    color: #000;
+}

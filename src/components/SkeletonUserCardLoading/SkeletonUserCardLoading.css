@@ -1,0 +1,72 @@
+.skeleton-loading {
+    border: 1px solid #ddd;
+    padding: 0.75rem 0.5rem;
+    border-radius: 8px;
+}
+
+.ribbon-loading {
+    height: 24px;
+    background-color: #ddd;
+    margin-bottom: 0.5rem;
+}
+
+.user__card__header__loading {
+    display: flex;
+    justify-content: space-between;
+}
+
+.user-card-loading {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.avatar-loading {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #ddd;
+}
+
+.meta-loading {
+    flex: 1;
+}
+
+.title-loading {
+    height: 20px;
+    width: 80%;
+    background-color: #ddd;
+    margin-bottom: 8px;
+}
+
+.description-loading {
+    height: 60px;
+    width: 100%;
+    background-color: #ddd;
+}
+
+.avatar-loading:last-child {
+    width: 40px;
+    height: 40px;
+    border-radius: 10%;
+    background-color: #ddd;
+}
+
+.title-loading,
+.description-loading,
+.avatar-loading,
+.ribbon-loading {
+    background: linear-gradient(90deg, #ddd, #f0f0f0, #ddd);
+    background-size: 200% 100%;
+    animation: lightingEffect 1.5s linear infinite;
+}
+
+@keyframes lightingEffect {
+    0% {
+        background-position: 200% 0;
+    }
+
+    100% {
+        background-position: -200% 0;
+    }
+}

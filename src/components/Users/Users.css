@@ -1,0 +1,17 @@
+.user__list__container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-gap: 0.5rem;
+    padding: 0.5rem;
+}
+
+.user__card {
+    padding: 0.75rem 0.5rem;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+.pending_followings__actions {
+    display: flex;
+    gap: 0.5rem;
+}

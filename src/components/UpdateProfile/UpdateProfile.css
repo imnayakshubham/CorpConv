@@ -1,0 +1,36 @@
+.common__divider {
+    margin: 0.5rem auto;
+}
+
+.update__profile__container {
+    padding: 1rem;
+}
+
+.update__profile__card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.user__info__container,
+.user__info {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+
+.update__profile__form__items {
+    display: flex;
+    width: 100%;
+    gap: 0.5rem;
+}
+
+.form__item {
+    width: 100%;
+}
+
+.form__item__submit {
+    display: flex;
+    justify-content: flex-end;
+}

@@ -1,0 +1,83 @@
+.side__bar__header {
+    display: flex;
+    padding: 0.5rem;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+}
+
+.side__bar__header__user__info {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.side__bar__header__actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.icon {
+    cursor: pointer;
+}
+
+.icon:hover {
+    transform: scale(1.25);
+    transition: transform 250ms linear ease-in;
+}
+
+.logout {
+    color: red;
+}
+
+.show__side__bar {
+    display: none;
+}
+
+@media (max-width:481px) {
+    .show__side__bar {
+        display: block;
+    }
+}
+
+.side__bar__search__user__input {
+    padding: 0;
+    height: 3rem;
+    outline: none;
+    border: none;
+}
+
+.side__bar__search__user {
+    padding: 0.25rem 0.75rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.side__bar__search__user__input:focus,
+.ant-input-affix-wrapper:focus-within {
+    outline: none !important;
+    border: none !important;
+    box-shadow: none;
+}
+
+.user_chat {
+    padding: 0.5rem 0.75rem;
+    cursor: pointer;
+}
+
+.selected_chat {
+    background-color: rgb(185, 255, 255);
+}
+
+.chat__name__container {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.chat__name__container {
+    display: flex;
+    justify-content: space-between
+}

@@ -1,0 +1,39 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.sidebar {
+    max-width: 25rem;
+    flex: 1
+}
+
+.sidebar,
+.content {
+    height: 100vh;
+    border: 1px solid #ccc;
+}
+
+.content {
+    flex: 2
+}
+
+.users__list {
+    overflow-y: scroll;
+    height: 100vh;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.5rem;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+
+.user__image {
+    object-fit: contain;
+    border-radius: 50%;
+}

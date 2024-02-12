@@ -1,0 +1,42 @@
+img {
+    width: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    height: 50px;
+}
+
+.verified_user {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    right: 0;
+    bottom: 0;
+    border-radius: 10px;
+    color: #000;
+    background-color: greenyellow;
+}
+
+.avatar__header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.avatar__header__info {
+    display: flex;
+    gap: 0.25rem;
+    align-items: center;
+}
+
+.avatar_by__header {
+    font-weight: 500;
+    font-size: .875rem;
+    line-height: 1.25rem;
+}
+
+.gray__color_sub_title {
+    font-size: .75rem;
+    --tw-text-opacity: 1;
+    color: rgb(106 115 125/var(--tw-text-opacity));
+}
