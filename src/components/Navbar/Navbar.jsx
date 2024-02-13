@@ -38,7 +38,7 @@ export const Navbar = () => {
             const payload = {
                 actual_user_name: data.user.displayName,
                 is_email_verified: data.user.emailVerified,
-                email_id: data.user.email,
+                user_email_id: data.user.email,
                 is_anonymous: true,
                 user_phone_number: data.user.phoneNumber,
                 actual_profile_pic: data.user.photoURL,

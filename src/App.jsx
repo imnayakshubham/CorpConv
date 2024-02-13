@@ -53,7 +53,7 @@ function App() {
     <>
       <Routes>
         <Route path='/' element={
-          <PageWrapper>
+          <PageWrapper from="landing_page">
             <LandingPage />
           </PageWrapper>
         } />

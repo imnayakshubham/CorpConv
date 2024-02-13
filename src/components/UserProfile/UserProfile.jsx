@@ -4,12 +4,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUserInfoClear, getUserInfoRequest } from '../../../store/action/users.js';
 import "./UserProfile.css"
 import { Jobs } from '../Jobs/Jobs.jsx';
-import { Button, Tooltip } from 'antd';
+import { Badge, Button, Tooltip } from 'antd';
 import { followUserRequest } from '../../../store/action/users.js'
 import { UserAddOutlined, UserDeleteOutlined } from '@ant-design/icons'
-import { UserNameAvatar } from '../UserNameAvatar/UserNameAvatar.tsx';
 import { SkeletonUserCardLoading } from '../SkeletonUserCardLoading/SkeletonUserCardLoading.tsx';
 import { AsyncStates } from '../../../constants';
+import { CheckOutlined } from '@ant-design/icons'
+import { UserAvatar } from '../UserAvatar/UserAvatar.tsx';
 
 
 
@@ -64,39 +65,42 @@ export const UserProfile = () => {
     if (getUserInfoStatus === AsyncStates.LOADING) return <SkeletonUserCardLoading />
     if (!userProfileDetails) return null
 
+
     return (
         userProfileDetails && <div className='user__profile__container'>
             <div className="user__details__container">
-                <div className='user__profile__avatar'>
-                    <UserNameAvatar name={userProfileDetails.public_user_name} showName={true} size={66} />
-                    {loggedInUser && loggedInUser?._id !== userProfileDetails?._id &&
-                        <div className='follow__button' >
-                            {loggedInUser?.followings?.includes(userProfileDetails?._id) ?
-                                <Tooltip title={"Withdraw Follow Request"}>
-                                    <Button
-                                        onClick={(e) => {
-                                            e.stopPropagation()
-                                            dispatch(followUserRequest({ senderId: loggedInUser._id, receiverId: userProfileDetails._id }))
-                                        }}>
-                                        <UserDeleteOutlined /> {"Withdraw Follow Request"}
-                                    </Button>
-                                </Tooltip>
-                                :
-                                <Tooltip title={"Send Follow Request"}>
-                                    <Button
+                <Badge.Ribbon text={
+                    userProfileDetails?.is_email_verified ? <><CheckOutlined /> Verified User</> : null} color={'green'}> <div className='user__profile__avatar'>
+                        <UserAvatar isUserVerified={userProfileDetails?.is_email_verified} title={userProfileDetails.public_user_name} titleClassName="font-medium text-base leading-5" />
+                        {loggedInUser && loggedInUser?._id !== userProfileDetails?._id &&
+                            <div className='follow__button' >
+                                {loggedInUser?.followings?.includes(userProfileDetails?._id) ?
+                                    <Tooltip title={"Withdraw Follow Request"}>
+                                        <Button
+                                            onClick={(e) => {
+                                                e.stopPropagation()
+                                                dispatch(followUserRequest({ senderId: loggedInUser._id, receiverId: userProfileDetails._id }))
+                                            }}>
+                                            <UserDeleteOutlined /> {"Withdraw Follow Request"}
+                                        </Button>
+                                    </Tooltip>
+                                    :
+                                    <Tooltip title={"Send Follow Request"}>
+                                        <Button
 
-                                        onClick={(e) => {
-                                            e.stopPropagation()
-                                            // socket.emit("send_follow_request", { senderId: loggedInUser._id, receiverId: user._id, tab })
-                                            dispatch(followUserRequest({ senderId: loggedInUser._id, receiverId: userProfileDetails._id }))
-                                        }}>
-                                        <UserAddOutlined /> {"Follow"}
-                                    </Button>
-                                </Tooltip>
-                            }
-                        </div>
-                    }
-                </div>
+                                            onClick={(e) => {
+                                                e.stopPropagation()
+                                                // socket.emit("send_follow_request", { senderId: loggedInUser._id, receiverId: user._id, tab })
+                                                dispatch(followUserRequest({ senderId: loggedInUser._id, receiverId: userProfileDetails._id }))
+                                            }}>
+                                            <UserAddOutlined /> {"Follow"}
+                                        </Button>
+                                    </Tooltip>
+                                }
+                            </div>
+                        }
+                    </div>
+                </Badge.Ribbon>
                 <div className='user__profile__details'>
                     <div className='follows'>
                         <div id="stats__container">
