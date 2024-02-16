@@ -86,7 +86,7 @@ export const AddJobLink = ({ openAddJobModal, setOpenAddJobModal }) => {
 
 
                     <Form.Item style={{ display: "flex", justifyContent: "flex-end" }}>
-                        <Button type="primary" htmlType="submit">{openAddJobModal.mode === "create" ? "Add" : "Edit"} Job</Button>
+                        <Button htmlType="submit">{openAddJobModal.mode === "create" ? "Add" : "Edit"} Job</Button>
                     </Form.Item>
 
                 </Form>

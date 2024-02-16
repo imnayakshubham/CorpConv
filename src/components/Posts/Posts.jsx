@@ -55,7 +55,6 @@ export const Posts = () => {
                 <CreatePost postModalData={postModalData} setPostModalData={setPostModalData} />
             }
             <PostList setPostModalData={setPostModalData} />
-
         </div>
     )
 }

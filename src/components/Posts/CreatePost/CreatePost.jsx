@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import "./CreatePost.css"
 import { Form, Modal, Tabs } from "antd"
 import ReactQuill from 'react-quill';
@@ -15,6 +15,8 @@ export const CreatePost = ({ setPostModalData, postModalData }) => {
     const addPostStatus = useSelector((state) => state.posts.addPostStatus)
     const editPostStatus = useSelector((state) => state.posts.editPostStatus)
 
+    const [currentTab, setCurrentTab] = useState(postModalData?.data?.category ?? "company_review")
+
     const handleCreatePost = () => {
         setPostModalData({
             showModel: true,
@@ -29,6 +31,7 @@ export const CreatePost = ({ setPostModalData, postModalData }) => {
                 category: postModalData.data.category,
                 content: postModalData.data.content,
             })
+            setCurrentTab(postModalData.data.category)
         }
     }, [postModalData.data, postForm, postModalData.mode])
 
@@ -40,6 +43,7 @@ export const CreatePost = ({ setPostModalData, postModalData }) => {
                 mode: "create"
             })
             postForm.resetFields()
+            setCurrentTab("company_review")
         }
     }, [editPostStatus, setPostModalData, addPostStatus, postForm])
 
@@ -48,7 +52,6 @@ export const CreatePost = ({ setPostModalData, postModalData }) => {
             dispatch(editPostRequest({ _id: postModalData.data._id, ...values }))
         } else {
             dispatch(addPostRequest(values))
-
         }
     }
 
@@ -60,7 +63,7 @@ export const CreatePost = ({ setPostModalData, postModalData }) => {
                     onClick={() => {
                         handleCreatePost()
                     }}
-                >{"Add"} Post</Button>
+                >Add Post</Button>
             </div>
             <Modal
                 title={`${postModalData.mode === "create" ? "Add" : "Update"} Post`}
@@ -76,6 +79,7 @@ export const CreatePost = ({ setPostModalData, postModalData }) => {
                         mode: "create"
                     })
                     postForm.resetFields()
+                    setCurrentTab("company_review")
                 }}
             >
                 <Form layout='vertical' onFinish={handlePost}
@@ -90,10 +94,10 @@ export const CreatePost = ({ setPostModalData, postModalData }) => {
                     >
                         <Tabs
                             destroyInactiveTabPane={true}
-                            activeKey={postModalData.data?.category ?? postForm.getFieldValue("category") ?? "company_review"}
-                            defaultActiveKey={postModalData.data?.category ?? postForm.getFieldValue("category") ?? "company_review"}
+                            activeKey={currentTab}
                             onChange={(activeKey) => {
                                 postForm.setFieldsValue({ category: activeKey, content: null })
+                                setCurrentTab(activeKey)
                             }}
                             items={Object.keys(categoriesList).map((categoryKey) => {
                                 return {
