@@ -1,4 +1,4 @@
-import { Routes, Route, useNavigate } from 'react-router-dom'
+import { Routes, Route, useNavigate, Link } from 'react-router-dom'
 import { Jobs } from './components/Jobs/Jobs.jsx';
 
 import "./App.css";
@@ -97,7 +97,17 @@ function App() {
                 <UpdateProfile />
               </PageWrapper>} />
           </Route>
-          <Route path='*' element={<>404 Page</>} />
+          <Route path='*' element={<PageWrapper>
+            <div className="flex items-center h-[88vh] justify-center">
+              <div className="text-center">
+                <h1 className="text-6xl font-bold mb-4">404</h1>
+                <p className="text-lg">Oops! Page not found.</p>
+                <Link to="/" className="text-blue-500 hover:underline">
+                  Go back to home
+                </Link>
+              </div>
+            </div>
+          </PageWrapper>} />
         </Route>
         <Route element={<PrivateRoutes />}>
           <Route path='/chats' element={<ChatWrapper />} />
