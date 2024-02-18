@@ -43,9 +43,9 @@ function App() {
     if (!socket) return
     socket.emit("setup", loginResponse);
     socket.on("connected", () => console.log("connected..."));
-    socket.on("follow_request_send_notication", (payload) => {
-      console.log(payload)
-    })
+    // socket.on("follow_request_send_notication", (payload) => {
+    //   console.log(payload)
+    // })
   }, [socket, loginResponse]);
 
   return (

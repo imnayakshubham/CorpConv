@@ -1,8 +1,9 @@
 import { useEffect } from 'react'
-import { Button, Form, Input, Modal } from 'antd'
+import { Form, Input, Modal } from 'antd'
 import { useDispatch, useSelector } from 'react-redux';
 import { createJobClear, createJobRequest, editJobClear, editJobRequest } from '../../../../store/action/jobs';
 import { AsyncStates } from '../../../../constants';
+import { Button } from '@/components/ui/button';
 
 
 export const AddJobLink = ({ openAddJobModal, setOpenAddJobModal }) => {
@@ -56,11 +57,14 @@ export const AddJobLink = ({ openAddJobModal, setOpenAddJobModal }) => {
 
     return (
         <div style={{ display: "flex", justifyContent: "flex-end" }}>
-            <Button onClick={() => setOpenAddJobModal({
-                isModalOpen: true,
-                selectedJob: null,
-                mode: "create"
-            })}>
+            <Button
+                size={"sm"}
+                variant={"outline"}
+                onClick={() => setOpenAddJobModal({
+                    isModalOpen: true,
+                    selectedJob: null,
+                    mode: "create"
+                })}>
                 Add Job
             </Button>
 
@@ -84,9 +88,8 @@ export const AddJobLink = ({ openAddJobModal, setOpenAddJobModal }) => {
                         <Input type='text' placeholder='Job Link' />
                     </Form.Item>
 
-
                     <Form.Item style={{ display: "flex", justifyContent: "flex-end" }}>
-                        <Button htmlType="submit">{openAddJobModal.mode === "create" ? "Add" : "Edit"} Job</Button>
+                        <Button htmlType="submit" size={"sm"} variant={"outline"}>{openAddJobModal.mode === "create" ? "Add" : "Edit"} Job</Button>
                     </Form.Item>
 
                 </Form>

@@ -1,5 +1,5 @@
 import { call, put, select, takeLatest } from "redux-saga/effects";
-import { createBookmarkClear, createBookmarkFailure, createBookmarkRequest, createBookmarkSuccess, createJobFailure, createJobRequest, createJobSuccess, deleteJobFailure, deleteJobRequest, deleteJobSuccess, editJobFailure, editJobRequest, editJobSuccess, fetchJobsFailure, fetchJobsRequest, fetchJobsSuccess, likeDislikeFailure, likeDislikeRequest, likeDislikeSuccess } from "../action/jobs";
+import { createBookmarkFailure, createBookmarkRequest, createBookmarkSuccess, createJobFailure, createJobRequest, createJobSuccess, deleteJobFailure, deleteJobRequest, deleteJobSuccess, editJobFailure, editJobRequest, editJobSuccess, fetchJobsFailure, fetchJobsRequest, fetchJobsSuccess, likeDislikeFailure, likeDislikeRequest, likeDislikeSuccess } from "../action/jobs";
 import { jobBookmarkApi, jobCreateApi, jobDeleteApi, jobLikeDisLikeApi, jobUpdateApi } from "../../services/apis";
 import { defaultHeaders } from "../../constants";
 import { sendGet } from "../../src/utils/sendApiRequest";

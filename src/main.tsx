@@ -8,7 +8,6 @@ import { Provider } from 'react-redux';
 import { createBrowserHistory } from "history"
 import { HistoryRouter } from './HistoryRouter.jsx';
 
-
 export const history = createBrowserHistory()
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

@@ -94,17 +94,17 @@ const postsReducer = handleActions<any>({
         }
     },
     [UpvotePostActionTypes.SUCCESS]: (state, action) => {
-        console.log({ data: action.payload })
+        const newPostsList = JSON.parse(JSON.stringify(state.postsList)).map((post: any) => {
+            if (post._id === action.payload._id) {
+                return action.payload
+            }
+            return post
+        })
         return {
             ...state,
             postUpvoteStatus: AsyncStates.SUCCESS,
             postUpvoteError: null,
-            postsList: state.postsList.map((post: any) => {
-                if (post._id === action.payload._id) {
-                    return action.payload
-                }
-                return post
-            })
+            postsList: newPostsList
         }
     },
     [UpvotePostActionTypes.FAILURE]: (state, action) => {

@@ -23,12 +23,14 @@ function* addPostSaga({ payload }) {
     }
 }
 
-function* fetchPostsSaga() {
+function* fetchPostsSaga({ payload }) {
     try {
         const headers = {
             ...defaultHeaders,
         }
-        const url = `post/all-posts`
+        const endPoint = `post/all-posts`
+
+        const url = payload?._id ? `${endPoint}?user_id=${payload?._id}` : endPoint
         const { data: { status, message: apiMessage, data } } = yield call(sendGet(url), headers);
         if (status === "Success") {
             yield put(fetchPostsSuccess(data));

@@ -12,6 +12,7 @@ import { AsyncStates } from '../../../constants';
 import { CheckOutlined } from '@ant-design/icons'
 import { UserAvatar } from '../UserAvatar/UserAvatar.tsx';
 import { Login } from '../Authentication/Login/Login.jsx';
+import { Posts } from '../Posts/Posts.jsx';
 
 
 
@@ -24,6 +25,9 @@ export const UserProfile = () => {
 
     const { loginResponse: loggedInUser } = useSelector(state => state.login)
     const { userInfo, getUserInfoStatus } = useSelector(state => state.users)
+    const jobsList = useSelector((state) => state.jobs)
+    const postsList = useSelector((state) => state.posts.postsList)
+
 
 
     const [userProfileDetails, setuserProfileDetails] = useState(null)
@@ -117,13 +121,13 @@ export const UserProfile = () => {
                                 <svg viewBox="0 0 24 24" className='icons'>
                                     <path d="M4.5 6.375a4.125 4.125 0 118.25 0 4.125 4.125 0 01-8.25 0zM14.25 8.625a3.375 3.375 0 116.75 0 3.375 3.375 0 01-6.75 0zM1.5 19.125a7.125 7.125 0 0114.25 0v.003l-.001.119a.75.75 0 01-.363.63 13.067 13.067 0 01-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 01-.364-.63l-.001-.122zM17.25 19.128l-.001.144a2.25 2.25 0 01-.233.96 10.088 10.088 0 005.06-1.01.75.75 0 00.42-.643 4.875 4.875 0 00-6.957-4.611 8.586 8.586 0 011.71 5.157v.003z" />
                                 </svg>
-                                <span>{userProfileDetails?.followers?.length}</span>followers
+                                <span>{userProfileDetails?.followers?.length ?? 0}</span>followers
                             </p>
                             <p className="stats-text">
                                 <svg viewBox="0 0 24 24" className='icons'>
                                     <path d="M4.5 6.375a4.125 4.125 0 118.25 0 4.125 4.125 0 01-8.25 0zM14.25 8.625a3.375 3.375 0 116.75 0 3.375 3.375 0 01-6.75 0zM1.5 19.125a7.125 7.125 0 0114.25 0v.003l-.001.119a.75.75 0 01-.363.63 13.067 13.067 0 01-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 01-.364-.63l-.001-.122zM17.25 19.128l-.001.144a2.25 2.25 0 01-.233.96 10.088 10.088 0 005.06-1.01.75.75 0 00.42-.643 4.875 4.875 0 00-6.957-4.611 8.586 8.586 0 011.71 5.157v.003z" />
                                 </svg>
-                                <span>{userProfileDetails?.followings?.length}</span>followings
+                                <span>{userProfileDetails?.followings?.length ?? 0}</span>followings
                             </p>
                             {!!userProfileDetails?.posts?.length &&
                                 <p className="stats-text">
@@ -136,16 +140,22 @@ export const UserProfile = () => {
                         </div>
                     </div>
                     <h3>Experience: {userProfileDetails?.user_job_experience}</h3>
-                    <h3>Building: {userProfileDetails?.user_current_company_name}</h3>
+                    <h3>Working @ <span className='font-semibold'>{userProfileDetails?.user_current_company_name}</span></h3>
                     {userProfileDetails.user_bio && <p>{userProfileDetails.user_bio}</p>}
 
                 </div>
             </div>
             <div className='user__activity__container'>
-                <h1>Jobs</h1>
-                <Jobs from={"user_profile"} user_id={userProfileDetails?._id} />
+                <div className='flex gap-2 flex-col'>
+                    <div>
+                        <Jobs from={"user_profile"} user_id={userProfileDetails?._id} />
+                    </div>
+                    <div>
+                        <Posts from={"user_profile"} user_id={userProfileDetails?._id} />
+                    </div>
+                </div>
             </div>
-            <div className='auth__wrapper fixed bottom-4 z-50 bg-[#fff]'>
+            <div className='auth__wrapper fixed bottom-4 z-50 backdrop-blur'>
                 <Login profileColor={profileColor} setProfileColor={setProfileColor} />
             </div>
         </div>

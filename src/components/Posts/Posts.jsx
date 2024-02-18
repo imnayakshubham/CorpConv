@@ -6,8 +6,9 @@ import { addPostSuccess, fetchPostsRequest, upvotePostSuccess } from '../../../s
 import { PostList } from './PostList/PostList'
 
 
-export const Posts = () => {
+export const Posts = ({ from, user_id = null }) => {
     const socket = useSelector((state) => state.common.socketInstance)
+    const posts = useSelector((state) => state.posts.postsList)
 
     const [postModalData, setPostModalData] = useState({
         showModel: false,
@@ -45,13 +46,22 @@ export const Posts = () => {
     }, [dispatch, socket, userInfo?._id])
 
     useEffect(() => {
-        dispatch(fetchPostsRequest())
-    }, [dispatch])
+        if (from === "user_profile") {
+            if (user_id) {
+                dispatch(fetchPostsRequest({ _id: user_id }))
+            }
+        } else {
+            dispatch(fetchPostsRequest())
+
+        }
+    }, [dispatch, from, user_id])
 
     return (
         <div>
-            {
-                userInfo &&
+            {from === "user_profile" && !!posts.length &&
+                <h1 className='font-semibold p-2 text-lg'>Posts</h1>
+            }
+            {(userInfo && userInfo._id === user_id) &&
                 <CreatePost postModalData={postModalData} setPostModalData={setPostModalData} />
             }
             <PostList setPostModalData={setPostModalData} />

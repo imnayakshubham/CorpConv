@@ -4,7 +4,7 @@ import { Form, Modal, Tabs } from "antd"
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useDispatch, useSelector } from "react-redux";
-import { addPostRequest, editPostRequest } from "../../../../store/action/posts";
+import { addPostClear, addPostRequest, editPostClear, editPostRequest } from "../../../../store/action/posts";
 import { AsyncStates, categoriesList } from "../../../../constants";
 import { Button } from "@/components/ui/button"
 
@@ -44,8 +44,13 @@ export const CreatePost = ({ setPostModalData, postModalData }) => {
             })
             postForm.resetFields()
             setCurrentTab("company_review")
+            if (editPostStatus === AsyncStates.SUCCESS) {
+                dispatch(editPostClear())
+            } else if (addPostStatus === AsyncStates.SUCCESS) {
+                dispatch(addPostClear())
+            }
         }
-    }, [editPostStatus, setPostModalData, addPostStatus, postForm])
+    }, [editPostStatus, setPostModalData, addPostStatus, postForm, dispatch])
 
     const handlePost = (values) => {
         if (postModalData.mode === "edit") {
@@ -59,6 +64,7 @@ export const CreatePost = ({ setPostModalData, postModalData }) => {
         <div>
             <div className="create__post__container">
                 <Button
+                    size={"sm"}
                     variant={"outline"}
                     onClick={() => {
                         handleCreatePost()
@@ -123,7 +129,9 @@ export const CreatePost = ({ setPostModalData, postModalData }) => {
                         />
                     </Form.Item>
                     <Form.Item style={{ display: "flex", justifyContent: "flex-end" }}>
-                        <Button>{postModalData.mode === "create" ? "Add" : "Update"} Post</Button>
+                        <Button
+                            size={"sm"} variant={"outline"}
+                        >{postModalData.mode === "create" ? "Add" : "Update"} Post</Button>
                     </Form.Item>
                 </Form>
             </Modal>

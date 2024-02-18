@@ -1,16 +1,12 @@
 import { useDispatch, useSelector } from "react-redux"
 import "./PostList.css"
-import DOMPurify from 'dompurify';
-import { fromNow } from "@/utils/helperFn";
-import { commentRequest, deleteCommentRequest, deletePostRequest, likeCommentRequest, replyToCommentRequest, upvotePostRequest } from '../../../../store/action/posts'
+import { deleteCommentRequest, likeCommentRequest, replyToCommentRequest } from '../../../../store/action/posts'
 import { useEffect, useState } from "react";
 import { Mentions } from "antd";
 import { Button } from "@/components/ui/button";
 import { UserAvatar } from "@/components/UserAvatar/UserAvatar";
-import { MoreVertical, PlusCircle, Reply, Trash } from "lucide-react";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { AsyncStates, categoriesList } from '../../../../constants'
-import { useNavigate } from "react-router-dom";
+import { PlusCircle, Reply, Trash } from "lucide-react";
+import { AsyncStates } from '../../../../constants'
 import { Post } from "../Post/Post";
 import { PostsListSkeleton } from "../PostsSkeleton/PostsListSkeleton";
 
@@ -38,7 +34,7 @@ export const PostList = ({ setPostModalData }) => {
     const fetchPostsStatus = useSelector((state) => state.posts.fetchPostsStatus)
 
     return (
-        <div className="posts__container">
+        <div className="posts__container py-2">
             {fetchPostsStatus === AsyncStates.LOADING ? <PostsListSkeleton /> :
                 posts.map((post) => {
                     return (
@@ -69,7 +65,6 @@ export function CommentForm({
     const [message, setMessage] = useState(initialValue)
     const [prefix, setPrefix] = useState('@');
     const onSearch = (_, newPrefix) => {
-        console.log(_, newPrefix)
         setPrefix(newPrefix);
     };
 
@@ -115,7 +110,6 @@ export function CommentForm({
                         label: value,
                     }))}
                     onInput={(e) => {
-                        console.log("ghfhgfhgfjhg")
                         const text = e.target.value;
                         setMessage(text);
                     }}
@@ -138,17 +132,16 @@ export const Comment = ({ comment }) => {
 
     const handleReply = (comment) => {
         setViewedComments((prev) => {
-            // Create a new Set based on the previous state
             const newSet = new Set(prev);
+            const viewIds = [comment._id, ...comment.nested_comments.map((reply) => reply._id)]
 
-            // Add the new comment ID if it doesn't exist in the set
-            if (!newSet.has(comment._id)) {
-                newSet.add(comment._id);
-            } else {
-                newSet.delete(comment._id);
-            }
-
-            // Return the new Set to update the state
+            viewIds.forEach((id) => {
+                if (!newSet.has(id)) {
+                    newSet.add(id);
+                } else {
+                    newSet.delete(id);
+                }
+            })
             return newSet;
         });
     };
@@ -189,13 +182,16 @@ export const Comment = ({ comment }) => {
                 handleLikeComment(comment)
             }}
                 variant={"ghost"} disabled={!userInfo?._id}>
-                <UpVoteIcon size={20} /> {comment.upvoted_by.length}
+                <UpVoteIcon size={20} fill={comment.upvoted_by.includes(userInfo?._id) ? "black" : "transparent"} /> {comment.upvoted_by.length}
             </Button>
             <Button disabled={!userInfo?._id} className="py-1" variant={"ghost"} onClick={(e) => {
                 e.stopPropagation()
                 handleReply(comment)
             }}
-            ><Reply size={20} /> {comment.nested_comments.length}</Button>
+            >
+                {comment.nested_comments.length === 0 ? <>Reply</> :
+                    <><Reply size={20} /> {comment.nested_comments.length}</>}
+            </Button>
             {/* <Button className="py-1" variant={"ghost"}>Edit</Button> */}
             {(!!userInfo?._id) && (userInfo?._id === comment.commented_by._id) &&
                 <Button className="py-1" onClick={(e) => {
@@ -208,12 +204,14 @@ export const Comment = ({ comment }) => {
         <div className="nested__comments ml-6 border-l-2">
             {
                 comment.nested_comments.map((reply) => {
-                    return <Comment key={reply._id} comment={reply} />
+                    if (viewedComments.has(comment._id) || viewedComments.has(reply._id)) {
+                        return <Comment key={reply._id} comment={reply} />
+                    }
                 })
             }
         </div>
         {
-            viewedComments.has(comment._id) && <CommentForm
+            (viewedComments.has(comment._id)) && <CommentForm
                 parentId={comment.parentId}
                 postId={comment.post_id}
                 commentId={comment._id}

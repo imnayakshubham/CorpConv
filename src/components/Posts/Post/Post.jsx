@@ -1,26 +1,42 @@
 import { UserAvatar } from '@/components/UserAvatar/UserAvatar'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { fromNow } from '@/utils/helperFn'
-import { categoriesList } from '../../../../constants'
+import { AsyncStates, categoriesList } from '../../../../constants'
 import { useDispatch, useSelector } from 'react-redux'
 import { CommentForm, CommentList, UpVoteIcon } from '../PostList/PostList'
-import { MoreVertical, Trash } from "lucide-react";
-import { useMemo, useState } from 'react'
+import { Edit, MoreVertical, Trash } from "lucide-react";
+import { useCallback, useEffect, useState } from 'react'
 import { deletePostRequest, replyToCommentRequest, upvotePostRequest } from '../../../../store/action/posts'
 import DOMPurify from 'dompurify'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import { CreatePost } from '../CreatePost/CreatePost'
+import { sendGet } from '@/utils/sendApiRequest'
+import { message } from 'antd'
+import { PostSkeleton } from '../PostsSkeleton/PostSkeleton'
 
-export const Post = ({ post }) => {
+export const Post = ({ post = null }) => {
     const { loginResponse: userInfo } = useSelector(state => state.login)
     const dispatch = useDispatch()
     const navigateTo = useNavigate();
     const location = useLocation();
+    const params = useParams()
 
+    const [fetchPostStatus, setfetchPostStatus] = useState(AsyncStates.INITIAL)
+
+    const [postModalData, setPostModalData] = useState({
+        showModel: false,
+        data: null,
+        mode: "create"
+    })
+
+    const [postData, setPostData] = useState(post ?? location?.state ?? null)
     const [viewedParentCommentsIds, setViewedParentCommentsIds] = useState(new Set())
 
-    const postData = useMemo(() => post ?? location?.state, [location?.state, post])
-
-    const sanitizedContent = DOMPurify.sanitize(postData.content);
+    useEffect(() => {
+        if (post) {
+            setPostData(post)
+        }
+    }, [post])
 
     const handleParentComment = (post_id) => {
         setViewedParentCommentsIds((prev) => {
@@ -45,15 +61,46 @@ export const Post = ({ post }) => {
     }
 
     const handleDeletePost = (post) => {
-        dispatch(deletePostRequest({ _id: postData?._id }))
+        dispatch(deletePostRequest({ _id: post?._id }))
     }
+
+    const fetchPost = useCallback(async (post_id) => {
+        setfetchPostStatus("Loading")
+        try {
+            const apiResponse = await sendGet(`post/${post_id}`)
+            const { data: { data, status, message } } = await apiResponse()
+            if (status === "Success") {
+                setfetchPostStatus("Success")
+                setPostData(data)
+            }
+            else if (status === AsyncStates.ERROR) {
+                message.error(message)
+                setfetchPostStatus(AsyncStates.ERROR)
+            }
+
+        } catch (error) {
+            message.error("Error fetching post")
+            setfetchPostStatus(AsyncStates.ERROR)
+        }
+
+    }, [])
+
+    useEffect(() => {
+        if (!postData && !!params?.id && fetchPostStatus === AsyncStates.INITIAL) {
+            fetchPost(params.id);
+        }
+    }, [fetchPost, postData, params?.id, fetchPostStatus]);
+
+    if (fetchPostStatus === "Loading") return <PostSkeleton />
+
+    if (!postData) return <>No Post Found</>
 
     return (
         <>
             <div
                 onClick={(e) => {
                     e.stopPropagation()
-                    navigateTo(`/post/${post._id}`, { state: post })
+                    navigateTo(`/post/${postData._id}`, { state: postData })
                 }}
             >
                 <div className="flex justify-between">
@@ -69,18 +116,21 @@ export const Post = ({ post }) => {
                         </div>
                     </div>
                     {userInfo?._id === postData?.posted_by._id &&
-                        <DropdownMenu>
+                        <DropdownMenu onClick={(e) => e.stopPropagation()}>
                             <DropdownMenuTrigger className="border-none"><MoreVertical /></DropdownMenuTrigger>
                             <DropdownMenuContent>
                                 <DropdownMenuItem className="cursor-pointer"
-                                // onClick={() => setPostModalData({
-                                //     showModel: true,
-                                //     data: post,
-                                //     mode: "edit"
-                                // })}
+                                    onClick={(e) => {
+                                        e.stopPropagation()
+                                        setPostModalData({
+                                            showModel: true,
+                                            data: postData,
+                                            mode: "edit"
+                                        })
+                                    }}
                                 >
                                     <div className="flex w-full gap-3">
-                                        <UpVoteIcon size={20} />
+                                        <Edit size={20} />
                                         Edit
                                     </div>
                                 </DropdownMenuItem>
@@ -89,9 +139,9 @@ export const Post = ({ post }) => {
                                     handleDeletePost(post)
                                 }
                                 }>
-                                    <div className="flex w-full gap-3">
-                                        <Trash size={20} />
-                                        Delete
+                                    <div className="flex w-full gap-3 ">
+                                        <Trash size={20} className='text-red-600' />
+                                        <span className='text-red-600'> Delete</span>
                                     </div>
                                 </DropdownMenuItem>
                             </DropdownMenuContent>
@@ -99,7 +149,7 @@ export const Post = ({ post }) => {
                     }
                 </div>
                 <div className="mt-2 pl-12">
-                    <div dangerouslySetInnerHTML={{ __html: sanitizedContent }} />
+                    <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(postData?.content) }} />
                 </div>
             </div>
             <div className="mt-2 w-full pl-12">
@@ -114,7 +164,7 @@ export const Post = ({ post }) => {
                             e.stopPropagation()
                             handleUpvote(postData?._id)
                         }} >
-                            <UpVoteIcon size={20} />
+                            <UpVoteIcon size={20} fill={postData.upvoted_by.includes(userInfo?._id) ? "black" : "transparent"} />
                         </span>
                         <span className="absolute font-semibold text-xs px-1 left-6 text-light">{postData?.upvoted_by.length}</span>
                     </button>
@@ -177,6 +227,9 @@ export const Post = ({ post }) => {
                         />
                     }
                 </section>
+            }
+            {postModalData.showModel &&
+                <CreatePost postModalData={postModalData} setPostModalData={setPostModalData} />
             }
         </>
     )
