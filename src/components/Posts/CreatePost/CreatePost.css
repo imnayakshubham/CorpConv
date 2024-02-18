@@ -1,5 +1,5 @@
 .create__post__container {
     display: flex;
     justify-content: flex-end;
-    padding: 1rem;
+    gap: 1rem;
 }

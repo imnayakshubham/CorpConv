@@ -10,10 +10,10 @@ import { sendGet, sendPost } from "../../src/utils/sendApiRequest"
 
 function* fetchUsersListSaga({ payload }) {
     try {
-        const token = yield select((state) => state.login.loginResponse.token);
+        const token = yield select((state) => state.login.loginResponse?.token);
         const headers = {
             ...defaultHeaders,
-            token,
+            token
         }
         const { data: { result, status, message } } = yield call(fetchUsersApi, payload, headers)
 

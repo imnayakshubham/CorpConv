@@ -15,6 +15,7 @@ import { ChatWrapper } from './components/ChatContainer/ChatWrapper.jsx';
 import { Users } from './components/Users/Users.jsx';
 import { Posts } from './components/Posts/Posts.jsx';
 import { LandingPage } from './components/LandingPage/LandingPage.jsx';
+import { Post } from './components/Posts/Post/Post.jsx';
 
 function App() {
   const loginResponse = useSelector((state) => state.login.loginResponse)
@@ -25,9 +26,7 @@ function App() {
   const navigateTo = useNavigate()
 
   useEffect(() => {
-    if (!loginResponse) {
-      navigateTo("/")
-    } else if ((!loginResponse.user_current_company_name || !loginResponse.user_job_experience || !loginResponse.user_job_role)) {
+    if (loginResponse && (!loginResponse.user_current_company_name || !loginResponse.user_job_experience || !loginResponse.user_job_role)) {
       navigateTo("/update-profile")
     }
   }, [loginResponse, navigateTo])
@@ -44,16 +43,16 @@ function App() {
     if (!socket) return
     socket.emit("setup", loginResponse);
     socket.on("connected", () => console.log("connected..."));
-    socket.on("follow_request_send_notication", (payload) => {
-      console.log(payload)
-    })
+    // socket.on("follow_request_send_notication", (payload) => {
+    //   console.log(payload)
+    // })
   }, [socket, loginResponse]);
 
   return (
     <>
       <Routes>
         <Route path='/' element={
-          <PageWrapper from="landing_page">
+          <PageWrapper>
             <LandingPage />
           </PageWrapper>
         } />
@@ -81,6 +80,14 @@ function App() {
           <Route>
             <Route path='/user/:id' element={
               <UserProfile />
+            } />
+          </Route>
+
+          <Route>
+            <Route path='/post/:id' element={
+              <PageWrapper bodyClass={"lg:w-8/12 md:w-9/12"}>
+                <Post />
+              </PageWrapper>
             } />
           </Route>
 

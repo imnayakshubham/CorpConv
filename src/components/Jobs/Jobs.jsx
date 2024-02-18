@@ -3,9 +3,10 @@ import { AddJobLink } from './AddJobLink/AddJobLink'
 import { useDispatch, useSelector } from 'react-redux'
 import { createBookmarkRequest, createBookmarkSuccess, createJobSuccess, deleteJobRequest, editJobSuccess, fetchJobsRequest, likeDislikeRequest, likeDislikeSuccess } from '../../../store/action/jobs'
 import './Jobs.css'
-import { Avatar, Button } from 'antd'
+import { Avatar, Button, Tooltip } from 'antd'
 import { Pencil, Trash, Bookmark, Copy, ExternalLink } from 'lucide-react';
 import { fromNow } from '@/utils/helperFn'
+import { UpVoteIcon } from '../Posts/PostList/PostList'
 
 const HandHeart = ({ liked }) => {
     return <svg className={`${liked ? "job_liked" : ""} lucide lucide-hand-heart`} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 14h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 16" /><path d="m7 20 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9" /><path d="m2 15 6 6" /><path d="M19.5 8.5c.7-.7 1.5-1.6 1.5-2.7A2.73 2.73 0 0 0 16 4a2.78 2.78 0 0 0-5 1.8c0 1.2.8 2 1.5 2.8L16 12Z" /></svg>
@@ -51,7 +52,9 @@ export const Jobs = ({ from, user_id = null }) => {
 
     useEffect(() => {
         if (from === "user_profile") {
-            dispatch(fetchJobsRequest({ _id: user_id }))
+            if (user_id) {
+                dispatch(fetchJobsRequest({ _id: user_id }))
+            }
         } else {
             dispatch(fetchJobsRequest())
         }
@@ -80,9 +83,14 @@ export const Jobs = ({ from, user_id = null }) => {
 
     return (
         <div>
-            {userInfo &&
+            {from === "user_profile" && !!jobs.length &&
+                <h1 className='font-semibold p-2 text-lg'>Jobs</h1>
+            }
+            {(userInfo && userInfo._id === user_id) &&
                 <AddJobLink openAddJobModal={openAddJobModal} setOpenAddJobModal={setOpenAddJobModal} />
             }
+
+
             {/* <div className='grid grid-cols-1 gap-2 bg-red-400 md:grid-cols-2'>
                 {jobs.map((job) => {
                     const jobData = job.job_data
@@ -100,16 +108,16 @@ export const Jobs = ({ from, user_id = null }) => {
                         <div className={`post__actions`}>
                             {job.job_posted_by?._id === userInfo?._id &&
                                 <>
-                                    <Button type='link' onClick={() => handleEditJob(job)}>
+                                    <Button  className='border-none p-1 outline-none' onClick={() => handleEditJob(job)}>
                                         <Pencil />
                                     </Button>
-                                    <Button type='link' style={{ color: "red" }} onClick={() => handleDelete(job)} >
+                                    <Button  className='border-none p-1 outline-none' style={{ color: "red" }} onClick={() => handleDelete(job)} >
                                         <Trash />
                                     </Button>
                                 </>
                             }
                             <>
-                                <Button type='link'
+                                <Button  className='border-none p-1 outline-none'
                                     disabled={(job.job_posted_by._id === userInfo?._id) || !userInfo}
                                     onClick={() => {
                                         bookmarkJob(job)
@@ -118,7 +126,7 @@ export const Jobs = ({ from, user_id = null }) => {
                                         style={{ fill: job.bookmarked_by.includes(userInfo?._id) ? "black" : "transparent" }}
                                     />
                                 </Button>
-                                <Button type='link'
+                                <Button  className='border-none p-1 outline-none'
                                     disabled={(job.job_posted_by._id === userInfo?._id) || !userInfo}
                                     onClick={() => handleLike(job)}>
                                     <HandHeart liked={job.liked_by.includes(userInfo?._id)} />
@@ -126,13 +134,13 @@ export const Jobs = ({ from, user_id = null }) => {
                             </>
 
                             <Button
-                                type='link'
+                                 className='border-none p-1 outline-none'
                                 onClick={() => navigator.clipboard.writeText(`${jobData.job_post_link}?ref=corpconv`)}
                             >
                                 <Copy />
                             </Button>
                             <Button
-                                type='link'
+                                 className='border-none p-1 outline-none'
                                 onClick={() => {
                                     window.open(`${jobData.job_post_link}?ref=corpconv`, "_blank", "noreferrer");
                                 }
@@ -161,48 +169,55 @@ export const Jobs = ({ from, user_id = null }) => {
                             </p>
                         </div>
                         <div className="mt-auto py-2 border-t-2">
-                            <div>
+                            <div className='flex gap-1 items-center'>
                                 {job.job_posted_by?._id === userInfo?._id &&
                                     <>
-                                        <Button type='link' onClick={() => handleEditJob(job)}>
+                                        <Button className='border-none p-1 outline-none' onClick={() => handleEditJob(job)}>
                                             <Pencil />
                                         </Button>
-                                        <Button type='link' style={{ color: "red" }} onClick={() => handleDelete(job)} >
+                                        <Button className='border-none p-1 outline-none' style={{ color: "red" }} onClick={() => handleDelete(job)} >
                                             <Trash />
                                         </Button>
                                     </>
                                 }
                                 <>
-                                    <Button type='link'
-                                        disabled={(job.job_posted_by._id === userInfo?._id) || !userInfo}
-                                        onClick={() => {
-                                            bookmarkJob(job)
-                                        }} >
-                                        <Bookmark
-                                            style={{ fill: job.bookmarked_by.includes(userInfo?._id) ? "black" : "transparent" }}
-                                        />
-                                    </Button>
-                                    <Button type='link'
-                                        disabled={(job.job_posted_by._id === userInfo?._id) || !userInfo}
-                                        onClick={() => handleLike(job)}>
-                                        <HandHeart liked={job.liked_by.includes(userInfo?._id)} />
-                                    </Button>
+                                    <Tooltip title={job.bookmarked_by.includes(userInfo?._id) ? "You bookmarked this job" : "Bookmark this job"} placement="top">
+                                        <Button className='border-none p-1 outline-none'
+                                            disabled={(job.job_posted_by._id === userInfo?._id) || !userInfo}
+                                            onClick={() => {
+                                                bookmarkJob(job)
+                                            }} >
+                                            <Bookmark
+                                                style={{ fill: job.bookmarked_by.includes(userInfo?._id) ? "black" : "transparent" }}
+                                            />
+                                        </Button>
+                                    </Tooltip>
+                                    <Tooltip title={job.liked_by.includes(userInfo?._id) ? "You liked this job" : "Like this job"} placement="top">
+                                        <Button className='border-none p-1 outline-none focus:outline-none'
+                                            disabled={(job.job_posted_by._id === userInfo?._id) || !userInfo}
+                                            onClick={() => handleLike(job)}>
+                                            <UpVoteIcon size={25} fill={job.liked_by.includes(userInfo?._id) ? "black" : "transparent"} />
+                                        </Button>
+                                    </Tooltip>
                                 </>
-
-                                <Button
-                                    type='link'
-                                    onClick={() => navigator.clipboard.writeText(`${jobData.job_post_link}?ref=corpconv`)}
-                                >
-                                    <Copy />
-                                </Button>
-                                <Button
-                                    type='link'
-                                    onClick={() => {
-                                        window.open(`${jobData.job_post_link}?ref=corpconv`, "_blank", "noreferrer");
-                                    }
-                                    }>
-                                    <ExternalLink />
-                                </Button>
+                                <Tooltip title="Copy Job Link" placement="top">
+                                    <Button
+                                        className='border-none p-1 outline-none'
+                                        onClick={() => navigator.clipboard.writeText(`${jobData.job_post_link}?ref=corpconv`)}
+                                    >
+                                        <Copy />
+                                    </Button>
+                                </Tooltip>
+                                <Tooltip title="Open Job Link" placement="top">
+                                    <Button
+                                        className='border-none p-1 outline-none'
+                                        onClick={() => {
+                                            window.open(`${jobData.job_post_link}?ref=corpconv`, "_blank", "noreferrer");
+                                        }
+                                        }>
+                                        <ExternalLink />
+                                    </Button>
+                                </Tooltip>
                             </div>
                         </div>
                     </div>

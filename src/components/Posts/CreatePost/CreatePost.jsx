@@ -1,10 +1,10 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import "./CreatePost.css"
 import { Form, Modal, Tabs } from "antd"
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useDispatch, useSelector } from "react-redux";
-import { addPostRequest, editPostRequest } from "../../../../store/action/posts";
+import { addPostClear, addPostRequest, editPostClear, editPostRequest } from "../../../../store/action/posts";
 import { AsyncStates, categoriesList } from "../../../../constants";
 import { Button } from "@/components/ui/button"
 
@@ -14,6 +14,8 @@ export const CreatePost = ({ setPostModalData, postModalData }) => {
     const dispatch = useDispatch()
     const addPostStatus = useSelector((state) => state.posts.addPostStatus)
     const editPostStatus = useSelector((state) => state.posts.editPostStatus)
+
+    const [currentTab, setCurrentTab] = useState(postModalData?.data?.category ?? "company_review")
 
     const handleCreatePost = () => {
         setPostModalData({
@@ -29,6 +31,7 @@ export const CreatePost = ({ setPostModalData, postModalData }) => {
                 category: postModalData.data.category,
                 content: postModalData.data.content,
             })
+            setCurrentTab(postModalData.data.category)
         }
     }, [postModalData.data, postForm, postModalData.mode])
 
@@ -40,15 +43,20 @@ export const CreatePost = ({ setPostModalData, postModalData }) => {
                 mode: "create"
             })
             postForm.resetFields()
+            setCurrentTab("company_review")
+            if (editPostStatus === AsyncStates.SUCCESS) {
+                dispatch(editPostClear())
+            } else if (addPostStatus === AsyncStates.SUCCESS) {
+                dispatch(addPostClear())
+            }
         }
-    }, [editPostStatus, setPostModalData, addPostStatus, postForm])
+    }, [editPostStatus, setPostModalData, addPostStatus, postForm, dispatch])
 
     const handlePost = (values) => {
         if (postModalData.mode === "edit") {
             dispatch(editPostRequest({ _id: postModalData.data._id, ...values }))
         } else {
             dispatch(addPostRequest(values))
-
         }
     }
 
@@ -56,11 +64,12 @@ export const CreatePost = ({ setPostModalData, postModalData }) => {
         <div>
             <div className="create__post__container">
                 <Button
+                    size={"sm"}
                     variant={"outline"}
                     onClick={() => {
                         handleCreatePost()
                     }}
-                >{"Add"} Post</Button>
+                >Add Post</Button>
             </div>
             <Modal
                 title={`${postModalData.mode === "create" ? "Add" : "Update"} Post`}
@@ -76,6 +85,7 @@ export const CreatePost = ({ setPostModalData, postModalData }) => {
                         mode: "create"
                     })
                     postForm.resetFields()
+                    setCurrentTab("company_review")
                 }}
             >
                 <Form layout='vertical' onFinish={handlePost}
@@ -90,10 +100,10 @@ export const CreatePost = ({ setPostModalData, postModalData }) => {
                     >
                         <Tabs
                             destroyInactiveTabPane={true}
-                            activeKey={postModalData.data?.category ?? postForm.getFieldValue("category") ?? "company_review"}
-                            defaultActiveKey={postModalData.data?.category ?? postForm.getFieldValue("category") ?? "company_review"}
+                            activeKey={currentTab}
                             onChange={(activeKey) => {
                                 postForm.setFieldsValue({ category: activeKey, content: null })
+                                setCurrentTab(activeKey)
                             }}
                             items={Object.keys(categoriesList).map((categoryKey) => {
                                 return {
@@ -119,7 +129,9 @@ export const CreatePost = ({ setPostModalData, postModalData }) => {
                         />
                     </Form.Item>
                     <Form.Item style={{ display: "flex", justifyContent: "flex-end" }}>
-                        <Button>{postModalData.mode === "create" ? "Add" : "Update"} Post</Button>
+                        <Button
+                            size={"sm"} variant={"outline"}
+                        >{postModalData.mode === "create" ? "Add" : "Update"} Post</Button>
                     </Form.Item>
                 </Form>
             </Modal>
