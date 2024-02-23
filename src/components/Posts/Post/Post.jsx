@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { CommentForm, CommentList, UpVoteIcon } from '../PostList/PostList'
 import { Edit, MoreVertical, Trash } from "lucide-react";
 import { useCallback, useEffect, useState } from 'react'
-import { deletePostRequest, replyToCommentRequest, upvotePostRequest } from '../../../../store/action/posts'
+import { commentRequest, deletePostRequest, upvotePostRequest } from '../../../../store/action/posts'
 import DOMPurify from 'dompurify'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { CreatePost } from '../CreatePost/CreatePost'
@@ -53,7 +53,7 @@ export const Post = ({ post = null }) => {
     };
 
     const onCommentCreate = (data) => {
-        dispatch(replyToCommentRequest(data))
+        dispatch(commentRequest(data))
     }
 
     const handleUpvote = (postId) => {
