@@ -32,7 +32,9 @@ function App() {
   }, [loginResponse, navigateTo])
 
   useEffect(() => {
-    const socketInstance = io(socketEndPoint)
+    const socketInstance = io(socketEndPoint, {
+      transports: ['websocket']
+    })
     if (!socket) {
       dispatch(socketSave(socketInstance))
     }
