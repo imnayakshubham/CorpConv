@@ -1,14 +1,9 @@
-import { Button } from "antd"
-import { signInWithGooglePopup } from "../../../../firebase/firebase";
 import { useDispatch, useSelector } from "react-redux"
-import { Link, useParams } from "react-router-dom"
-import { GoogleOutlined } from "@ant-design/icons"
-import { loginRequest, logoutRequest } from "../../../../store/action/login"
-import { useCallback, useState } from "react";
-import axios from "axios";
+import { Link } from "react-router-dom"
+import { logoutRequest } from "../../../../store/action/login"
 import { LoginWithGoogle } from "@/components/LoginWithGoogle/LoginWithGoogle";
 
-export const Login = ({ profileColor, setProfileColor }) => {
+export const Login = () => {
     const { loginResponse: userInfo } = useSelector(state => state.login)
     const dispatch = useDispatch()
 

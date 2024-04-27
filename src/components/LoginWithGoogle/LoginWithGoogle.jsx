@@ -45,9 +45,7 @@ export const LoginWithGoogle = () => {
                 //         actual_profile_pictures: (apiPayload?.picture ?? null)
                 //     }
                 // }
-                dispatch(loginRequest({
-                    user_email_id: "test@test.com"
-                }))
+                dispatch(loginRequest(payload))
             }
         } catch (error) {
             console.log({ error })

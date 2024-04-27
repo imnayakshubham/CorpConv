@@ -2,7 +2,7 @@ import { Routes, Route, useNavigate, Link } from 'react-router-dom'
 import { Jobs } from './components/Jobs/Jobs.jsx';
 
 import "./App.css";
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import io from "socket.io-client"
 import { socketEndPoint } from "../constants/index.ts";
@@ -106,17 +106,19 @@ function App() {
                 <UpdateProfile />
               </PageWrapper>} />
           </Route>
-          <Route path='*' element={<PageWrapper>
-            <div className="flex items-center h-[88vh] justify-center">
-              <div className="text-center">
-                <h1 className="text-6xl font-bold mb-4">404</h1>
-                <p className="text-lg">Oops! Page not found.</p>
-                <Link to="/" className="text-blue-500 hover:underline">
-                  Go back to home
-                </Link>
+          <Route path='*' element={
+            <PageWrapper>
+              <div className="flex items-center h-[88vh] justify-center">
+                <div className="text-center">
+                  <h1 className="text-6xl font-bold mb-4">404</h1>
+                  <p className="text-lg">Oops! Page not found.</p>
+                  <Link to="/" className="text-blue-500 hover:underline">
+                    Go back to home
+                  </Link>
+                </div>
               </div>
-            </div>
-          </PageWrapper>} />
+            </PageWrapper>
+          } />
         </Route>
         <Route element={<PrivateRoutes />}>
           <Route path='/chats' element={<ChatWrapper />} />
@@ -137,40 +139,49 @@ export const BottomNavigation = () => {
   const userInfo = useSelector((state) => state.login.loginResponse)
 
 
-  const navLinks = [
-    {
-      title: <div>Home</div>,
-      icon: <Home />,
-      to: `/`,
-    },
-    {
-      title: <div>Chat</div>,
-      icon: <MessageCircle />,
-      to: `chats`,
-    },
-    {
-      title: <div>Posts</div>,
-      to: `posts`,
-      icon: <StickyNote />,
-    },
-    {
-      title: <div>Community</div>,
-      to: `users`,
-      icon: <CircleUser />,
-    },
-    {
-      title: <div className="nav-logo">Profile</div>,
-      to: `/user/${userInfo?._id}`,
-      icon: <UsersIcon />
-    },
-    {
-      title: "Logout",
-      icon: <LogOut className='text-red-500' />,
-      onClick: () => {
-        dispatch(logoutRequest())
-      }
-    },
-  ]
+  const navLinks = useMemo(() => {
+    const links = [
+      {
+        title: <div>Home</div>,
+        icon: <Home />,
+        to: `/`,
+      },
+      {
+        title: <div>Chat</div>,
+        icon: <MessageCircle />,
+        to: `chats`,
+      },
+      {
+        title: <div>Posts</div>,
+        to: `posts`,
+        icon: <StickyNote />,
+      },
+      {
+        title: <div>Community</div>,
+        to: `users`,
+        icon: <CircleUser />,
+      },
+    ]
+
+    if (userInfo) {
+      links.push(...[
+        {
+          title: <div className="nav-logo">Profile</div>,
+          to: `/user/${userInfo?._id}`,
+          icon: <UsersIcon />
+        },
+        {
+          title: "Logout",
+          id: "logout",
+          icon: <LogOut className='text-red-500' />,
+          onClick: () => {
+            dispatch(logoutRequest())
+          }
+        },
+      ])
+    }
+    return links
+  }, [dispatch, userInfo])
 
   return <div className='sticky z-50 bottom-0 p-4 sm:hidden flex gap-2 w-screen justify-between bg-[#fff]'>
     {
@@ -178,7 +189,7 @@ export const BottomNavigation = () => {
         return <TooltipProvider key={i}>
           <Tooltip>
             <TooltipTrigger>
-              <Link to={link.to} className="flex flex-col items-center justify-center gap-1">
+              <Link to={link.to} onClick={link.onClick} className="flex flex-col items-center justify-center gap-1">
                 {link.icon}
               </Link>
             </TooltipTrigger>
