@@ -16,7 +16,14 @@ import { Users } from './components/Users/Users.jsx';
 import { Posts } from './components/Posts/Posts.jsx';
 import { LandingPage } from './components/LandingPage/LandingPage.jsx';
 import { Post } from './components/Posts/Post/Post.jsx';
-
+import { logoutRequest } from '../store/action/login.js';
+import { StickyNote, MessageCircle, LogOut, Home, CircleUser, Users as UsersIcon } from 'lucide-react';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 function App() {
   const loginResponse = useSelector((state) => state.login.loginResponse)
   const socket = useSelector((state) => state.common.socketInstance)
@@ -95,7 +102,7 @@ function App() {
 
           <Route element={<PrivateRoutes />}>
             <Route path='/update-profile' element={
-              <PageWrapper bodyClass='w-3/4 border border-slate-800'>
+              <PageWrapper bodyClass='w-full md:w-3/4 border border-slate-800'>
                 <UpdateProfile />
               </PageWrapper>} />
           </Route>
@@ -115,9 +122,72 @@ function App() {
           <Route path='/chats' element={<ChatWrapper />} />
         </Route>
       </Routes>
+      <BottomNavigation />
     </>
 
   );
 }
 
 export default App;
+
+
+
+export const BottomNavigation = () => {
+  const dispatch = useDispatch()
+  const userInfo = useSelector((state) => state.login.loginResponse)
+
+
+  const navLinks = [
+    {
+      title: <div>Home</div>,
+      icon: <Home />,
+      to: `/`,
+    },
+    {
+      title: <div>Chat</div>,
+      icon: <MessageCircle />,
+      to: `chats`,
+    },
+    {
+      title: <div>Posts</div>,
+      to: `posts`,
+      icon: <StickyNote />,
+    },
+    {
+      title: <div>Community</div>,
+      to: `users`,
+      icon: <CircleUser />,
+    },
+    {
+      title: <div className="nav-logo">Profile</div>,
+      to: `/user/${userInfo?._id}`,
+      icon: <UsersIcon />
+    },
+    {
+      title: "Logout",
+      icon: <LogOut className='text-red-500' />,
+      onClick: () => {
+        dispatch(logoutRequest())
+      }
+    },
+  ]
+
+  return <div className='sticky z-50 bottom-0 p-4 sm:hidden flex gap-2 w-screen justify-between bg-[#fff]'>
+    {
+      navLinks.map((link, i) => {
+        return <TooltipProvider key={i}>
+          <Tooltip>
+            <TooltipTrigger>
+              <Link to={link.to} className="flex flex-col items-center justify-center gap-1">
+                {link.icon}
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>{link.title}</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      })
+    }
+  </div>
+}

@@ -5,7 +5,7 @@ import { ChatContainer } from '../Chat/Chat/ChatContainer'
 export const ChatWrapper = () => {
 
     return (
-        <section className='container'>
+        <section className='chat__wrapper__container'>
             <section className='sidebar'>
                 <ChatSidebar />
             </section>

@@ -2,13 +2,14 @@ import { BadgeCheck } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
 import "./UserAvatar.css"
 
-export const UserAvatar = ({ isUserVerified = false, title = null, description = null, titleClassName = "avatar__header", descriptionClassName = "avatar__header__info" }) => {
+export const UserAvatar = ({
+    isUserVerified = false, title = null, description = null, titleClassName = "avatar__header", descriptionClassName = "avatar__header__info", avatarImage = "https://github.com/shadcn.png" }) => {
     return (
-        <div className="avatar__header">
+        <div className="avatar__header" >
             <div className="avatar__img__container">
                 <Avatar>
-                    <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-                    <AvatarFallback>CN</AvatarFallback>
+                    <AvatarImage src={avatarImage} alt={title ?? "img"} />
+                    <AvatarFallback>{title}</AvatarFallback>
                 </Avatar>
                 {isUserVerified &&
                     <BadgeCheck className="verified_user" />
@@ -21,6 +22,6 @@ export const UserAvatar = ({ isUserVerified = false, title = null, description =
                 </div>
                 }
             </div>
-        </div>
+        </div >
     )
 }

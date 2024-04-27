@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom"
-import { Dropdown, Avatar, Button } from "antd"
-import { GoogleOutlined } from "@ant-design/icons"
 import { useDispatch, useSelector } from 'react-redux'
-import { loginRequest, logoutRequest } from '../../../store/action/login';
-import { signInWithGooglePopup } from "../../../firebase/firebase";
+import { logoutRequest } from '../../../store/action/login';
 import "./Navbar.css"
+import { LoginWithGoogle } from "../LoginWithGoogle/LoginWithGoogle";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from "../ui/navigation-menu";
+import { cn } from "@/utils/utils";
+import React from "react";
 
 // const apiPayload = {
 //     "actual_user_name": "Shubham Nayak",
@@ -25,88 +27,116 @@ export const Navbar = () => {
     const dispatch = useDispatch()
     const { loginResponse: userInfo } = useSelector(state => state.login)
 
-    // const fetchHomies = useCallback(async () => {
-    //     const apiResponse = await axios.get(`https://randomuser.me/api`)
-    //     if (apiResponse.status === 200) {
-    //         return apiResponse.data.results?.[0]
-    //     }
-    // }, [])
-
-    const handleLogin = async () => {
-        try {
-            const data = await signInWithGooglePopup()
-            const payload = {
-                actual_user_name: data.user.displayName,
-                is_email_verified: data.user.emailVerified,
-                user_email_id: data.user.email,
-                is_anonymous: true,
-                user_phone_number: data.user.phoneNumber,
-                actual_profile_pic: data.user.photoURL,
-                providerId: data.user.providerId,
-                meta_data: data.user.metadata,
-                provider: data.providerId
-            }
-            // const apiPayload = await fetchHomies()
-            if (payload) {
-                // const data = {
-                //     actual_user_name: `${apiPayload.name.first} ${apiPayload.name.last}`,
-                //     user_email_id: apiPayload.email,
-                //     user_phone_number: apiPayload?.phone || apiPayload?.cell || apiPayload.user.phoneNumber,
-                //     actual_profile_pic: apiPayload?.picture.large || apiPayload?.picture?.thumbnail || apiPayload.user.photoURL,
-                //     providerId: "dummy.com",
-                //     provider: "randomuser.me",
-                //     meta_data: {
-                //         ...(apiPayload?.location || {}),
-                //         ...(apiPayload?.login || {}),
-                //         gender: apiPayload?.gender || null,
-                //         date_of_birth: apiPayload?.dob,
-                //         actual_profile_pictures: (apiPayload?.picture ?? null)
-                //     }
-                // }
-                dispatch(loginRequest(payload))
-            }
-        } catch (error) {
-            console.log({ error })
-        }
-    }
-    const items = [
+    const components = [
         {
-            label: <Link to={`/user/${userInfo?._id}`} className="nav-logo">Profile</Link>,
-            key: '0',
+            title: <div className="nav-logo">Profile</div>,
+            to: `/user/${userInfo?._id}`,
         },
         {
-            type: 'divider',
+            title: "Update Profile",
+            to: "/update-profile",
         },
         {
-            label: 'Logout',
-            key: '3',
+            title: "Surveys",
+            disable: true,
+            description: "Coming Soon"
+        },
+        {
+            title: "Logout",
             onClick: () => {
                 dispatch(logoutRequest())
             }
         },
-    ];
+    ]
+
     return (
         <header className="header" id="navigation-menu">
             <nav className="navbar">
                 <div className="navbar__left">
-                    <Link to="/" className="nav-logo">CorpConvo</Link>
+                    <Link to="/" className="nav__logo__text">CorpConv</Link>
                 </div>
                 <div className="navbar__right">
                     {userInfo?.token ? <>
-                        <Link to="/chats" className="nav-logo js-anchor-link">Chats</Link>
-                        <Dropdown menu={{ items }} trigger={['click']}
-                            placement="bottomLeft"
-                        >
-                            <div onClick={e => e.preventDefault()}>
-                                <Avatar size="large" icon={<>Icon</>} />
-                            </div>
-                        </Dropdown>
+                        <NavigationMenu>
+                            <NavigationMenuList className="flex gap-2 items-center align-middle">
+                                <NavigationMenuItem className="hidden sm:block">
+                                    <Link to={"/chats"}>
+                                        <NavigationMenuLink>
+                                            Chat
+                                        </NavigationMenuLink>
+                                    </Link>
+                                </NavigationMenuItem>
+
+                                <NavigationMenuItem className="hidden sm:block">
+                                    <Link to={"/posts"}>
+                                        <NavigationMenuLink>
+                                            Posts
+                                        </NavigationMenuLink>
+                                    </Link>
+                                </NavigationMenuItem>
+                                <NavigationMenuItem className="hidden sm:block">
+                                    <Link to={"/users"}>
+                                        <NavigationMenuLink>
+                                            Community
+                                        </NavigationMenuLink>
+                                    </Link>
+                                </NavigationMenuItem>
+                                <NavigationMenuItem>
+                                    <NavigationMenuTrigger>
+                                        <div onClick={e => e.preventDefault()} className="cursor-pointer">
+                                            <Avatar>
+                                                <AvatarImage src={userInfo?.user_public_profile_pic} />
+                                                <AvatarFallback>{userInfo?.public_user_name}</AvatarFallback>
+                                            </Avatar>
+                                        </div>
+                                    </NavigationMenuTrigger>
+                                    <NavigationMenuContent>
+                                        <ul className="mt-1 w-[200px] flex-start flex-col fixed right-3 z-50 top-16 shadow-sm bg-[#fff]	border rounded-sm">
+                                            {components.map((component) => (
+                                                <ListItem
+                                                    key={component.title}
+                                                    title={component.title}
+                                                    to={component.to}
+                                                    {...component}
+                                                >
+                                                    {component.description}
+                                                </ListItem>
+                                            ))}
+                                        </ul>
+                                    </NavigationMenuContent>
+                                </NavigationMenuItem>
+                            </NavigationMenuList>
+                        </NavigationMenu>
                     </>
-                        : <Button onClick={() => {
-                            handleLogin()
-                        }} icon={<GoogleOutlined />}>Login With Google</Button>}
+                        :
+                        <LoginWithGoogle />
+                    }
                 </div>
             </nav>
         </header>
     )
 }
+
+const ListItem = React.forwardRef(({ className, title, children, ...props }, ref) => {
+    return (
+        <li>
+            <NavigationMenuLink asChild>
+                <Link
+                    ref={ref}
+                    className={cn(
+                        "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+                        className
+                    )}
+                    {...props}
+                >
+                    <div className="text-sm font-medium leading-none">{title}</div>
+                    <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                        {children}
+                    </p>
+                </Link>
+            </NavigationMenuLink>
+        </li>
+    );
+});
+
+ListItem.displayName = "ListItem"

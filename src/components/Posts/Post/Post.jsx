@@ -96,7 +96,7 @@ export const Post = ({ post = null }) => {
     if (!postData) return <>No Post Found</>
 
     return (
-        <>
+        <div className="post__container__header p-4 md:p-6 lg:px-6 border  cursor-pointer">
             <div
                 onClick={(e) => {
                     e.stopPropagation()
@@ -105,7 +105,7 @@ export const Post = ({ post = null }) => {
             >
                 <div className="flex justify-between">
                     <div className="flex gap-2">
-                        <UserAvatar isUserVerified={postData?.posted_by?.is_email_verified} title={<h3 className="post_by__header">{postData?.posted_by.public_user_name}</h3>}
+                        <UserAvatar avatarImage={postData?.posted_by?.user_public_profile_pic} isUserVerified={postData?.posted_by?.is_email_verified} title={<h3 className="post_by__header">{postData?.posted_by.public_user_name}</h3>}
                             description={<div className="post__header__info">
                                 <span className="gray__color_sub_title">{categoriesList[postData?.category]}</span>
                                 <span className="gray__color_sub_title">{fromNow(postData?.createdAt)}</span>
@@ -231,6 +231,6 @@ export const Post = ({ post = null }) => {
             {postModalData.showModel &&
                 <CreatePost postModalData={postModalData} setPostModalData={setPostModalData} />
             }
-        </>
+        </div>
     )
 }

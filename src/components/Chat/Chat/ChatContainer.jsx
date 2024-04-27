@@ -1,25 +1,20 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import "./Chat.css";
 import { getSenderInfo } from '../../../config/ChatLogics';
 import { useDispatch, useSelector } from 'react-redux';
-import io from "socket.io-client";
 import { notification } from 'antd';
 import axios from 'axios';
 import { ChatMessageContainer } from '../ChatMessageContainer/ChatMessageContainer';
 import { updateChatList, fetchChatListRequest } from '../../../../store/action/chats';
-import { socketEndPoint } from '../../../../constants';
 import { getUrl } from '../../../utils/sendApiRequest';
 import { UserNameAvatar } from '../../UserNameAvatar/UserNameAvatar';
-var selectedChatCompare;
+import { UserAvatar } from '@/components/UserAvatar/UserAvatar';
 
 export const ChatContainer = () => {
     const dispatch = useDispatch()
 
     const [inputMessage, setInputMessage] = useState("")
     const [messages, setMessages] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [typing, setTyping] = useState(false);
-    const [istyping, setIsTyping] = useState(false);
 
     const loginResponse = useSelector(state => state.login.loginResponse)
     const selectedChat = useSelector(state => state.chatData.selectedChat)
@@ -39,24 +34,21 @@ export const ChatContainer = () => {
                 },
             };
 
-            setLoading(true);
 
             const { data: { result } } = await axios.get(getUrl(`message/${selectedChat._id}`), config);
             if (result?.chatData) {
                 dispatch(updateChatList(result?.chatData))
             }
             setMessages(result?.messages ?? []);
-            setLoading(false);
 
             socket.emit("join chat", selectedChat._id);
         } catch (error) {
-            console.log(error)
             notification.error({
                 message: "Error Occured!",
                 description: "Failed to Load the Messages",
             });
         }
-    }, [loginResponse.token, selectedChat, socket])
+    }, [loginResponse.token, selectedChat, socket, dispatch])
 
     useEffect(() => {
         if (!!selectedChat?._id) {
@@ -130,7 +122,7 @@ export const ChatContainer = () => {
                     <>
                         <div className='header'>
                             <div>
-                                <UserNameAvatar name={senderInfo.public_user_name} />
+                                <UserAvatar avatarImage={senderInfo?.posted_by?.user_public_profile_pic} title={<h3 className="post_by__header">{senderInfo?.posted_by.public_user_name}</h3>}></UserAvatar>
                             </div>
                         </div>
                         <div className='chat__content'>

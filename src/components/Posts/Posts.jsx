@@ -59,10 +59,18 @@ export const Posts = ({ from, user_id = null }) => {
     return (
         <div>
             {from === "user_profile" && !!posts.length &&
-                <h1 className='font-semibold p-2 text-lg'>Posts</h1>
+                <h1 className='font-semibold p-2 text-xl'>Posts</h1>
             }
-            {(userInfo && userInfo._id === user_id) &&
+
+            {userInfo &&
                 <CreatePost postModalData={postModalData} setPostModalData={setPostModalData} />
+            }
+
+            {
+                posts.length === 0 &&
+                <div className="flex justify-center items-center">
+                    <h1 className="text-2xl font-semibold">No posts Found</h1>
+                </div>
             }
             <PostList setPostModalData={setPostModalData} />
         </div>

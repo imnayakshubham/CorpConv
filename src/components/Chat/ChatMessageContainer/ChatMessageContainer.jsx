@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 import { UserNameAvatar } from '../../UserNameAvatar/UserNameAvatar'
 import { Check, CheckCheck } from 'lucide-react'
 import "./ChatMessageContainer.css"
+import { UserAvatar } from '@/components/UserAvatar/UserAvatar'
 
 export const ChatMessageContainer = ({ messages }) => {
     const { loginResponse: userInfo } = useSelector(state => state.login)
@@ -17,7 +18,7 @@ export const ChatMessageContainer = ({ messages }) => {
                         {(isSameSender(messages, message, i, userInfo._id) ||
                             isLastMessage(messages, i, userInfo._id)) && (
                                 <Tooltip label={message.sender.public_user_name} placement="bottom-start" hasArrow>
-                                    <UserNameAvatar name={message.sender.public_user_name} showName={false} />
+                                    <UserAvatar avatarImage={message.sender?.user_public_profile_pic} title={<h3 className="post_by__header">{message.sender?.posted_by.public_user_name}</h3>}></UserAvatar>
                                 </Tooltip>
                             )}
                         <p

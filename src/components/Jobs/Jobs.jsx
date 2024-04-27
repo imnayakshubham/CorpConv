@@ -84,7 +84,7 @@ export const Jobs = ({ from, user_id = null }) => {
     return (
         <div>
             {from === "user_profile" && !!jobs.length &&
-                <h1 className='font-semibold p-2 text-lg'>Jobs</h1>
+                <h1 className='font-bold p-2 text-xl'>Jobs</h1>
             }
             {(userInfo && userInfo._id === user_id) &&
                 <AddJobLink openAddJobModal={openAddJobModal} setOpenAddJobModal={setOpenAddJobModal} />
@@ -152,10 +152,17 @@ export const Jobs = ({ from, user_id = null }) => {
                 })}
             </div> */}
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {
+                jobs.length === 0 &&
+                <div className="flex justify-center items-center">
+                    <h1 className="text-2xl font-semibold">No Jobs Found</h1>
+                </div>
+            }
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 pt-2">
                 {jobs.map((job) => {
                     const jobData = job.job_data
-                    return <div className="bg-white p-4 rounded-lg shadow-md flex gap-2 flex-col h-full w-full" key={job._id} >
+                    return <div className="bg-white p-4 rounded-lg shadow-md flex gap-2 flex-col h-full w-full border" key={job._id} >
                         <div className="flex-1">
                             <div className='flex gap-2'>
                                 <Avatar src={jobData.image} />
@@ -224,7 +231,6 @@ export const Jobs = ({ from, user_id = null }) => {
                 })}
 
             </div>
-
         </div>
     )
 }

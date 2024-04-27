@@ -28,7 +28,6 @@ const defaultState = {
     userInfo: null,
     getUserInfoStatus: AsyncStates.INITIAL,
     getUserInfoError: null,
-
 }
 
 

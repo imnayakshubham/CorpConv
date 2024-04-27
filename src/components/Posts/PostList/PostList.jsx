@@ -38,7 +38,7 @@ export const PostList = ({ setPostModalData }) => {
             {fetchPostsStatus === AsyncStates.LOADING ? <PostsListSkeleton /> :
                 posts.map((post) => {
                     return (
-                        <article key={post._id} className="post__container__header bg-white p-4 md:p-6 lg:px-6 border border-primaryBorder hover:bg-gray-100 cursor-pointer shadow-md">
+                        <article key={post._id} >
                             <Post post={post} />
                         </article>
                     )
@@ -173,7 +173,7 @@ export const Comment = ({ comment }) => {
     }
     return <div className="comment__container py-4 px-2 ">
         <div className="flex flex-col">
-            <UserAvatar isUserVerified={comment.commented_by.is_email_verified} title={comment.commented_by.public_user_name} titleClassName="font-medium text-base leading-5" />
+            <UserAvatar avatarImage={comment.commented_by?.user_public_profile_pic} isUserVerified={comment.commented_by.is_email_verified} title={comment.commented_by.public_user_name} titleClassName="font-medium text-base leading-5" />
             <div className="ml-12">{comment.comment}</div>
         </div>
         <div className="comment__action flex gap-1 justify-start">

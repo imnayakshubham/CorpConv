@@ -1,14 +1,13 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import { userLists } from '../users'
+import { useEffect, useState } from 'react'
 import "./ChatSidebar.css"
 import { useDispatch, useSelector } from 'react-redux'
-import { Avatar, Badge, Input, Tooltip } from 'antd'
-import { MessageCirclePlus, LogOut, ListCollapse, Search, ArrowBigLeftIcon, ArrowLeft, BellRing } from 'lucide-react';
+import { Badge, Input, Tooltip } from 'antd'
+import { MessageCirclePlus, LogOut, ListCollapse, Search, ArrowLeft } from 'lucide-react';
 import NewChatDrawer from '../NewChatDrawer/NewChatDrawer'
 import { fetchChatListRequest, selectedChatRequest } from '../../../../store/action/chats'
 import { getSender } from '../../../config/ChatLogics'
 import { AsyncStates } from '../../../../constants'
-import { UserNameAvatar } from '../../UserNameAvatar/UserNameAvatar'
+import { UserAvatar } from '@/components/UserAvatar/UserAvatar';
 
 
 export const ChatSidebar = () => {
@@ -35,17 +34,19 @@ export const ChatSidebar = () => {
         }
     }, [selectedChat, socket])
 
+    console.log({ loginResponse })
+
     return (
         <>
             <div className='side__bar__header'>
                 <div className='side__bar__header__user__info'>
                     <ArrowLeft className='icon' onClick={() => window.history.back()} />
-                    <UserNameAvatar name={loginResponse.public_user_name} />
+                    <UserAvatar avatarImage={loginResponse.user_public_profile_pic} title={<h3 className="font-semibold text-sm text-wrap ">{loginResponse?.public_user_name}</h3>}></UserAvatar>
                 </div>
                 <div className='side__bar__header__actions'>
-                    <Badge count={5}>
+                    {/* <Badge count={5}>
                         <BellRing className='icon' />
-                    </Badge>
+                    </Badge> */}
                     <Tooltip title={"Show Side bar"}>
                         <ListCollapse className='icon show__side__bar' />
                     </Tooltip>
@@ -63,9 +64,9 @@ export const ChatSidebar = () => {
                 <Search />
             </div>
             <div className='side__bar__user_chat_list'>
-                {fetchChatListStatus === AsyncStates.LOADING ? <>Loadin....</> : chatList.map((chat) => <div key={chat._id} className={`user_chat ${selectedChat?._id === chat._id ? "selected_chat" : ""}`} onClick={() => selectChat(chat)}>
+                {fetchChatListStatus === AsyncStates.LOADING ? <>Loading....</> : chatList.map((chat) => <div key={chat._id} className={`user_chat ${selectedChat?._id === chat._id ? "selected_chat" : ""}`} onClick={() => selectChat(chat)}>
                     <div className='chat__name__container'>
-                        <UserNameAvatar name={!chat.isGroupChat ? getSender(loginResponse, chat.users) : chat?.chatName} />
+                        <UserAvatar avatarImage={loginResponse?.user_public_profile_pic} title={<h3 className="post_by__header">{!chat.isGroupChat ? getSender(loginResponse, chat.users) : chat?.chatName} </h3>}></UserAvatar>
                         <Badge
                             className="site-badge-count-109"
                             count={chat?.unreadMessage?.length}

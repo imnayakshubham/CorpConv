@@ -15,7 +15,8 @@ export const UpdateProfile = () => {
             _id: loginResponse._id,
             user_bio: bio?.length ? bio : null,
             user_job_experience: values.user_job_experience,
-            user_job_role: values.user_job_role?.trim()
+            user_job_role: values.user_job_role?.trim(),
+            user_current_company_name: values.user_current_company_name?.trim()
         }
         dispatch(updateProfileRequest(payload))
     };
@@ -46,14 +47,27 @@ export const UpdateProfile = () => {
                     onFinish={onFinish}
                     autoComplete="off"
                 >
-                    <div className='update__profile__form__items'>
+                    <div className='flex-wrap md:w-full md:flex-nowrap update__profile__form__items'>
                         <Form.Item
                             className='form__item'
                             label="Company Name"
                             name="user_current_company_name"
-                            tooltip={"You can not Change this Company Name"}
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please input your Current Company Name!',
+                                    validator: (_, value) => {
+                                        // Custom validator to check if the trimmed value exists
+                                        const trimmedValue = value && value.trim();
+                                        if (trimmedValue && trimmedValue.length > 0) {
+                                            return Promise.resolve();
+                                        }
+                                        return Promise.reject(new Error('Please input a valid Current Company Name!'));
+                                    },
+                                },
+                            ]}
                         >
-                            <Input disabled />
+                            <Input />
                         </Form.Item>
 
                         <Form.Item

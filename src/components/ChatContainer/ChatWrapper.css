@@ -1,6 +1,7 @@
-.container {
+.chat__wrapper__container {
     display: flex;
     justify-content: space-between;
+    margin: 0rem 0.5rem;
 }
 
 .sidebar {
