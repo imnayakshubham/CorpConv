@@ -9,7 +9,7 @@ export const PageWrapper = ({ children, bodyClass = defaultBodyStyle, from = nul
         <>
             <Navbar />
             <section style={{ display: "flex", justifyContent: "center", alignItems: "center", padding: "1rem 0.5rem" }}>
-                <div className={cn("w-full px-3 md:px-6", bodyClass)}>
+                <div className={cn("w-full px-3 md:px-6 h-screen sm:h-full", bodyClass)}>
                     {children}
                 </div>
             </section>
