@@ -22,11 +22,6 @@
     cursor: pointer;
 }
 
-.icon:hover {
-    transform: scale(1.25);
-    transition: transform 250ms linear ease-in;
-}
-
 .logout {
     color: red;
 }
@@ -57,6 +52,8 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
+    border-bottom: 1px solid #ccc;
+    border-radius: 0.5rem;
 }
 
 .side__bar__search__user__input:focus,

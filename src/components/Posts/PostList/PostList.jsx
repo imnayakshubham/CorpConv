@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
 import "./PostList.css"
-import { deleteCommentRequest, likeCommentRequest, replyToCommentRequest } from '../../../../store/action/posts'
+import { deleteCommentRequest, getCommentRepliesRequest, likeCommentRequest, replyToCommentRequest } from '../../../../store/action/posts'
 import { useEffect, useState } from "react";
 import { Mentions } from "antd";
 import { Button } from "@/components/ui/button";
@@ -29,7 +29,7 @@ export const UpVoteIcon = ({ size = 20, fill = "none" }) => {
 
 
 
-export const PostList = ({ setPostModalData }) => {
+export const PostList = () => {
     const posts = useSelector((state) => state.posts.postsList)
     const fetchPostsStatus = useSelector((state) => state.posts.fetchPostsStatus)
 
@@ -127,8 +127,7 @@ export const Comment = ({ comment }) => {
     const dispatch = useDispatch();
     const [viewedComments, setViewedComments] = useState(new Set());
     const { loginResponse: userInfo } = useSelector(state => state.login)
-    const commentStatus = useSelector(state => state.posts.commentStatus)
-    const replyToCommentStatus = useSelector(state => state.posts.replyToCommentStatus)
+    const getCommentRepliesStatus = useSelector(state => state.posts.getCommentRepliesStatus)
 
     const handleReply = (comment) => {
         setViewedComments((prev) => {
@@ -144,13 +143,8 @@ export const Comment = ({ comment }) => {
             })
             return newSet;
         });
+        handleGetCommentReply(comment)
     };
-
-    useEffect(() => {
-        if (commentStatus === AsyncStates.SUCCESS || replyToCommentStatus === AsyncStates.SUCCESS) {
-            setViewedComments(new Set())
-        }
-    }, [commentStatus, replyToCommentStatus])
 
     const onCommentCreate = (data) => {
         dispatch(replyToCommentRequest(data))
@@ -171,9 +165,18 @@ export const Comment = ({ comment }) => {
             parent_comment_id: comment.parent_comment_id
         }))
     }
+
+    const handleGetCommentReply = (currentComment) => {
+        const payload = {
+            comment_id: currentComment._id,
+            post_id: currentComment.post_id
+        }
+        dispatch(getCommentRepliesRequest(payload))
+    }
+
     return <div className="comment__container py-4 px-2 ">
         <div className="flex flex-col">
-            <UserAvatar avatarImage={comment.commented_by?.user_public_profile_pic} isUserVerified={comment.commented_by.is_email_verified} title={comment.commented_by.public_user_name} titleClassName="font-medium text-base leading-5" />
+            <UserAvatar avatarImage={comment.commented_by?.user_public_profile_pic} isUserVerified={comment.commented_by?.is_email_verified} title={comment.commented_by?.public_user_name} titleClassName="font-medium text-base leading-5" />
             <div className="ml-12">{comment.comment}</div>
         </div>
         <div className="comment__action flex gap-1 justify-start">
@@ -182,18 +185,25 @@ export const Comment = ({ comment }) => {
                 handleLikeComment(comment)
             }}
                 variant={"ghost"} disabled={!userInfo?._id}>
-                <UpVoteIcon size={20} fill={comment.upvoted_by.includes(userInfo?._id) ? "black" : "transparent"} /> {comment.upvoted_by.length}
+                <UpVoteIcon size={20} fill={comment.upvoted_by?.includes(userInfo?._id) ? "black" : "transparent"} /> {comment.upvoted_by?.length}
             </Button>
-            <Button disabled={!userInfo?._id} className="py-1" variant={"ghost"} onClick={(e) => {
-                e.stopPropagation()
-                handleReply(comment)
-            }}
+            <Button
+                disabled={!userInfo?._id} className="py-1"
+                variant={"ghost"}
+                onClick={(e) => {
+                    e.stopPropagation()
+                    handleReply(comment)
+                }}
             >
-                {comment.nested_comments.length === 0 ? <>Reply</> :
-                    <><Reply size={20} /> {comment.nested_comments.length}</>}
+                {comment.nested_comments?.length === 0 ?
+                    <>Reply</> :
+                    <div>
+                        <Reply size={20} /> {comment.nested_comments?.length}
+                    </div>
+                }
             </Button>
             {/* <Button className="py-1" variant={"ghost"}>Edit</Button> */}
-            {(!!userInfo?._id) && (userInfo?._id === comment.commented_by._id) &&
+            {(!!userInfo?._id) && (userInfo?._id === comment.commented_by?._id) &&
                 <Button className="py-1" onClick={(e) => {
                     e.stopPropagation()
                     handleDeleteComment(comment)
@@ -202,12 +212,16 @@ export const Comment = ({ comment }) => {
             }
         </div>
         <div className="nested__comments ml-6 border-l-2">
-            {
-                comment.nested_comments.map((reply) => {
-                    if (viewedComments.has(comment._id) || viewedComments.has(reply._id)) {
-                        return <Comment key={reply._id} comment={reply} />
+            {getCommentRepliesStatus[comment._id] === AsyncStates.SUCCESS &&
+                <>
+                    {
+                        comment.nested_comments?.map((reply) => {
+                            if (viewedComments.has(comment._id) || viewedComments.has(reply?._id)) {
+                                return <Comment key={reply?._id} comment={reply} />
+                            }
+                        })
                     }
-                })
+                </>
             }
         </div>
         {

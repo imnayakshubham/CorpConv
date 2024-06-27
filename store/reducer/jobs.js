@@ -25,7 +25,7 @@ const defaultState = {
 // Job Reducer
 
 const jobsReducer = handleActions({
-    [CreateJobActionTypes.REQUEST]: (state, action) => {
+    [CreateJobActionTypes.REQUEST]: (state) => {
         return {
             ...state,
             createJobStatus: AsyncStates.LOADING,

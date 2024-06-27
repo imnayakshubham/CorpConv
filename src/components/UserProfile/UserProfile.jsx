@@ -73,7 +73,7 @@ export const UserProfile = () => {
 
     if (getUserInfoStatus === AsyncStates.LOADING) {
         return <div className='flex h-screen items-center w-full'><SkeletonUserCardLoading /></div>
-    } else if (getUserInfoStatus === AsyncStates.ERROR || !userProfileDetails) {
+    } else if (getUserInfoStatus === AsyncStates.ERROR && !userProfileDetails) {
         return <section className="flex items-center h-screen w-full sm:p-16 dark:bg-gray-50 dark:text-gray-800 gap-2">
             <div className="container flex flex-col items-center justify-center px-5 mx-auto text-center sm:max-w-md gap-4">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="w-40 h-40 dark:text-gray-400">

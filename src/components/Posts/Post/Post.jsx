@@ -93,7 +93,7 @@ export const Post = ({ post = null }) => {
 
     if (fetchPostStatus === "Loading") return <PostSkeleton />
 
-    if (!postData) return <>No Post Found</>
+    if (!postData && fetchPostStatus !== "Loading") return <>No Post Found</>
 
     return (
         <div className="post__container__header p-4 md:p-6 lg:px-6 border  cursor-pointer">

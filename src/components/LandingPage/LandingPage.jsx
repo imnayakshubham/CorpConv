@@ -1,20 +1,68 @@
 import { useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom";
 import { LoginWithGoogle } from "../LoginWithGoogle/LoginWithGoogle";
+import SparklesText from "../magicui/sparkles-text";
+import { BentoCard, BentoGrid } from "../magicui/bento-grid";
+
+
+const features = [
+    {
+        Icon: "NetworkIcon",
+        name: "Anonymously Connect",
+        description: "Anonymously connect with your corporate network. Exchange messages, thoughts, and ideas freely, knowing that your anonymity is our priority.",
+        href: "/",
+        cta: "Learn more",
+        className: "col-span-3 lg:col-span-1",
+    },
+    {
+        Icon: "PrivacyIcon",
+        name: "Prioritize Privacy",
+        description: "At CorpConv, we prioritize your privacy and provide a secure space for corporate employees to exchange messages and thoughts anonymously.",
+        href: "/",
+        cta: "Learn more",
+        className: "col-span-3 lg:col-span-2",
+    },
+    {
+        Icon: "JobIcon",
+        name: "Post Job Opportunities",
+        description: "Post job opportunities and engage in one-on-one conversations while prioritizing user anonymity.",
+        href: "/",
+        cta: "Learn more",
+        className: "col-span-3 lg:col-span-2",
+    },
+    {
+        Icon: "CalendarIcon",
+        name: "Stay Connected",
+        description: "Stay connected with CorpConv and experience a new way of interacting with your corporate network.",
+        className: "col-span-3 lg:col-span-1",
+        href: "/",
+        cta: "Learn more",
+    },
+];
+
 
 export const LandingPage = () => {
     const navigateTo = useNavigate()
     const { loginResponse: userInfo } = useSelector(state => state.login)
 
     return (
-        <div className="" >
+        <div>
             <div className="mx-auto max-w-7xl px-3 lg:px-8 flex justify-center items-center flex-col" style={{ height: "calc(100vh - 60px)" }}>
                 <div className="relative mx-auto max-w-4xl text-center">
                     <h1 className="bg-gradient-to-br from-zinc-400 to-black bg-clip-text text-4xl/[1.07] font-bold tracking-tight text-transparent md:text-7xl/[1.07]"
                         style={{
                             opacity: 1, transform: "none"
                         }}>
-                        <span className="text-black	opacity-50 duration-300 hover:opacity-100 ease-in">Anonymously</span> Connect with Your Corporate Network
+                        <span className="text-black	opacity-50 duration-300 hover:opacity-100 ease-in">
+                            <SparklesText text="Anonymously" colors={
+                                {
+                                    second: "#000",
+                                    first: "#777777"
+                                }
+                            }
+                                sparklesCount={5}
+                            />
+                        </span> Connect with Your Corporate Network
                     </h1>
                     <p className="mt-6 text-lg font-medium text-zinc-400 md:text-xl" style={{ opacity: 1, transform: "none" }}>
                         Stay connected with <span className="text-black	opacity-50 duration-300 hover:opacity-100 ease-in">CorpConv</span> and experience a new way of interacting with your corporate network. Exchange messages, thoughts, and ideas freely, knowing that your anonymity is our priority.
@@ -42,7 +90,20 @@ export const LandingPage = () => {
                     </div >
                 </div >
             </div >
+            <BentoDemo />
             {/* <StickyScroll data={data} /> */}
         </div >
     )
 }
+
+
+export function BentoDemo() {
+    return (
+        <BentoGrid>
+            {features.map((feature, idx) => (
+                <BentoCard key={idx} {...feature} />
+            ))}
+        </BentoGrid>
+    );
+}
+

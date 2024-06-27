@@ -4,11 +4,13 @@ import "./Posts.css"
 import { useDispatch, useSelector } from 'react-redux'
 import { addPostSuccess, fetchPostsRequest, upvotePostSuccess } from '../../../store/action/posts'
 import { PostList } from './PostList/PostList'
+import { AsyncStates } from '../../../constants'
 
 
 export const Posts = ({ from, user_id = null }) => {
     const socket = useSelector((state) => state.common.socketInstance)
     const posts = useSelector((state) => state.posts.postsList)
+    const fetchPostsStatus = useSelector((state) => state.posts.fetchPostsStatus)
 
     const [postModalData, setPostModalData] = useState({
         showModel: false,
@@ -67,7 +69,7 @@ export const Posts = ({ from, user_id = null }) => {
             }
 
             {
-                posts.length === 0 &&
+                (posts.length === 0 && fetchPostsStatus === AsyncStates.SUCCESS) &&
                 <div className="flex justify-center items-center">
                     <h1 className="text-2xl font-semibold">No posts Found</h1>
                 </div>

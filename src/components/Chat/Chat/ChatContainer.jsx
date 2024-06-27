@@ -7,7 +7,6 @@ import axios from 'axios';
 import { ChatMessageContainer } from '../ChatMessageContainer/ChatMessageContainer';
 import { updateChatList, fetchChatListRequest } from '../../../../store/action/chats';
 import { getUrl } from '../../../utils/sendApiRequest';
-import { UserNameAvatar } from '../../UserNameAvatar/UserNameAvatar';
 import { UserAvatar } from '@/components/UserAvatar/UserAvatar';
 
 export const ChatContainer = () => {

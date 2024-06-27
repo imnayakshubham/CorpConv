@@ -183,7 +183,7 @@ export const BottomNavigation = () => {
     return links
   }, [dispatch, userInfo])
 
-  return <div className='sticky z-50 bottom-0 p-4 sm:hidden flex gap-2 w-screen justify-between bg-[#fff]'>
+  return <div className='fixed z-50 bottom-0 p-4 sm:hidden flex gap-2 w-screen justify-between bg-[#fff]'>
     {
       navLinks.map((link, i) => {
         return <TooltipProvider key={i}>

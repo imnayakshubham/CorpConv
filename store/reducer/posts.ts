@@ -1,5 +1,5 @@
 import { handleActions } from "redux-actions";
-import { AddPostActionTypes, CommentActionTypes, DeleteCommentActionTypes, DeletePostActionTypes, EditPostActionTypes, FetchPostsActionTypes, LikeCommentActionTypes, ReplyToCommentActionTypes, UpvotePostActionTypes } from "../action/posts";
+import { AddPostActionTypes, CommentActionTypes, DeleteCommentActionTypes, DeletePostActionTypes, EditPostActionTypes, FetchPostsActionTypes, GetCommentRepliesActionTypes, LikeCommentActionTypes, ReplyToCommentActionTypes, UpvotePostActionTypes } from "../action/posts";
 import { AsyncStates } from "../../constants";
 
 const defaultState = {
@@ -24,6 +24,9 @@ const defaultState = {
     deleteCommentError: null,
     // bookmarkStatus: AsyncStates.INITIAL,
     // bookmarkStatusError: null,
+
+    getCommentRepliesStatus: {},
+    getCommentRepliesError: {}
 };
 
 
@@ -319,6 +322,70 @@ const postsReducer = handleActions<any>({
             ...state,
             deletePostStatus: AsyncStates.INITIAL,
             deletePostError: null,
+        }
+    },
+    [GetCommentRepliesActionTypes.REQUEST]: (state, action) => {
+        const comment_id = action.payload.comment_id
+        return {
+            ...state,
+            getCommentRepliesStatus: {
+                ...state.getCommentRepliesStatus,
+                [comment_id]: AsyncStates.LOADING
+            },
+            getCommentRepliesError: {
+                ...state.getCommentRepliesError,
+                [comment_id]: null
+            },
+        }
+    },
+    [GetCommentRepliesActionTypes.SUCCESS]: (state, action) => {
+        const commentPayload = action.payload.payload
+        const commentData = action.payload.data
+        const newPostList = JSON.parse(JSON.stringify(state.postsList))
+
+        newPostList.forEach((post: any, postIndex: number) => {
+            if (post._id === commentPayload.post_id) {
+                post.comments.forEach((comment: any, commentIndex: number) => {
+                    if (comment._id === commentPayload.comment_id) {
+                        newPostList[postIndex].comments[commentIndex] = commentData
+                    }
+                });
+            }
+        })
+
+        return {
+            ...state,
+            getCommentRepliesStatus: {
+                ...state.getCommentRepliesStatus,
+                [commentPayload.comment_id]: AsyncStates.SUCCESS
+            },
+            getCommentRepliesError: {
+                ...state.getCommentRepliesError,
+                [commentPayload.comment_id]: null
+            },
+            postsList: newPostList
+        }
+    },
+    [GetCommentRepliesActionTypes.FAILURE]: (state, action) => {
+        const comment_id = action.payload.comment_id
+
+        return {
+            ...state,
+            getCommentRepliesStatus: {
+                ...state.getCommentRepliesStatus,
+                [comment_id]: AsyncStates.ERROR
+            },
+            getCommentRepliesError: {
+                ...state.getCommentRepliesError,
+                [comment_id]: action.payload.error
+            },
+        }
+    },
+    [GetCommentRepliesActionTypes.CLEAR]: (state) => {
+        return {
+            ...state,
+            getCommentRepliesStatus: {},
+            getCommentRepliesError: {},
         }
     }
 }, defaultState)

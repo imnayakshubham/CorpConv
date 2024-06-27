@@ -1,5 +1,5 @@
 import { call, put, select, takeLatest } from "redux-saga/effects";
-import { addPostFailure, addPostRequest, addPostSuccess, fetchPostsFailure, fetchPostsSuccess, fetchPostsRequest, upvotePostRequest, upvotePostSuccess, upvotePostFailure, commentRequest, commentSuccess, commentFailure, replyToCommentSuccess, replyToCommentFailure, replyToCommentRequest, likeCommentRequest, likeCommentSuccess, likeCommentFailure, deleteCommentSuccess, deleteCommentFailure, deleteCommentRequest, editPostRequest, editPostSuccess, editPostFailure, deletePostRequest, deletePostSuccess, deletePostFailure } from "../action/posts";
+import { addPostFailure, addPostRequest, addPostSuccess, fetchPostsFailure, fetchPostsSuccess, fetchPostsRequest, upvotePostRequest, upvotePostSuccess, upvotePostFailure, commentRequest, commentSuccess, commentFailure, replyToCommentSuccess, replyToCommentFailure, replyToCommentRequest, likeCommentRequest, likeCommentSuccess, likeCommentFailure, deleteCommentSuccess, deleteCommentFailure, deleteCommentRequest, editPostRequest, editPostSuccess, editPostFailure, deletePostRequest, deletePostSuccess, deletePostFailure, getCommentRepliesSuccess, getCommentRepliesFailure, getCommentRepliesRequest } from "../action/posts";
 import { addPostApi, commentApi, deleteCommentApi, deletePosttApi, likeCommentApi, replyCommentApi, updatePostApi, upvotePostApi } from "../../services/apis";
 import { defaultHeaders } from "../../constants";
 import { sendGet } from "../../src/utils/sendApiRequest";
@@ -171,6 +171,24 @@ function* deletePostSaga({ payload }) {
     }
 }
 
+function* fetchCommentRepliesSaga({ payload }) {
+    try {
+        const headers = {
+            ...defaultHeaders,
+        }
+        const endPoint = `comment/${payload.post_id}/comment/${payload.comment_id}`
+
+        const { data: { status, message: apiMessage, data } } = yield call(sendGet(endPoint), headers);
+        if (status === "Success") {
+            yield put(getCommentRepliesSuccess({ payload, data }));
+        } else {
+            yield put(getCommentRepliesFailure(apiMessage));
+        }
+    } catch (error) {
+        yield put(getCommentRepliesFailure(error));
+    }
+}
+
 
 export default function* rootSaga() {
     yield takeLatest(addPostRequest, addPostSaga);
@@ -181,5 +199,6 @@ export default function* rootSaga() {
     yield takeLatest(likeCommentRequest, likeCommentSaga);
     yield takeLatest(deleteCommentRequest, deleteCommentSaga);
     yield takeLatest(editPostRequest, editPostSaga)
-    yield takeLatest(deletePostRequest, deletePostSaga)
+    yield takeLatest(deletePostRequest, deletePostSaga);
+    yield takeLatest(getCommentRepliesRequest, fetchCommentRepliesSaga);
 }

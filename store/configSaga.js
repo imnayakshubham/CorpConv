@@ -13,14 +13,14 @@ import usersReducer from "./reducer/users"
 import chatsSaga from "./sagas/chats";
 // import commonSaga from "./sagas/common";
 import postsReducer from "./reducer/posts"
-
-
+import { axiosInstance } from "../src/utils/sendApiRequest"
 
 import chatReducer from "./reducer/chats"
 import commonReducer from "./reducer/common"
 import jobsReducer from "./reducer/jobs"
 import jobsSaga from "./sagas/jobs";
 import postsSaga from "./sagas/posts";
+import { toast } from "@/components/ui/use-toast"
 
 
 const sagaMiddleware = createSagaMiddleware()
@@ -72,3 +72,15 @@ const rootSagas = [
 rootSagas.forEach(sagaMiddleware.run)
 const persistor = persistStore(store)
 export { store, persistor }
+
+
+axiosInstance.interceptors.response.use((response) => response, (error) => {
+    if (error.response.status === 401) {
+        toast({
+            title: "Session Expired",
+            description: "Please Login Again!.",
+        })
+        store.dispatch({ type: "LOGOUT_SUCCESS" });
+    }
+    throw error
+});

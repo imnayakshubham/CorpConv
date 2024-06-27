@@ -1,9 +1,14 @@
 import axios from "axios"
 
+const defaultOptions = {
+    baseURL: import.meta.env.VITE_APP_APP_URL,
+}
+
+export const axiosInstance = axios.create(defaultOptions);
 
 export const sendPost = (url) => {
     return (params, headers) =>
-        axios.post(import.meta.env.VITE_APP_API_URL + url, params, {
+        axiosInstance.post(import.meta.env.VITE_APP_API_URL + url, params, {
             headers,
         })
 }
@@ -15,7 +20,7 @@ export const getUrl = (endPoint) => {
 
 export const sendGet = (url) => {
     return (params, headers) => {
-        return axios.get(import.meta.env.VITE_APP_API_URL + url, {
+        return axiosInstance.get(import.meta.env.VITE_APP_API_URL + url, {
             headers,
         })
     }

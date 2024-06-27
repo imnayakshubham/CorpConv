@@ -63,6 +63,13 @@ export const DeletePostActionTypes = {
     CLEAR: 'DELETE_POST_CLEAR',
 }
 
+export const GetCommentRepliesActionTypes = {
+    REQUEST: 'GET_COMMENT_REPLIES_REQUEST',
+    SUCCESS: 'GET_COMMENT_REPLIES_SUCCESS',
+    FAILURE: 'GET_COMMENT_REPLIES_FAILURE',
+    CLEAR: 'GET_COMMENT_REPLIES_CLEAR',
+}
+
 export const {
     addPostRequest,
     addPostSuccess,
@@ -101,6 +108,11 @@ export const {
     deletePostFailure,
     deletePostClear,
 
+    getCommentRepliesRequest,
+    getCommentRepliesSuccess,
+    getCommentRepliesFailure,
+    getCommentRepliesClear
+
 } = createActions({
     [AddPostActionTypes.REQUEST]: (payload) => payload,
     [AddPostActionTypes.SUCCESS]: (payload) => payload,
@@ -138,4 +150,8 @@ export const {
     [DeletePostActionTypes.SUCCESS]: (payload) => payload,
     [DeletePostActionTypes.FAILURE]: (error) => error,
     [DeletePostActionTypes.CLEAR]: () => { },
+    [GetCommentRepliesActionTypes.REQUEST]: (payload) => payload,
+    [GetCommentRepliesActionTypes.SUCCESS]: (payload) => payload,
+    [GetCommentRepliesActionTypes.FAILURE]: (error) => error,
+    [GetCommentRepliesActionTypes.CLEAR]: () => { },
 })
