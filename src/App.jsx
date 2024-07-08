@@ -24,6 +24,9 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { AnswerLinkHome } from './components/AnswerLink/AnswerLinkHome.tsx';
+import { AnswerLinkQuestion } from './components/AnswerLink/AnswerLinkQuestion/AnswerLinkQuestion.jsx';
+import { AnswerLinkQuestions } from './components/AnswerLink/AnswerLinkQuestions.tsx';
 function App() {
   const loginResponse = useSelector((state) => state.login.loginResponse)
   const socket = useSelector((state) => state.common.socketInstance)
@@ -106,6 +109,22 @@ function App() {
                 <UpdateProfile />
               </PageWrapper>} />
           </Route>
+          <Route element={<PrivateRoutes />}>
+            <Route path='/answerlink' element={
+              <PageWrapper bodyClass={"lg:w-8/12 md:w-9/12"}>
+                <AnswerLinkHome />
+              </PageWrapper>} />
+          </Route>
+          <Route path='/answerlink/question/:id' element={
+            <PageWrapper bodyClass={"lg:w-8/12 md:w-9/12"}>
+              <AnswerLinkQuestion />
+            </PageWrapper>}
+          />
+          <Route path='/answerlink/questions' element={
+            <PageWrapper bodyClass={"lg:w-8/12 md:w-9/12"}>
+              <AnswerLinkQuestions />
+            </PageWrapper>}
+          />
           <Route path='*' element={
             <PageWrapper>
               <div className="flex items-center h-[88vh] justify-center">

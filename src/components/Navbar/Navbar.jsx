@@ -42,6 +42,11 @@ export const Navbar = () => {
             description: "Coming Soon"
         },
         {
+            title: "Answer Link",
+            disable: false,
+            to: "/answerlink"
+        },
+        {
             title: "Logout",
             onClick: () => {
                 dispatch(logoutRequest())
