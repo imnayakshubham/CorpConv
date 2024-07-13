@@ -1,23 +1,26 @@
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { getUrl } from "@/utils/sendApiRequest"
 import axios from "axios"
-import { useCallback, useEffect, useState } from "react"
+import { MouseEvent, useCallback, useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import { Button } from "../ui/button"
 import { fromNow } from "@/utils/helperFn"
 import { UserAvatar } from "../UserAvatar/UserAvatar"
 import { useNavigate } from "react-router-dom"
 
+type QuestionsDataType = {
+    [key: string]: any
+}
 
 export const AnswerLinkQuestions = () => {
     const navigateTo = useNavigate()
     const [selectedTab, setSelectedTab] = useState("all-questions")
-    const [questionsData, setQuestionsData] = useState({
+    const [questionsData, setQuestionsData] = useState<QuestionsDataType>({
         data: {},
         loading: false,
         message: null
     })
-    const loginResponse = useSelector(state => state.login.loginResponse)
+    const loginResponse = useSelector((state: any) => state.login.loginResponse)
 
     const onTabChange = useCallback((async () => {
         setQuestionsData((prev) => {
@@ -49,7 +52,7 @@ export const AnswerLinkQuestions = () => {
         onTabChange()
     }, [selectedTab])
 
-    const handleDeleteQuestion = async (e, questionId: string) => {
+    const handleDeleteQuestion = async (e: MouseEvent<HTMLButtonElement>, questionId: string) => {
         e.stopPropagation()
         const config = {
             headers: {
@@ -59,12 +62,12 @@ export const AnswerLinkQuestions = () => {
         };
         const { data: apiResponse } = await axios.delete(getUrl(`question/delete/${questionId}`), config)
         if (apiResponse.status === "Success") {
-            setQuestionsData((prev) => {
+            setQuestionsData((prev: any) => {
                 return {
                     ...prev,
                     data: {
                         ...prev.data,
-                        [selectedTab]: prev?.data?.[selectedTab].filter((question) => question._id !== questionId)
+                        [selectedTab]: prev?.data?.[selectedTab].filter((question: any) => question._id !== questionId)
                     }
                 }
             })
@@ -100,7 +103,7 @@ export const AnswerLinkQuestions = () => {
 
                             : <div className=" p-2">
                                 {
-                                    questionsData?.data?.[selectedTab]?.map((question) => <div key={question._id}
+                                    questionsData?.data?.[selectedTab]?.map((question: any) => <div key={question._id}
                                         onClick={() => navigateTo(`/answerlink/question/${question._id}`)}
                                         className="flex sm:justify-between md:gap-2 gap-1 flex-wrap p-2 border cursor-pointer"
                                     >
