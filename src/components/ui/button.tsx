@@ -35,18 +35,27 @@ const buttonVariants = cva(
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
   VariantProps<typeof buttonVariants> {
-  asChild?: boolean
+  asChild?: boolean,
+  loading: boolean,
+  icon: React.ReactElement | null,
+  loadingContent: React.ReactElement | string
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
+  ({ className, disabled = false, loading = false, loadingContent = "Loading...", variant, size, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : "button"
+    const is_disabled = loading ? loading : disabled
     return (
       <Comp
         className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
         {...props}
-      />
+        disabled={is_disabled}
+      >
+        {loading ? <>{loadingContent}</> : <div className="flex gap-2 items-center justify-center">
+          {props.icon}  {props.children}
+        </div>}
+      </Comp>
     )
   }
 )

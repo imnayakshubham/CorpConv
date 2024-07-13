@@ -1,6 +1,5 @@
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { getUrl } from "@/utils/sendApiRequest"
-import { Skeleton } from "antd"
 import axios from "axios"
 import { useCallback, useEffect, useState } from "react"
 import { useSelector } from "react-redux"
@@ -59,7 +58,6 @@ export const AnswerLinkQuestions = () => {
             },
         };
         const { data: apiResponse } = await axios.delete(getUrl(`question/delete/${questionId}`), config)
-        console.log(apiResponse)
         if (apiResponse.status === "Success") {
             setQuestionsData((prev) => {
                 return {
@@ -79,18 +77,24 @@ export const AnswerLinkQuestions = () => {
             <Tabs defaultValue={selectedTab} className="w-full" onValueChange={(value) => {
                 setSelectedTab(value)
             }}>
-                <TabsList className="w-full">
-                    <TabsTrigger className="w-full" value="all-questions">All Questions</TabsTrigger>
-                    <TabsTrigger className="w-full" value="your-questions">Your Questions</TabsTrigger>
-                </TabsList>
+                {
+                    !!loginResponse?._id ?
+                        <TabsList className="w-full">
+                            <TabsTrigger className="w-full" value="all-questions">All Questions</TabsTrigger>
+                            <TabsTrigger className="w-full" value="your-questions">Your Questions</TabsTrigger>
+                        </TabsList>
+                        :
+                        <h3 className="text-3xl font-extrabold">Questions</h3>
+                }
                 <div className="py-2">
                     {
                         questionsData.loading ?
-                            <div className="flex items-center space-x-4">
-                                <Skeleton className="h-12 w-full rounded-full" />
-                                <div className="space-y-2">
-                                    <Skeleton className="h-4 w-full" />
-                                    <Skeleton className="h-4  w-full" />
+                            <div className="flex-1 overflow-y-scroll">
+                                <div className="animate-pulse">
+                                    <div className="h-20 bg-gray-300 rounded w-full mb-1"></div>
+                                    <div className="h-20 bg-gray-300 rounded w-full mb-1"></div>
+                                    <div className="h-20 bg-gray-300 rounded w-full mb-1"></div>
+                                    <div className="h-20 bg-gray-300 rounded w-full mb-1"></div>
                                 </div>
                             </div>
 
@@ -102,7 +106,6 @@ export const AnswerLinkQuestions = () => {
                                     >
                                         <div>
                                             <UserAvatar avatarImage={question?.question_posted_by?.user_public_profile_pic}>
-
                                             </UserAvatar>
                                         </div>
                                         <div className="sm:flex-1 flex-wrap">
