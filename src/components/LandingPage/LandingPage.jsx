@@ -42,15 +42,15 @@ const features = [
         Icon: "CalendarIcon",
         name: "AnswerLink: Your Ultimate Q&A Destination",
         description: "Welcome to AnswerLink, the ultimate destination for seeking and sharing knowledge. With AnswerLink, users can effortlessly ask questions and receive expert answers from a vibrant community. Whether you're looking for quick solutions or in-depth explanations, AnswerLink connects you with the right answers, fast.",
-        className: "col-span-3 lg:col-span-3",
+        className: "col-span-3 lg:col-span-1",
         href: "/answerlink",
         cta: "Learn more",
     },
     {
         "Icon": "CalendarIcon",
-        "name": "Survey: Your Ultimate Survey Builder",
+        "name": "Survey: Your Ultimate Survey Builder (Coming Soon)",
         "description": "Welcome to Survey, your ultimate survey builder. Create, distribute, and analyze surveys effortlessly. Whether you need quick feedback or detailed insights, Survey provides the tools you need to connect with your audience and gather valuable information.",
-        "className": "col-span-3 lg:col-span-3",
+        "className": "col-span-3 lg:col-span-2",
         "href": "/surveys",
         "cta": "Learn more"
     }
