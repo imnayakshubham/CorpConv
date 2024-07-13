@@ -5,7 +5,7 @@ import { getUrl } from '@/utils/sendApiRequest'
 import { useSelector } from 'react-redux'
 
 export const AnswerLinkHome = () => {
-    const loginResponse = useSelector(state => state.login.loginResponse)
+    const loginResponse = useSelector((state: any) => state.login.loginResponse)
     const navigateTo = useNavigate()
 
     const askAquestion = async () => {
