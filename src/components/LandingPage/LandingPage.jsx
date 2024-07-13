@@ -10,7 +10,7 @@ const features = [
         Icon: "NetworkIcon",
         name: "Anonymously Connect",
         description: "Anonymously connect with your corporate network. Exchange messages, thoughts, and ideas freely, knowing that your anonymity is our priority.",
-        href: "/",
+        href: "/chats",
         cta: "Learn more",
         className: "col-span-3 lg:col-span-1",
     },
@@ -18,7 +18,7 @@ const features = [
         Icon: "PrivacyIcon",
         name: "Prioritize Privacy",
         description: "At CorpConv, we prioritize your privacy and provide a secure space for corporate employees to exchange messages and thoughts anonymously.",
-        href: "/",
+        href: "/posts",
         cta: "Learn more",
         className: "col-span-3 lg:col-span-2",
     },
@@ -26,7 +26,7 @@ const features = [
         Icon: "JobIcon",
         name: "Post Job Opportunities",
         description: "Post job opportunities and engage in one-on-one conversations while prioritizing user anonymity.",
-        href: "/",
+        href: "/jobs",
         cta: "Learn more",
         className: "col-span-3 lg:col-span-2",
     },
@@ -38,6 +38,22 @@ const features = [
         href: "/",
         cta: "Learn more",
     },
+    {
+        Icon: "CalendarIcon",
+        name: "AnswerLink: Your Ultimate Q&A Destination",
+        description: "Welcome to AnswerLink, the ultimate destination for seeking and sharing knowledge. With AnswerLink, users can effortlessly ask questions and receive expert answers from a vibrant community. Whether you're looking for quick solutions or in-depth explanations, AnswerLink connects you with the right answers, fast.",
+        className: "col-span-3 lg:col-span-3",
+        href: "/answerlink",
+        cta: "Learn more",
+    },
+    {
+        "Icon": "CalendarIcon",
+        "name": "Survey: Your Ultimate Survey Builder",
+        "description": "Welcome to Survey, your ultimate survey builder. Create, distribute, and analyze surveys effortlessly. Whether you need quick feedback or detailed insights, Survey provides the tools you need to connect with your audience and gather valuable information.",
+        "className": "col-span-3 lg:col-span-3",
+        "href": "/surveys",
+        "cta": "Learn more"
+    }
 ];
 
 
@@ -90,8 +106,9 @@ export const LandingPage = () => {
                     </div >
                 </div >
             </div >
-            <BentoDemo />
-            {/* <StickyScroll data={data} /> */}
+            <div className="mx-auto max-w-7xl px-3 lg:px-8 flex justify-center items-center flex-col">
+                <BentoDemo />
+            </div>
         </div >
     )
 }
