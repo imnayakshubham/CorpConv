@@ -1,11 +1,14 @@
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { loginRequest } from '../../../store/action/login';
 import { signInWithGooglePopup } from "../../../firebase/firebase"
 import { GoogleOutlined } from "@ant-design/icons"
+import { Button } from "../ui/button";
+import { AsyncStates } from '../../../constants'
 
 
 export const LoginWithGoogle = () => {
     const dispatch = useDispatch()
+    const loginStatus = useSelector((state) => state.login.loginStatus)
 
     // const fetchHomies = useCallback(async () => {
     //     const apiResponse = await axios.get(`https://randomuser.me/api`)
@@ -54,16 +57,19 @@ export const LoginWithGoogle = () => {
 
     return (
         <>
-            <button
+            <Button
                 onClick={() => {
                     handleLogin()
                 }}
-                className="relative inline-flex h-10 overflow-hidden rounded-2xl p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
+                loading={loginStatus === AsyncStates.LOADING}
+                loadingContent={"Signing up..."}
+                className="relative inline-flex h-10 overflow-hidden rounded-2xl  focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
+
                 <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
-                <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-2xl bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl gap-1">
+                <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-2xl bg-transparent px-3 py-1 text-md font-medium backdrop-blur-sm gap-1">
                     <GoogleOutlined /> Login With Google
                 </span>
-            </button>
+            </Button >
         </>
 
     )

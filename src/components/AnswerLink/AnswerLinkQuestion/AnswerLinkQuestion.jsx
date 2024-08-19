@@ -6,8 +6,9 @@ import { PencilOff } from 'lucide-react';
 import { UserAvatar } from "@/components/UserAvatar/UserAvatar"
 import { fromNow } from "@/utils/helperFn"
 import { Button } from "@/components/ui/button";
+import { Helmet } from "react-helmet";
 
-export const AnswerLinkQuestion = () => {
+const AnswerLinkQuestion = () => {
     const navigateTo = useNavigate()
     const questionId = useParams()?.id
     const socket = useSelector((state) => state.common.socketInstance)
@@ -136,6 +137,16 @@ export const AnswerLinkQuestion = () => {
 
     return (
         <>
+            <Helmet>
+                <title>AnswerLink - {question?.data?.question}</title>
+                <meta name="description" content={question?.data?.question} />
+                <meta name="keywords" content="Q&A platform, expert answers, real-time interaction, community knowledge, Ask Anything, AnswerLink, expert community" />
+                <meta property="og:title" content={question?.data?.question} />
+                <meta property="og:description" content="Welcome to AnswerLink, your go-to platform for asking questions and getting answers from a community of experts and enthusiasts. Engage in real-time discussions and connect with knowledgeable community members." />
+                <meta property="og:type" content="website" />
+                <meta name="twitter:title" content="AnswerLink - Your Go-To Q&A Platform for Expert Answers" />
+                <meta name="twitter:description" content="Welcome to AnswerLink, your go-to platform for asking questions and getting answers from a community of experts and enthusiasts. Engage in real-time discussions and connect with knowledgeable community members." />
+            </Helmet>
             {
                 question?.status === "loading" ?
                     <div className="flex-1 overflow-y-scroll">
@@ -245,3 +256,5 @@ export const AnswerLinkQuestion = () => {
         </>
     )
 }
+
+export default AnswerLinkQuestion

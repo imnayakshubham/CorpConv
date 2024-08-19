@@ -14,7 +14,7 @@ import { sendGet } from '@/utils/sendApiRequest'
 import { message } from 'antd'
 import { PostSkeleton } from '../PostsSkeleton/PostSkeleton'
 
-export const Post = ({ post = null }) => {
+const Post = ({ post = null }) => {
     const { loginResponse: userInfo } = useSelector(state => state.login)
     const dispatch = useDispatch()
     const navigateTo = useNavigate();
@@ -234,3 +234,6 @@ export const Post = ({ post = null }) => {
         </div>
     )
 }
+
+export default Post
+

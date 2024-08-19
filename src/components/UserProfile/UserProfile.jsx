@@ -3,7 +3,6 @@ import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { getUserInfoClear, getUserInfoRequest } from '../../../store/action/users.js';
 import "./UserProfile.css"
-import { Jobs } from '../Jobs/Jobs.jsx';
 import { Button, Tooltip } from 'antd';
 import { followUserRequest } from '../../../store/action/users.js'
 import { UserAddOutlined, UserDeleteOutlined } from '@ant-design/icons'
@@ -11,11 +10,12 @@ import { SkeletonUserCardLoading } from '../SkeletonUserCardLoading/SkeletonUser
 import { AsyncStates } from '../../../constants';
 import { UserAvatar } from '../UserAvatar/UserAvatar.tsx';
 import { Login } from '../Authentication/Login/Login.jsx';
-import { Posts } from '../Posts/Posts.jsx';
+import Jobs from '../Jobs/Jobs.jsx';
+import Posts from '../Posts/Posts.jsx';
 
 
 
-export const UserProfile = () => {
+const UserProfile = () => {
     const location = useLocation();
     const params = useParams()
     const dispatch = useDispatch()
@@ -168,3 +168,5 @@ export const UserProfile = () => {
         )
     }
 }
+
+export default UserProfile

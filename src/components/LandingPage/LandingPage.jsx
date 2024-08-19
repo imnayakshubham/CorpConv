@@ -47,17 +47,18 @@ const features = [
         cta: "Learn more",
     },
     {
-        "Icon": "CalendarIcon",
+        Icon: "CalendarIcon",
         "name": "Survey: Your Ultimate Survey Builder (Coming Soon)",
         "description": "Welcome to Survey, your ultimate survey builder. Create, distribute, and analyze surveys effortlessly. Whether you need quick feedback or detailed insights, Survey provides the tools you need to connect with your audience and gather valuable information.",
         "className": "col-span-3 lg:col-span-2",
         "href": "/surveys",
-        "cta": "Learn more"
+        "cta": "Coming Soon",
+        disabled: true,
     }
 ];
 
 
-export const LandingPage = () => {
+const LandingPage = () => {
     const navigateTo = useNavigate()
     const { loginResponse: userInfo } = useSelector(state => state.login)
 
@@ -106,13 +107,14 @@ export const LandingPage = () => {
                     </div >
                 </div >
             </div >
-            <div className="mx-auto max-w-7xl px-3 lg:px-8 flex justify-center items-center flex-col">
+            <section className="mx-auto max-w-7xl px-3 lg:px-8 flex justify-center items-center flex-col">
                 <BentoDemo />
-            </div>
+            </section>
         </div >
     )
 }
 
+export default LandingPage
 
 export function BentoDemo() {
     return (

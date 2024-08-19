@@ -8,8 +8,9 @@ import "./Users.css"
 import { UserCard } from './UserCard/UserCard';
 import { AsyncStates } from '../../../constants';
 import { SkeletonUserCardLoading } from '../SkeletonUserCardLoading/SkeletonUserCardLoading';
+import { Helmet } from 'react-helmet';
 
-export const Users = () => {
+const Users = () => {
     const dispatch = useDispatch()
     const { usersList, fetchUsersStatus } = useSelector(state => state.users)
     const loginResponse = useSelector(state => state.login.loginResponse)
@@ -60,6 +61,14 @@ export const Users = () => {
 
     return (
         <>
+            <Helmet>
+                <title>Stay Connected with CorpConv | Corporate Networking</title>
+                <meta name="description" content="Stay connected with CorpConv and experience a revolutionary way of interacting with your corporate network. Discover seamless communication and enhance your professional interactions securely." />
+                <meta name="keywords" content="CorpConv, corporate networking, professional interaction, secure communication, stay connected, corporate network, networking tool, business communication, professional networking" />
+                <meta property="og:title" content="Stay Connected with CorpConv" />
+                <meta property="og:description" content="Stay connected with CorpConv and experience a revolutionary way of interacting with your corporate network. Discover seamless communication and enhance your professional interactions securely." />
+                <meta property="og:type" content="website" />
+            </Helmet>
             <Segmented options={options} value={tab} onChange={(value) => setTab(value)} style={{ background: "transparent" }} />
             <div className='user__list__container'>
                 {fetchUsersStatus[tab] === AsyncStates.LOADING ? (
@@ -100,3 +109,6 @@ export const Users = () => {
 
     )
 }
+
+
+export default Users

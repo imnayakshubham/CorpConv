@@ -8,13 +8,14 @@ import { Pencil, Trash, Bookmark, Copy, ExternalLink } from 'lucide-react';
 import { fromNow } from '@/utils/helperFn'
 import { UpVoteIcon } from '../Posts/PostList/PostList'
 import { AsyncStates } from '../../../constants'
+import { Helmet } from 'react-helmet'
 
 // const HandHeart = ({ liked }) => {
 //     return <svg className={`${liked ? "job_liked" : ""} lucide lucide-hand-heart`} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 14h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 16" /><path d="m7 20 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9" /><path d="m2 15 6 6" /><path d="M19.5 8.5c.7-.7 1.5-1.6 1.5-2.7A2.73 2.73 0 0 0 16 4a2.78 2.78 0 0 0-5 1.8c0 1.2.8 2 1.5 2.8L16 12Z" /></svg>
 // }
 
 
-export const Jobs = ({ from, user_id = null }) => {
+const Jobs = ({ from, user_id = null }) => {
     const socket = useSelector((state) => state.common.socketInstance)
     const jobs = useSelector((state) => state.jobs.jobsList)
     const fetchJobsStatus = useSelector((state) => state.jobs.fetchJobsStatus)
@@ -86,6 +87,19 @@ export const Jobs = ({ from, user_id = null }) => {
 
     return (
         <div>
+            <Helmet>
+                <title>Post Job Opportunities Anonymously | CorpConv</title>
+                <meta name="description" content="Post job opportunities and engage in one-on-one conversations while prioritizing user anonymity. Discover how CorpConv allows you to manage job postings securely and confidentially." />
+                <meta name="keywords" content="Post Job Opportunities, Job Posting, Anonymously Post Jobs, Secure Job Posting, User Anonymity, CorpConv Job Board" />
+
+                <meta property="og:title" content="Post Job Opportunities Anonymously | CorpConv" />
+                <meta property="og:description" content="Post job opportunities and engage in one-on-one conversations while prioritizing user anonymity. Discover how CorpConv allows you to manage job postings securely and confidentially." />
+                <meta property="og:type" content="website" />
+
+                <meta name="twitter:title" content="Post Job Opportunities Anonymously | CorpConv" />
+                <meta name="twitter:description" content="Post job opportunities and engage in one-on-one conversations while prioritizing user anonymity. Discover how CorpConv allows you to manage job postings securely and confidentially." />
+            </Helmet>
+
             {from === "user_profile" && !!jobs.length &&
                 <h1 className='font-bold p-2 text-xl'>Jobs</h1>
             }
@@ -237,3 +251,5 @@ export const Jobs = ({ from, user_id = null }) => {
         </div>
     )
 }
+
+export default Jobs

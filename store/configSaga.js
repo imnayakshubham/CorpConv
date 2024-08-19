@@ -20,7 +20,7 @@ import commonReducer from "./reducer/common"
 import jobsReducer from "./reducer/jobs"
 import jobsSaga from "./sagas/jobs";
 import postsSaga from "./sagas/posts";
-import { toast } from "@/components/ui/use-toast"
+import { notification } from "antd"
 
 
 const sagaMiddleware = createSagaMiddleware()
@@ -74,13 +74,41 @@ const persistor = persistStore(store)
 export { store, persistor }
 
 
-axiosInstance.interceptors.response.use((response) => response, (error) => {
-    if (error.response.status === 401) {
-        toast({
-            title: "Session Expired",
-            description: "Please Login Again!.",
-        })
-        store.dispatch({ type: "LOGOUT_SUCCESS" });
+axiosInstance.interceptors.response.use(
+    (response) => response,
+    (error) => {
+        if (error.response) {
+            const status = error.response.status;
+
+            if (status === 401) {
+                notification.error({
+                    message: "Session Expired",
+                    description: "Your session has expired. Please log in again.",
+                });
+                store.dispatch({ type: "LOGOUT_SUCCESS" });
+            } else if (status === 400) {
+                notification.error({
+
+                    message: "Invalid Request", description: "There was an issue with your request. Please try again.",
+                });
+                store.dispatch({ type: "LOGOUT_SUCCESS" });
+
+            } else if (status === 404) {
+                notification.error({
+
+                    message: "User Not Found",
+                    description: "User not found or access is revoked.",
+                }); store.dispatch({ type: "LOGOUT_SUCCESS" });
+            }
+        } else {
+            // Handle errors without a response (e.g., network errors)
+            notification.error({
+                message: "Network Error",
+                description: "An error occurred. Please check your connection and try again.",
+            });
+        }
+
+        // Pass the error to the next handler (if any)
+        return Promise.reject(error);
     }
-    throw error
-});
+);

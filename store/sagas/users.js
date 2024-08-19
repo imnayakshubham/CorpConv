@@ -24,7 +24,10 @@ function* fetchUsersListSaga({ payload }) {
             yield put(fetchUsersFailure(message))
         }
     } catch (error) {
-        yield put(fetchUsersFailure(error))
+        yield put(fetchUsersFailure({
+            type: payload.type,
+            error
+        }))
     }
 }
 

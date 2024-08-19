@@ -3,11 +3,12 @@ import { CreatePost } from './CreatePost/CreatePost'
 import "./Posts.css"
 import { useDispatch, useSelector } from 'react-redux'
 import { addPostSuccess, fetchPostsRequest, upvotePostSuccess } from '../../../store/action/posts'
-import { PostList } from './PostList/PostList'
 import { AsyncStates } from '../../../constants'
+import { PostList } from './PostList/PostList'
+import { Helmet } from 'react-helmet'
 
 
-export const Posts = ({ from, user_id = null }) => {
+const Posts = ({ from, user_id = null }) => {
     const socket = useSelector((state) => state.common.socketInstance)
     const posts = useSelector((state) => state.posts.postsList)
     const fetchPostsStatus = useSelector((state) => state.posts.fetchPostsStatus)
@@ -60,6 +61,28 @@ export const Posts = ({ from, user_id = null }) => {
 
     return (
         <div>
+            <Helmet>
+                <title>Anonymous Post and Share Your Thoughts | Privacy Focused Platform</title>
+                <meta
+                    name="description"
+                    content="Post and share your thoughts, viewpoints, opinions, and learnings anonymously on our privacy-focused platform. Engage with a community while keeping your identity secure."
+                />
+                <meta
+                    name="keywords"
+                    content="anonymous posting, share thoughts anonymously, privacy focused platform, opinions, viewpoints, learnings, secure communication, anonymous sharing"
+                />
+                <meta property="og:title" content="Anonymous Post and Share Your Thoughts | Privacy Focused Platform" />
+                <meta
+                    property="og:description"
+                    content="Post and share your thoughts, viewpoints, opinions, and learnings anonymously on our privacy-focused platform. Engage with a community while keeping your identity secure."
+                />
+                <meta property="og:type" content="website" />
+                <meta property="twitter:title" content="Anonymous Post and Share Your Thoughts | Privacy Focused Platform" />
+                <meta
+                    property="twitter:description"
+                    content="Post and share your thoughts, viewpoints, opinions, and learnings anonymously on our privacy-focused platform. Engage with a community while keeping your identity secure."
+                />
+            </Helmet>
             {from === "user_profile" && !!posts.length &&
                 <h1 className='font-semibold p-2 text-xl'>Posts</h1>
             }
@@ -78,3 +101,5 @@ export const Posts = ({ from, user_id = null }) => {
         </div>
     )
 }
+
+export default Posts

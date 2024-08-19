@@ -2,26 +2,29 @@
     display: flex;
     justify-content: space-between;
     margin: 0rem 0.5rem;
+    overflow-y: scroll;
+    height: 93vh;
 }
 
-.sidebar {
-    max-width: 25rem;
-    flex: 1
+.chat__sidebar {
+    /* max-width: 25rem; */
+    flex: 1;
+
 }
 
-.sidebar,
-.content {
-    height: 100vh;
+.chat__sidebar,
+.chat__container {
+    height: 93vh;
     border: 1px solid #ccc;
 }
 
-.content {
+.chat__container {
     flex: 2
 }
 
 .users__list {
     overflow-y: scroll;
-    height: 100vh;
+    height: 93vh;
 }
 
 .user {
@@ -37,4 +40,44 @@
 .user__image {
     object-fit: contain;
     border-radius: 50%;
+}
+
+.back__button__chat__room {
+    display: none;
+}
+
+@media (max-width:500px) {
+    .chat__container__no__selected_chat {
+        display: none;
+    }
+
+    .chat__sidebar__selected__chat {
+        display: none;
+    }
+
+    .back__button__chat__room {
+        display: block;
+    }
+
+}
+
+@media (min-width:640px) {
+    .chat__wrapper__container {
+        height: 100vh;
+    }
+
+    .users__list {
+        overflow-y: scroll;
+        height: 100vh;
+    }
+
+    .chat__sidebar,
+    .chat__container {
+        height: 100vh;
+        border: 1px solid #ccc;
+    }
+
+    .no_chat_selected {
+        height: 100vh;
+    }
 }

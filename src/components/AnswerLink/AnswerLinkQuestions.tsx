@@ -12,7 +12,7 @@ type QuestionsDataType = {
     [key: string]: any
 }
 
-export const AnswerLinkQuestions = () => {
+const AnswerLinkQuestions = () => {
     const navigateTo = useNavigate()
     const [selectedTab, setSelectedTab] = useState("all-questions")
     const [questionsData, setQuestionsData] = useState<QuestionsDataType>({
@@ -135,3 +135,6 @@ export const AnswerLinkQuestions = () => {
         </div >
     )
 }
+
+
+export default AnswerLinkQuestions

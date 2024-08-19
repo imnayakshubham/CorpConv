@@ -1,21 +1,11 @@
 import { Routes, Route, useNavigate, Link } from 'react-router-dom'
-import { Jobs } from './components/Jobs/Jobs.jsx';
 
 import "./App.css";
-import { useEffect, useMemo } from 'react';
+import React, { Suspense, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import io from "socket.io-client"
 import { socketEndPoint } from "../constants/index.ts";
 import { socketSave } from "../store/action/common.js";
-import { UserProfile } from './components/UserProfile/UserProfile.jsx';
-import { PrivateRoutes } from './components/PrivateRoutes/PrivateRoutes.tsx';
-import { PageWrapper } from './components/PageWrapper/PageWrapper.jsx';
-import { UpdateProfile } from './components/UpdateProfile/UpdateProfile.jsx';
-import { ChatWrapper } from './components/ChatContainer/ChatWrapper.jsx';
-import { Users } from './components/Users/Users.jsx';
-import { Posts } from './components/Posts/Posts.jsx';
-import { LandingPage } from './components/LandingPage/LandingPage.jsx';
-import { Post } from './components/Posts/Post/Post.jsx';
 import { logoutRequest } from '../store/action/login.js';
 import { StickyNote, MessageCircle, LogOut, Home, CircleUser, Users as UsersIcon } from 'lucide-react';
 import {
@@ -23,10 +13,25 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/tooltip"
-import { AnswerLinkHome } from './components/AnswerLink/AnswerLinkHome.tsx';
-import { AnswerLinkQuestion } from './components/AnswerLink/AnswerLinkQuestion/AnswerLinkQuestion.jsx';
-import { AnswerLinkQuestions } from './components/AnswerLink/AnswerLinkQuestions.tsx';
+} from "@/components/ui/tooltip";
+import PrivateRoutes from './components/PrivateRoutes/PrivateRoutes.tsx';
+
+const Jobs = React.lazy(() => import('./components/Jobs/Jobs.jsx'))
+const UserProfile = React.lazy(() => import('./components/UserProfile/UserProfile.jsx'))
+const PageWrapper = React.lazy(() => import('./components/PageWrapper/PageWrapper.jsx'))
+const UpdateProfile = React.lazy(() => import('./components/UpdateProfile/UpdateProfile.jsx'))
+const ChatWrapper = React.lazy(() => import('./components/ChatContainer/ChatWrapper.jsx'))
+const Users = React.lazy(() => import('./components/Users/Users.jsx'))
+const Posts = React.lazy(() => import('./components/Posts/Posts.jsx'))
+const LandingPage = React.lazy(() => import('./components/LandingPage/LandingPage.jsx'))
+const Post = React.lazy(() => import('./components/Posts/Post/Post.jsx'))
+const AnswerLinkHome = React.lazy(() => import('./components/AnswerLink/AnswerLinkHome.tsx'))
+const AnswerLinkQuestion = React.lazy(() => import('./components/AnswerLink/AnswerLinkQuestion/AnswerLinkQuestion.jsx'));
+const AnswerLinkQuestions = React.lazy(() => import('./components/AnswerLink/AnswerLinkQuestions.tsx'));
+const PageNotFound = React.lazy(() => import('./components/PageNotFound/PageNotFound.tsx'));
+
+import { Helmet } from 'react-helmet';
+
 function App() {
   const loginResponse = useSelector((state) => state.login.loginResponse)
   const socket = useSelector((state) => state.common.socketInstance)
@@ -64,83 +69,124 @@ function App() {
     <>
       <Routes>
         <Route path='/' element={
-          <PageWrapper>
-            <LandingPage />
-          </PageWrapper>
+          <Suspense fallback={<div>Loading...</div>}>
+            <PageWrapper>
+              <LandingPage />
+            </PageWrapper>
+          </Suspense>
         } />
 
         <Route path='/posts' element={
-          <PageWrapper bodyClass={"lg:w-8/12 md:w-9/12 "}>
-            <Posts />
-          </PageWrapper>
+          <Suspense fallback={<div>Loading...</div>}>
+            <PageWrapper bodyClass={"lg:w-8/12 md:w-9/12 "}>
+              <Posts />
+            </PageWrapper>
+          </Suspense>
         } />
         <Route>
           <Route path='/jobs' element={
-            <PageWrapper>
-              <Jobs from={"jobs"} />
-            </PageWrapper>
+            <Suspense fallback={<div>Loading...</div>}>
+              <PageWrapper>
+                <Jobs from={"jobs"} />
+              </PageWrapper>
+            </Suspense>
           } />
 
           <Route>
             <Route path='/users' element={
-              <PageWrapper>
-                <Users />
-              </PageWrapper>
+              <Suspense fallback={<div>Loading...</div>}>
+                <PageWrapper>
+                  <Users />
+                </PageWrapper>
+              </Suspense>
             } />
           </Route>
 
           <Route>
             <Route path='/user/:id' element={
-              <UserProfile />
+              <Suspense fallback={<div>Loading...</div>}>
+                <UserProfile />
+              </Suspense>
             } />
           </Route>
 
           <Route>
             <Route path='/post/:id' element={
-              <PageWrapper bodyClass={"lg:w-8/12 md:w-9/12"}>
-                <Post />
-              </PageWrapper>
+              <Suspense fallback={<div>Loading...</div>}>
+                <PageWrapper bodyClass={"lg:w-8/12 md:w-9/12"}>
+                  <Post />
+                </PageWrapper>
+              </Suspense>
             } />
           </Route>
 
           <Route element={<PrivateRoutes />}>
             <Route path='/update-profile' element={
-              <PageWrapper bodyClass='w-full md:w-3/4 border border-slate-800'>
-                <UpdateProfile />
-              </PageWrapper>} />
+              <Suspense fallback={<div>Loading...</div>}>
+                <PageWrapper bodyClass='w-full md:w-3/4 border border-slate-800'>
+                  <UpdateProfile />
+                </PageWrapper>
+              </Suspense>
+            } />
           </Route>
           <Route element={<PrivateRoutes />}>
             <Route path='/answerlink' element={
-              <PageWrapper bodyClass={"lg:w-8/12 md:w-9/12"}>
-                <AnswerLinkHome />
-              </PageWrapper>} />
+              <Suspense fallback={<div>Loading...</div>}>
+                <Helmet>
+                  <title>AnswerLink - Your Go-To Q&A Platform for Expert Answers</title>
+                  <meta name="description" content="Welcome to AnswerLink, your go-to platform for asking questions and getting answers from a community of experts and enthusiasts. Engage in real-time discussions and connect with knowledgeable community members." />
+                  <meta name="keywords" content="Q&A platform, expert answers, real-time interaction, community knowledge, Ask Anything, AnswerLink, expert community" />
+                  <meta property="og:title" content="AnswerLink - Your Go-To Q&A Platform for Expert Answers" />
+                  <meta property="og:description" content="Welcome to AnswerLink, your go-to platform for asking questions and getting answers from a community of experts and enthusiasts. Engage in real-time discussions and connect with knowledgeable community members." />
+                  <meta property="og:type" content="website" />
+                  <meta name="twitter:title" content="AnswerLink - Your Go-To Q&A Platform for Expert Answers" />
+                  <meta name="twitter:description" content="Welcome to AnswerLink, your go-to platform for asking questions and getting answers from a community of experts and enthusiasts. Engage in real-time discussions and connect with knowledgeable community members." />
+                </Helmet>
+                <PageWrapper bodyClass={"lg:w-8/12 md:w-9/12"}>
+                  <AnswerLinkHome />
+                </PageWrapper>
+              </Suspense>
+            } />
           </Route>
           <Route path='/answerlink/question/:id' element={
-            <PageWrapper bodyClass={"lg:w-8/12 md:w-9/12"}>
-              <AnswerLinkQuestion />
-            </PageWrapper>}
+            <Suspense fallback={<div>Loading...</div>}>
+              <PageWrapper bodyClass={"lg:w-8/12 md:w-9/12"}>
+                <AnswerLinkQuestion />
+              </PageWrapper>
+            </Suspense>
+
+          }
           />
           <Route path='/answerlink/questions' element={
-            <PageWrapper bodyClass={"lg:w-8/12 md:w-9/12"}>
-              <AnswerLinkQuestions />
-            </PageWrapper>}
+            <Suspense fallback={<div>Loading...</div>}>
+              <PageWrapper bodyClass={"lg:w-8/12 md:w-9/12"}>
+                <Helmet>
+                  <title>AnswerLink - Your Go-To Q&A Platform for Expert Answers</title>
+                  <meta name="description" content="Welcome to AnswerLink, your go-to platform for asking questions and getting answers from a community of experts and enthusiasts. Engage in real-time discussions and connect with knowledgeable community members." />
+                  <meta name="keywords" content="Q&A platform, expert answers, real-time interaction, community knowledge, Ask Anything, AnswerLink, expert community" />
+                  <meta property="og:title" content="AnswerLink - Your Go-To Q&A Platform for Expert Answers" />
+                  <meta property="og:description" content="Welcome to AnswerLink, your go-to platform for asking questions and getting answers from a community of experts and enthusiasts. Engage in real-time discussions and connect with knowledgeable community members." />
+                  <meta property="og:type" content="website" />
+                  <meta name="twitter:title" content="AnswerLink - Your Go-To Q&A Platform for Expert Answers" />
+                  <meta name="twitter:description" content="Welcome to AnswerLink, your go-to platform for asking questions and getting answers from a community of experts and enthusiasts. Engage in real-time discussions and connect with knowledgeable community members." />
+                </Helmet>
+                <AnswerLinkQuestions />
+              </PageWrapper>
+            </Suspense>
+          }
           />
           <Route path='*' element={
-            <PageWrapper>
-              <div className="flex items-center h-[88vh] justify-center">
-                <div className="text-center">
-                  <h1 className="text-6xl font-bold mb-4">404</h1>
-                  <p className="text-lg">Oops! Page not found.</p>
-                  <Link to="/" className="text-blue-500 hover:underline">
-                    Go back to home
-                  </Link>
-                </div>
-              </div>
-            </PageWrapper>
+            <Suspense fallback={<div>Loading...</div>}>
+              <PageNotFound />
+            </Suspense>
           } />
         </Route>
         <Route element={<PrivateRoutes />}>
-          <Route path='/chats' element={<ChatWrapper />} />
+          <Route path='/chats' element={
+            <Suspense fallback={<div>Loading...</div>}>
+              <ChatWrapper />
+            </Suspense>
+          } />
         </Route>
       </Routes>
       <BottomNavigation />
