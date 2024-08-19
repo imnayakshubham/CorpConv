@@ -1,10 +1,9 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { Button } from '../ui/button'
-import axios from 'axios'
-import { getUrl } from '@/utils/sendApiRequest'
+import { axiosInstance, getUrl } from '@/utils/sendApiRequest'
 import { useSelector } from 'react-redux'
 
-export const AnswerLinkHome = () => {
+const AnswerLinkHome = () => {
     const loginResponse = useSelector((state: any) => state.login.loginResponse)
     const navigateTo = useNavigate()
 
@@ -15,7 +14,7 @@ export const AnswerLinkHome = () => {
                 token: `${loginResponse.token}`,
             },
         };
-        const { data: { data } } = await axios.post(getUrl("question/create"), {}, config)
+        const { data: { data } } = await axiosInstance.post(getUrl("question/create"), {}, config)
         if (data) {
             console.log({ data })
             navigateTo(`question/${data._id}`)
@@ -54,3 +53,5 @@ export const AnswerLinkHome = () => {
         </main>
     )
 }
+
+export default AnswerLinkHome

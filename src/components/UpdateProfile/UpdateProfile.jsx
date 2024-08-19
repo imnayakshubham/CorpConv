@@ -5,7 +5,7 @@ import { InfoCircleFilled } from '@ant-design/icons'
 import { updateProfileRequest } from '../../../store/action/login'
 import { AsyncStates } from '../../../constants'
 
-export const UpdateProfile = () => {
+const UpdateProfile = () => {
     const dispatch = useDispatch()
     const { loginResponse, updateProfileStatus } = useSelector(state => state.login)
 
@@ -130,4 +130,6 @@ export const UpdateProfile = () => {
         </div >
     )
 }
+
+export default UpdateProfile
 

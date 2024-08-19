@@ -9,7 +9,7 @@ import { UserCard } from './UserCard/UserCard';
 import { AsyncStates } from '../../../constants';
 import { SkeletonUserCardLoading } from '../SkeletonUserCardLoading/SkeletonUserCardLoading';
 
-export const Users = () => {
+const Users = () => {
     const dispatch = useDispatch()
     const { usersList, fetchUsersStatus } = useSelector(state => state.users)
     const loginResponse = useSelector(state => state.login.loginResponse)
@@ -100,3 +100,6 @@ export const Users = () => {
 
     )
 }
+
+
+export default Users

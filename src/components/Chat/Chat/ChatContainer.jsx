@@ -5,9 +5,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { notification } from 'antd';
 import axios from 'axios';
 import { ChatMessageContainer } from '../ChatMessageContainer/ChatMessageContainer';
-import { updateChatList, fetchChatListRequest } from '../../../../store/action/chats';
+import { updateChatList, fetchChatListRequest, selectedChatRequest } from '../../../../store/action/chats';
 import { getUrl } from '../../../utils/sendApiRequest';
 import { UserAvatar } from '@/components/UserAvatar/UserAvatar';
+import { ArrowLeft } from 'lucide-react';
 
 export const ChatContainer = () => {
     const dispatch = useDispatch()
@@ -119,14 +120,16 @@ export const ChatContainer = () => {
             {senderInfo ?
                 <div className='chat__room'>
                     <>
-                        <div className='header'>
+                        <div className='header flex items-center gap-2'>
+                            <div className='back__button__chat__room'>
+                                <ArrowLeft className='icon cursor-pointer' onClick={() => dispatch(selectedChatRequest(null))} />
+                            </div>
                             <div>
                                 <UserAvatar avatarImage={senderInfo?.posted_by?.user_public_profile_pic} title={<h3 className="post_by__header">{senderInfo?.posted_by.public_user_name}</h3>}></UserAvatar>
                             </div>
                         </div>
                         <div className='chat__content'>
                             <ChatMessageContainer messages={messages} />
-
                         </div>
                         <div className='footer'>
                             <div className='chat__input__contaniner'>

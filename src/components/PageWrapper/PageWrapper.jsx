@@ -4,15 +4,17 @@ import { Navbar } from "../Navbar/Navbar"
 const defaultBodyStyle = "w-full"
 
 
-export const PageWrapper = ({ children, bodyClass = defaultBodyStyle, from = null }) => {
+const PageWrapper = ({ children, bodyClass = defaultBodyStyle }) => {
     return (
         <>
             <Navbar />
-            <section style={{ display: "flex", justifyContent: "center", alignItems: "center", padding: "1rem 0.5rem" }}>
-                <div className={cn("w-full px-3 md:px-6 h-screen sm:h-full", bodyClass)}>
+            <section className="flex justify-center items-center pb-20 md:py-4 md:px-2 md:pb-6">
+                <div className={cn("w-full px-3 md:px-6", bodyClass)}>
                     {children}
                 </div>
             </section>
         </>
     )
 }
+
+export default PageWrapper

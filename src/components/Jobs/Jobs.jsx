@@ -14,7 +14,7 @@ import { AsyncStates } from '../../../constants'
 // }
 
 
-export const Jobs = ({ from, user_id = null }) => {
+const Jobs = ({ from, user_id = null }) => {
     const socket = useSelector((state) => state.common.socketInstance)
     const jobs = useSelector((state) => state.jobs.jobsList)
     const fetchJobsStatus = useSelector((state) => state.jobs.fetchJobsStatus)
@@ -237,3 +237,5 @@ export const Jobs = ({ from, user_id = null }) => {
         </div>
     )
 }
+
+export default Jobs

@@ -7,7 +7,7 @@ import { UserAvatar } from "@/components/UserAvatar/UserAvatar"
 import { fromNow } from "@/utils/helperFn"
 import { Button } from "@/components/ui/button";
 
-export const AnswerLinkQuestion = () => {
+const AnswerLinkQuestion = () => {
     const navigateTo = useNavigate()
     const questionId = useParams()?.id
     const socket = useSelector((state) => state.common.socketInstance)
@@ -245,3 +245,5 @@ export const AnswerLinkQuestion = () => {
         </>
     )
 }
+
+export default AnswerLinkQuestion

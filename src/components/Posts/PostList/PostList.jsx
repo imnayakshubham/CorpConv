@@ -7,8 +7,8 @@ import { Button } from "@/components/ui/button";
 import { UserAvatar } from "@/components/UserAvatar/UserAvatar";
 import { PlusCircle, Reply, Trash } from "lucide-react";
 import { AsyncStates } from '../../../../constants'
-import { Post } from "../Post/Post";
 import { PostsListSkeleton } from "../PostsSkeleton/PostsListSkeleton";
+import Post from "../Post/Post";
 
 export const UpVoteIcon = ({ size = 20, fill = "none" }) => {
     return <svg
