@@ -31,6 +31,7 @@ const AnswerLinkQuestions = React.lazy(() => import('./components/AnswerLink/Ans
 const PageNotFound = React.lazy(() => import('./components/PageNotFound/PageNotFound.tsx'));
 
 import { Helmet } from 'react-helmet';
+import { MainLoader } from './components/Loader/MainLoader.tsx';
 
 function App() {
   const loginResponse = useSelector((state) => state.login.loginResponse)
@@ -69,7 +70,7 @@ function App() {
     <>
       <Routes>
         <Route path='/' element={
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<MainLoader />}>
             <PageWrapper>
               <LandingPage />
             </PageWrapper>
@@ -77,7 +78,7 @@ function App() {
         } />
 
         <Route path='/posts' element={
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<MainLoader />}>
             <PageWrapper bodyClass={"lg:w-8/12 md:w-9/12 "}>
               <Posts />
             </PageWrapper>
@@ -85,7 +86,7 @@ function App() {
         } />
         <Route>
           <Route path='/jobs' element={
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<MainLoader />}>
               <PageWrapper>
                 <Jobs from={"jobs"} />
               </PageWrapper>
@@ -94,7 +95,7 @@ function App() {
 
           <Route>
             <Route path='/users' element={
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<MainLoader />}>
                 <PageWrapper>
                   <Users />
                 </PageWrapper>
@@ -104,7 +105,7 @@ function App() {
 
           <Route>
             <Route path='/user/:id' element={
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<MainLoader />}>
                 <UserProfile />
               </Suspense>
             } />
@@ -112,7 +113,7 @@ function App() {
 
           <Route>
             <Route path='/post/:id' element={
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<MainLoader />}>
                 <PageWrapper bodyClass={"lg:w-8/12 md:w-9/12"}>
                   <Post />
                 </PageWrapper>
@@ -122,7 +123,7 @@ function App() {
 
           <Route element={<PrivateRoutes />}>
             <Route path='/update-profile' element={
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<MainLoader />}>
                 <PageWrapper bodyClass='w-full md:w-3/4 border border-slate-800'>
                   <UpdateProfile />
                 </PageWrapper>
@@ -131,7 +132,7 @@ function App() {
           </Route>
           <Route element={<PrivateRoutes />}>
             <Route path='/answerlink' element={
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<MainLoader />}>
                 <Helmet>
                   <title>AnswerLink - Your Go-To Q&A Platform for Expert Answers</title>
                   <meta name="description" content="Welcome to AnswerLink, your go-to platform for asking questions and getting answers from a community of experts and enthusiasts. Engage in real-time discussions and connect with knowledgeable community members." />
@@ -149,7 +150,7 @@ function App() {
             } />
           </Route>
           <Route path='/answerlink/question/:id' element={
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<MainLoader />}>
               <PageWrapper bodyClass={"lg:w-8/12 md:w-9/12"}>
                 <AnswerLinkQuestion />
               </PageWrapper>
@@ -158,7 +159,7 @@ function App() {
           }
           />
           <Route path='/answerlink/questions' element={
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<MainLoader />}>
               <PageWrapper bodyClass={"lg:w-8/12 md:w-9/12"}>
                 <Helmet>
                   <title>AnswerLink - Your Go-To Q&A Platform for Expert Answers</title>
@@ -176,14 +177,14 @@ function App() {
           }
           />
           <Route path='*' element={
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<MainLoader />}>
               <PageNotFound />
             </Suspense>
           } />
         </Route>
         <Route element={<PrivateRoutes />}>
           <Route path='/chats' element={
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<MainLoader />}>
               <ChatWrapper />
             </Suspense>
           } />
