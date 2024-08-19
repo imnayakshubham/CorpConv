@@ -20,8 +20,7 @@ import commonReducer from "./reducer/common"
 import jobsReducer from "./reducer/jobs"
 import jobsSaga from "./sagas/jobs";
 import postsSaga from "./sagas/posts";
-import { toast } from "@/components/ui/use-toast"
-import { cn } from "@/utils/utils"
+import { notification } from "antd"
 
 
 const sagaMiddleware = createSagaMiddleware()
@@ -82,41 +81,29 @@ axiosInstance.interceptors.response.use(
             const status = error.response.status;
 
             if (status === 401) {
-                toast({
-                    className: cn(
-                        'top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4'
-                    ),
-                    title: "Session Expired",
+                notification.error({
+                    message: "Session Expired",
                     description: "Your session has expired. Please log in again.",
                 });
                 store.dispatch({ type: "LOGOUT_SUCCESS" });
             } else if (status === 400) {
-                toast({
-                    className: cn(
-                        'top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4'
-                    ),
-                    title: "Invalid Request",
-                    description: "There was an issue with your request. Please try again.",
+                notification.error({
+
+                    message: "Invalid Request", description: "There was an issue with your request. Please try again.",
                 });
                 store.dispatch({ type: "LOGOUT_SUCCESS" });
 
             } else if (status === 404) {
-                toast({
-                    className: cn(
-                        'top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4'
-                    ),
-                    title: "User Not Found",
+                notification.error({
+
+                    message: "User Not Found",
                     description: "User not found or access is revoked.",
-                });
-                store.dispatch({ type: "LOGOUT_SUCCESS" });
+                }); store.dispatch({ type: "LOGOUT_SUCCESS" });
             }
         } else {
             // Handle errors without a response (e.g., network errors)
-            toast({
-                className: cn(
-                    'top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4'
-                ),
-                title: "Network Error",
+            notification.error({
+                message: "Network Error",
                 description: "An error occurred. Please check your connection and try again.",
             });
         }
