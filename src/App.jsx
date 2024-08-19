@@ -1,4 +1,5 @@
 import { Routes, Route, useNavigate, Link } from 'react-router-dom'
+import ReactGA from 'react-ga4';
 
 import "./App.css";
 import React, { Suspense, useEffect, useMemo } from 'react';
@@ -65,6 +66,12 @@ function App() {
     //   console.log(payload)
     // })
   }, [socket, loginResponse]);
+
+  const googleAnalyticsTrackingId = import.meta.env.VITE_APP_ENV === "production" ? import.meta.env.VITE_APP_GOOGLE_ANALYTICS_ID : null
+
+  if (googleAnalyticsTrackingId) {
+    ReactGA.initialize(googleAnalyticsTrackingId);
+  }
 
   return (
     <>
