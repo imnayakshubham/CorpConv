@@ -98,6 +98,18 @@ const AnswerLinkQuestion = () => {
                     }
                 }
             })
+
+            socket.on("delete_answer_response", (updatedAnswer) => {
+                if (updatedAnswer?.status === "Success") {
+                    if (questionId === updatedAnswer.data.question_id) {
+                        setQuestion((prev) => {
+                            const newState = JSON.parse(JSON.stringify(prev))
+                            newState.data.answers = newState.data.answers.filter((answer) => answer._id !== updatedAnswer.data._id)
+                            return newState
+                        })
+                    }
+                }
+            })
         }
     }, [questionId, socket])
 
@@ -138,7 +150,7 @@ const AnswerLinkQuestion = () => {
     return (
         <>
             <Helmet>
-                <title>AnswerLink - {question?.data?.question}</title>
+                <title>AnswerLink - {question?.data?.question ?? 'Q&A platform, expert answers, real-time interaction, community knowledge, Ask Anything, AnswerLink, expert community'}</title>
                 <meta name="description" content={question?.data?.question} />
                 <meta name="keywords" content="Q&A platform, expert answers, real-time interaction, community knowledge, Ask Anything, AnswerLink, expert community" />
                 <meta property="og:title" content={question?.data?.question} />
