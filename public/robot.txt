@@ -1,0 +1,45 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /private/
+Disallow: /login/
+Disallow: /register/
+Disallow: /tmp/
+Disallow: /test/
+Disallow: /search?q=
+Allow: /
+
+# Sitemap location
+# Sitemap: https://yourdomain.com/sitemap.xml
+
+# Allow crawling of all JS and CSS files
+User-agent: *
+Allow: /*.css$
+Allow: /*.js$
+
+# Block specific crawlers if needed
+User-agent: BadBot
+Disallow: /
+
+# Prevent crawling of duplicate URLs with parameters
+User-agent: *
+Disallow: /*?ref=
+Disallow: /*?source=
+
+# Slow down crawl rate for non-essential crawlers
+User-agent: *
+Crawl-delay: 10
+
+# Allow all crawlers access to images
+User-agent: *
+Allow: /images/
+
+# Prevent indexing of URLs with specific query parameters
+Disallow: /*?session=
+Disallow: /*?sort=
+
+# Block unwanted bots
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
