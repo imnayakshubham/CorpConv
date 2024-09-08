@@ -184,9 +184,7 @@ function App() {
           }
           />
           <Route path='*' element={
-            <Suspense fallback={<MainLoader />}>
-              <PageNotFound />
-            </Suspense>
+            <PageNotFound />
           } />
         </Route>
         <Route element={<PrivateRoutes />}>
