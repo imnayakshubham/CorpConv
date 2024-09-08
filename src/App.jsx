@@ -137,25 +137,25 @@ function App() {
               </Suspense>
             } />
           </Route>
-          <Route element={<PrivateRoutes />}>
-            <Route path='/answerlink' element={
-              <Suspense fallback={<MainLoader />}>
-                <Helmet>
-                  <title>AnswerLink - Your Go-To Q&A Platform for Expert Answers</title>
-                  <meta name="description" content="Welcome to AnswerLink, your go-to platform for asking questions and getting answers from a community of experts and enthusiasts. Engage in real-time discussions and connect with knowledgeable community members." />
-                  <meta name="keywords" content="Q&A platform, expert answers, real-time interaction, community knowledge, Ask Anything, AnswerLink, expert community" />
-                  <meta property="og:title" content="AnswerLink - Your Go-To Q&A Platform for Expert Answers" />
-                  <meta property="og:description" content="Welcome to AnswerLink, your go-to platform for asking questions and getting answers from a community of experts and enthusiasts. Engage in real-time discussions and connect with knowledgeable community members." />
-                  <meta property="og:type" content="website" />
-                  <meta name="twitter:title" content="AnswerLink - Your Go-To Q&A Platform for Expert Answers" />
-                  <meta name="twitter:description" content="Welcome to AnswerLink, your go-to platform for asking questions and getting answers from a community of experts and enthusiasts. Engage in real-time discussions and connect with knowledgeable community members." />
-                </Helmet>
-                <PageWrapper bodyClass={"lg:w-8/12 md:w-9/12"}>
-                  <AnswerLinkHome />
-                </PageWrapper>
-              </Suspense>
-            } />
-          </Route>
+          <Route path='/answerlink' element={
+            <Suspense fallback={<MainLoader />}>
+              <Helmet>
+                <title>AnswerLink - Your Go-To Q&A Platform for Expert Answers</title>
+                <meta name="description" content="Welcome to AnswerLink, your go-to platform for asking questions and getting answers from a community of experts and enthusiasts. Engage in real-time discussions and connect with knowledgeable community members." />
+                <meta name="keywords" content="Q&A platform, expert answers, real-time interaction, community knowledge, Ask Anything, AnswerLink, expert community" />
+                <meta property="og:title" content="AnswerLink - Your Go-To Q&A Platform for Expert Answers" />
+                <meta property="og:description" content="Welcome to AnswerLink, your go-to platform for asking questions and getting answers from a community of experts and enthusiasts. Engage in real-time discussions and connect with knowledgeable community members." />
+                <meta property="og:type" content="website" />
+                <meta name="twitter:title" content="AnswerLink - Your Go-To Q&A Platform for Expert Answers" />
+                <meta name="twitter:description" content="Welcome to AnswerLink, your go-to platform for asking questions and getting answers from a community of experts and enthusiasts. Engage in real-time discussions and connect with knowledgeable community members." />
+              </Helmet>
+              <PageWrapper bodyClass={"lg:w-8/12 md:w-9/12"}>
+                <AnswerLinkHome />
+              </PageWrapper>
+            </Suspense>
+          } />
+        </Route>
+        <Route element={<PrivateRoutes />}>
           <Route path='/answerlink/question/:id' element={
             <Suspense fallback={<MainLoader />}>
               <PageWrapper bodyClass={"lg:w-8/12 md:w-9/12"}>

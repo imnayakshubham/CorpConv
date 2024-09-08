@@ -2,6 +2,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Button } from '../ui/button'
 import { axiosInstance, getUrl } from '@/utils/sendApiRequest'
 import { useSelector } from 'react-redux'
+import { LoginWithGoogle } from '../LoginWithGoogle/LoginWithGoogle'
 
 const AnswerLinkHome = () => {
     const loginResponse = useSelector((state: any) => state.login.loginResponse)
@@ -29,7 +30,6 @@ const AnswerLinkHome = () => {
             </section>
 
             <section className="mb-12">
-                <h3 className="text-2xl font-semibold mb-6 text-center">Key Features</h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <div className="bg-white p-6 rounded-lg border">
                         <h4 className="text-xl font-bold mb-2">Ask Anything</h4>
@@ -47,8 +47,13 @@ const AnswerLinkHome = () => {
             </section>
 
             <section className="flex gap-2 items-center w-full justify-center">
-                <Button onClick={() => askAquestion()} className=" bg-[#fff] text-black py-2 px-4 rounded-full font-bold border hover:bg-black hover:text-white ">Ask Question</Button>
-                <Link to="/answerlink/questions" className="bg-[#000] text-white py-2 px-4 rounded-full font-bold border hover:bg-[#fff] hover:text-black">View Questions</Link>
+                {!!loginResponse?.token ?
+                    <>
+                        <Button onClick={() => askAquestion()} className=" bg-[#fff] text-black py-2 px-4 rounded-full font-bold border hover:bg-black hover:text-white ">Ask Question</Button>
+                        <Link to="/answerlink/questions" className="bg-[#000] text-white py-2 px-4 rounded-full font-bold border hover:bg-[#fff] hover:text-black">View Questions</Link>
+                    </>
+                    : <LoginWithGoogle />
+                }
             </section>
         </main>
     )

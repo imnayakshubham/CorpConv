@@ -4,7 +4,8 @@ export const MainLoader = () => {
         <div
             className="bg-transparent h-screen flex items-center justify-center"
         >
-            Loading....
+            <div className="pulsing-circle w-[50px] h-[50px] bg-[#000] "></div>
         </div>
+
     )
 }
