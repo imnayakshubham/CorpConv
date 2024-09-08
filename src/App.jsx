@@ -216,23 +216,27 @@ export const BottomNavigation = () => {
     const links = [
       {
         title: <div>Home</div>,
-        icon: <Home />,
+        label: "Home",
+        icon: <Home aria-label='Home' />,
         to: `/`,
       },
       {
         title: <div>Chat</div>,
-        icon: <MessageCircle />,
+        label: "Chat",
+        icon: <MessageCircle aria-label='Chat' />,
         to: `chats`,
       },
       {
         title: <div>Posts</div>,
+        label: "Posts",
         to: `posts`,
-        icon: <StickyNote />,
+        icon: <StickyNote aria-label='Posts' />,
       },
       {
         title: <div>Community</div>,
+        label: "Community",
         to: `users`,
-        icon: <CircleUser />,
+        icon: <CircleUser aria-label='Community' />,
       },
     ]
 
@@ -262,7 +266,7 @@ export const BottomNavigation = () => {
         return <TooltipProvider key={i}>
           <Tooltip>
             <TooltipTrigger>
-              <Link to={link.to} onClick={link.onClick} className="flex flex-col items-center justify-center gap-1">
+              <Link to={link.to} onClick={link.onClick} aria-label={link.label} className="flex flex-col items-center justify-center gap-1">
                 {link.icon}
               </Link>
             </TooltipTrigger>
