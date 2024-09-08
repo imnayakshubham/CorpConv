@@ -1,9 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&display=swap');
-
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+    font-family: 'Nunito';
+    src: url('https://fonts.gstatic.com/s/nunito/v14/4iCs6K-qDEcF4Lu5zt5OswZjzsz7a2kK2mMb9C6ieGk.woff2') format('woff2');
+    font-weight: 200 1000;
+    font-style: italic normal;
+    font-display: swap;
+}
 
 
 @layer base {
@@ -76,7 +81,7 @@
 
 body {
     background-color: #FFFFFF;
-    font-family: 'Nunito', sans-serif, "Inter", sans-serif;
+    font-family: 'Nunito', "Inter", sans-serif;
 }
 
 
