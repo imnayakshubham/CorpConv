@@ -103,7 +103,7 @@ const Jobs = ({ from, user_id = null }) => {
             {from === "user_profile" && !!jobs.length &&
                 <h1 className='font-bold p-2 text-xl'>Jobs</h1>
             }
-            {(userInfo && userInfo._id === user_id) &&
+            {(userInfo && (user_id && from === "user_profile" ? (userInfo._id === user_id) : userInfo)) &&
                 <AddJobLink openAddJobModal={openAddJobModal} setOpenAddJobModal={setOpenAddJobModal} />
             }
 
