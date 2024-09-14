@@ -41,7 +41,7 @@ export const ChatSidebar = () => {
             <div className='side__bar__header'>
                 <div className='side__bar__header__user__info'>
                     <ArrowLeft className='icon' onClick={() => window.history.back()} />
-                    <UserAvatar avatarImage={loginResponse.user_public_profile_pic} title={<h3 className="font-semibold text-sm text-wrap ">{loginResponse?.public_user_name}</h3>}></UserAvatar>
+                    <UserAvatar avatarImage={loginResponse.user_public_profile_pic} title={<h3 className="font-semibold md:text-sm">{loginResponse?.public_user_name}</h3>}></UserAvatar>
                 </div>
                 <div className='side__bar__header__actions'>
                     {/* <Badge count={5}>

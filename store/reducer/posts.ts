@@ -26,7 +26,7 @@ const defaultState = {
     // bookmarkStatusError: null,
 
     getCommentRepliesStatus: {},
-    getCommentRepliesError: {}
+    getCommentRepliesError: {},
 };
 
 

@@ -8,7 +8,7 @@ import { Edit, MoreVertical, Trash } from "lucide-react";
 import { useCallback, useEffect, useState } from 'react'
 import { commentRequest, deletePostRequest, upvotePostRequest } from '../../../../store/action/posts'
 import DOMPurify from 'dompurify'
-import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { CreatePost } from '../CreatePost/CreatePost'
 import { sendGet } from '@/utils/sendApiRequest'
 import { message } from 'antd'
@@ -18,7 +18,6 @@ const Post = ({ post = null }) => {
     const { loginResponse: userInfo } = useSelector(state => state.login)
     const dispatch = useDispatch()
     const navigateTo = useNavigate();
-    const location = useLocation();
     const params = useParams()
 
     const [fetchPostStatus, setfetchPostStatus] = useState(AsyncStates.INITIAL)
@@ -29,7 +28,7 @@ const Post = ({ post = null }) => {
         mode: "create"
     })
 
-    const [postData, setPostData] = useState(post ?? location?.state ?? null)
+    const [postData, setPostData] = useState(post ?? null)
     const [viewedParentCommentsIds, setViewedParentCommentsIds] = useState(new Set())
 
     useEffect(() => {

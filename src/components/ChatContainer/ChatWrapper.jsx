@@ -5,7 +5,7 @@ import { useSelector } from "react-redux"
 import { Helmet } from "react-helmet"
 
 const ChatWrapper = () => {
-    const selectedChat = useSelector(state => state.chatData.selectedChat) ?? true
+    const selectedChat = useSelector(state => state.chatData.selectedChat)
 
     return (
         <section className='chat__wrapper__container'>

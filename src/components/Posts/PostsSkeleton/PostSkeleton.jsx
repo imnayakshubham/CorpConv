@@ -1,5 +1,3 @@
-import React from 'react'
-
 export const PostSkeleton = () => {
     return (
         <div className="mx-auto p-4 my-8 bg-white shadow-md rounded-md flex gap-2 flex-col">
