@@ -1,6 +1,6 @@
 
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { Button, Checkbox, Col, Drawer, Form, Input, InputNumber, Radio, Row, Select, Switch, notification } from 'antd'
+import { Button, Checkbox, Col, Drawer, Form, Input, InputNumber, Radio, Row, Select, Switch } from 'antd'
 import TextArea from 'antd/es/input/TextArea'
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
@@ -352,7 +352,7 @@ const SurveyBuilder = () => {
         }
     });
 
-    const handlePublish = (selectedSurvey: any) => {
+    const handlePublish = (_: any) => {
         setIsPreviewMode(true)
         const payload = {
             _id: surveyItems._id,
@@ -362,7 +362,7 @@ const SurveyBuilder = () => {
         editSurveyMutation.mutate(payload)
     }
 
-    const handleFormSubmission = (values: any) => {
+    const handleFormSubmission = () => {
         // notification.success({
         //     message: "Your Survey is Submitted"
         // })

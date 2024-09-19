@@ -4,7 +4,6 @@ import {
     DialogDescription,
     DialogHeader,
     DialogTitle,
-    DialogTrigger,
 } from "@/components/ui/dialog"
 
 import type { FormProps } from 'antd';
@@ -19,11 +18,11 @@ type FieldType = {
     survey_description?: string;
 };
 
-export const CreateSurveyForm = ({ survey, showCreateSurveyModal, setShowCreateSurveyModal }) => {
+export const CreateSurveyForm = ({ survey, showCreateSurveyModal, setShowCreateSurveyModal }: any) => {
     const queryClient = useQueryClient();
     const loginResponse = useSelector((state: any) => state.login.loginResponse)
 
-    const handleModalUpdate = (open: boolean, survey) => {
+    const handleModalUpdate = (open: boolean, survey: any) => {
         if (open) {
             setShowCreateSurveyModal({
                 isModalVisible: open,
@@ -40,7 +39,7 @@ export const CreateSurveyForm = ({ survey, showCreateSurveyModal, setShowCreateS
     }
 
 
-    const createSurvey = async (newSurvey) => {
+    const createSurvey = async (newSurvey: any) => {
         const config = {
             headers: {
                 token: `${loginResponse.token}`,
@@ -58,14 +57,14 @@ export const CreateSurveyForm = ({ survey, showCreateSurveyModal, setShowCreateS
                 data: survey ?? null,
                 mode: "create"
             })
-            queryClient.invalidateQueries(['surveys']);
+            queryClient.invalidateQueries(['surveys'] as any);
         },
         onError: (error) => {
             console.log({ error })
         }
     });
 
-    const editSurvey = async (updatedSurvey) => {
+    const editSurvey = async (updatedSurvey: any) => {
         const config = {
             headers: {
                 token: `${loginResponse.token}`,
@@ -87,7 +86,7 @@ export const CreateSurveyForm = ({ survey, showCreateSurveyModal, setShowCreateS
             })
             const surveyId = showCreateSurveyModal.data._id
 
-            queryClient.invalidateQueries([`edit_survey_${surveyId}`]);
+            queryClient.invalidateQueries([`edit_survey_${surveyId}`] as any);
         },
         onError: (error) => {
             console.log({ error })
