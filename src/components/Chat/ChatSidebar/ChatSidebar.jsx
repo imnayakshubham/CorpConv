@@ -34,8 +34,6 @@ export const ChatSidebar = () => {
         }
     }, [selectedChat, socket])
 
-    console.log({ loginResponse })
-
     return (
         <>
             <div className='side__bar__header'>

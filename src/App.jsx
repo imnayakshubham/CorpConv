@@ -33,6 +33,10 @@ const PageNotFound = React.lazy(() => import('./components/PageNotFound/PageNotF
 
 import { Helmet } from 'react-helmet';
 import { MainLoader } from './components/Loader/MainLoader.tsx';
+import Survey from './components/Surveys/Survey/Survey.tsx';
+const SurveyList = React.lazy(() => import('./components/Surveys/SurveyList/SurveyList.tsx'));
+const SurveyBuilder = React.lazy(() => import('./components/Surveys/SurveyBuilder/SurveyBuilder.tsx'));
+
 
 function App() {
   const loginResponse = useSelector((state) => state.login.loginResponse)
@@ -155,16 +159,17 @@ function App() {
             </Suspense>
           } />
         </Route>
-        <Route element={<PrivateRoutes />}>
-          <Route path='/answerlink/question/:id' element={
-            <Suspense fallback={<MainLoader />}>
-              <PageWrapper bodyClass={"lg:w-8/12 md:w-9/12"}>
-                <AnswerLinkQuestion />
-              </PageWrapper>
-            </Suspense>
 
-          }
-          />
+        <Route path='/answerlink/question/:id' element={
+          <Suspense fallback={<MainLoader />}>
+            <PageWrapper bodyClass={"lg:w-8/12 md:w-9/12"}>
+              <AnswerLinkQuestion />
+            </PageWrapper>
+          </Suspense>
+        }
+        />
+
+        <Route element={<PrivateRoutes />}>
           <Route path='/answerlink/questions' element={
             <Suspense fallback={<MainLoader />}>
               <PageWrapper bodyClass={"lg:w-8/12 md:w-9/12"}>
@@ -183,8 +188,37 @@ function App() {
             </Suspense>
           }
           />
+
+          <Route element={<PrivateRoutes />}>
+            <Route path='/surveys' element={
+              <Suspense fallback={<MainLoader />}>
+                <PageWrapper bodyClass='w-full md:w-3/4 border border-slate-800'>
+                  <SurveyList />
+                </PageWrapper>
+              </Suspense>
+            } />
+          </Route>
+
+          <Route element={<PrivateRoutes />}>
+            <Route path='/survey/builder/:id' element={
+              <Suspense fallback={<MainLoader />}>
+                <SurveyBuilder />
+              </Suspense>
+            } />
+          </Route>
+
+          <Route element={<PrivateRoutes />}>
+            <Route path='/survey/:id' element={
+              <Suspense fallback={<MainLoader />}>
+                <Survey />
+              </Suspense>
+            } />
+          </Route>
+
           <Route path='*' element={
-            <PageNotFound />
+            <Suspense fallback={<MainLoader />}>
+              <PageNotFound />
+            </Suspense>
           } />
         </Route>
         <Route element={<PrivateRoutes />}>

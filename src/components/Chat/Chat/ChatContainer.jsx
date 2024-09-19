@@ -98,8 +98,6 @@ export const ChatContainer = () => {
             if (selectedChat?._id !== newMessage?.chat?._id) {
                 console.log("for other user", newMessage)
             } else {
-                console.log({ newMessage, selectedChat })
-
                 setMessages((prevMessages) => [...prevMessages, newMessage]);
             }
             dispatch(fetchChatListRequest({ background: true }))

@@ -17,7 +17,6 @@ const AnswerLinkHome = () => {
         };
         const { data: { data } } = await axiosInstance.post(getUrl("question/create"), {}, config)
         if (data) {
-            console.log({ data })
             navigateTo(`question/${data._id}`)
         }
     }
