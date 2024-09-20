@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { Button, Checkbox, Col, Form, Input, InputNumber, Radio, Row, Select, notification } from 'antd'
 import TextArea from 'antd/es/input/TextArea'
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { useMutation, useQuery } from '@tanstack/react-query';
@@ -11,6 +11,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 const Survey = () => {
     const { id: surveyId } = useParams()
     const loginResponse = useSelector((state: any) => state.login.loginResponse)
+    const navigateTo = useNavigate()
 
 
     const [surveyValues, setSurveyValues] = useState<{ [key: string]: any }>({
@@ -26,7 +27,7 @@ const Survey = () => {
         return response.data;
     };
 
-    const { data = {}, error, isLoading, isError } = useQuery({
+    const { data = {}, isLoading, failureReason } = useQuery({
         queryKey: [`survey_${surveyId}`], // Unique key for caching
         queryFn: getSurvey,
     });
@@ -117,14 +118,12 @@ const Survey = () => {
         sendSurveySubmissionMutation.mutate(payload)
     }
 
-    if (isLoading) return <>Loading...</>
-    if (isError) return <>{error}</>
+    if (isLoading) return <SurveySkeleton />
 
     return (
-        <div>
-            <div>
-                {
-                    selectedSurvey &&
+        <>
+            {
+                selectedSurvey ?
                     <div className='survey__form__container h-screen border'>
                         <div className={`flex justify-center items-center h-full`}>
                             <div className={`border bg-gray-50 h-[85%]  w-full sm:w-[100%] md:w-[50%] flex flex-col`}>
@@ -137,19 +136,6 @@ const Survey = () => {
                                             {selectedSurvey.survey_description}
                                         </span>
                                     </div>
-                                    {/* <div className='flex gap-2 justify-end items-center w-full h-20 sm:w-auto'>
-                                        <Edit className='cursor-pointer'
-                                            onClick={() => {
-                                                setShowCreateSurveyModal({
-                                                    isModalVisible: true,
-                                                    data: {
-                                                        ...selectedSurvey
-                                                    },
-                                                    mode: "edit"
-                                                })
-
-                                            }} />
-                                    </div> */}
                                 </div>
                                 <div className='p-2 flex-1 overflow-y-scroll'>
                                     <Form
@@ -192,10 +178,83 @@ const Survey = () => {
                             </div>
                         </div>
                     </div>
-                }
+                    : failureReason ? <div className='flex justify-center h-[90%] md:h-screen items-center flex-col gap-3'>
+                        {(failureReason as any)?.response?.data?.message}
+                        <div>
+                            <Button onClick={() => {
+                                navigateTo("/surveys")
+                            }}>Go to Surveys</Button>
+                        </div>
+                    </div>
+                        : null
+            }
+        </>
+    )
+}
+
+const SurveySkeleton = () => {
+    return <div className="survey__form__container h-screen border">
+        <div className="flex justify-center items-center h-full">
+            <div className="border bg-gray-50 h-[85%] w-full sm:w-[100%] md:w-[50%] flex flex-col animate-shimmer">
+                {/* Header Skeleton */}
+                <div className="justify-between flex p-3 border-b gap-4 md:gap-2">
+                    <div className="flex gap-2 flex-col w-full">
+                        <div className="h-6 bg-gray-200 rounded w-3/4"></div>
+                        <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+                    </div>
+                </div>
+
+                {/* Form Body Skeleton */}
+                <div className="p-2 flex-1 overflow-y-scroll">
+                    <div className="space-y-4">
+                        {/* Example of multiple form fields */}
+                        <div className="flex gap-2 w-full justify-between">
+                            <div className="w-full">
+                                <div className="h-4 bg-gray-200 rounded w-1/4 mb-2"></div>
+                                <div className="h-10 bg-gray-200 rounded"></div>
+                            </div>
+                        </div>
+                        <div className="flex gap-2 w-full justify-between">
+                            <div className="w-full">
+                                <div className="h-4 bg-gray-200 rounded w-1/4 mb-2"></div>
+                                <div className="h-10 bg-gray-200 rounded"></div>
+                            </div>
+                        </div>
+                        <div className="flex gap-2 w-full justify-between">
+                            <div className="w-full">
+                                <div className="h-4 bg-gray-200 rounded w-1/4 mb-2"></div>
+                                <div className="h-10 bg-gray-200 rounded"></div>
+                            </div>
+                        </div>
+                        <div className="flex gap-2 w-full justify-between">
+                            <div className="w-full">
+                                <div className="h-4 bg-gray-200 rounded w-1/4 mb-2"></div>
+                                <div className="h-10 bg-gray-200 rounded"></div>
+                            </div>
+                        </div>
+                        <div className="flex gap-2 w-full justify-between">
+                            <div className="w-full">
+                                <div className="h-4 bg-gray-200 rounded w-1/4 mb-2"></div>
+                                <div className="h-10 bg-gray-200 rounded"></div>
+                            </div>
+                        </div>
+                        <div className="flex gap-2 w-full justify-between">
+                            <div className="w-full">
+                                <div className="h-4 bg-gray-200 rounded w-1/4 mb-2"></div>
+                                <div className="h-10 bg-gray-200 rounded"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Submit Button Skeleton */}
+                <div className="flex justify-end border p-2">
+                    <div className="h-10 bg-gray-200 rounded w-1/4"></div>
+                </div>
             </div>
         </div>
-    )
+    </div>
+
 }
 
 export default Survey

@@ -31,7 +31,7 @@ const SurveyBuilder = () => {
         return response.data;
     };
 
-    const { data = {}, error, isLoading, isError } = useQuery({
+    const { data = {}, isLoading, failureReason } = useQuery({
         queryKey: [`survey_${surveyId}`], // Unique key for caching
         queryFn: getSurvey,
     });
@@ -369,121 +369,128 @@ const SurveyBuilder = () => {
         // navigateTo("/")
     }
 
-    if (isLoading) return <>Loading...</>
-    if (isError) return <>{error}</>
+    if (isLoading) return <SurveyBuilderSkeleton />
 
     return (
         <div>
             <div>
                 {
-                    selectedSurvey &&
-                    <div className='survey__form__container h-screen border'>
-                        <div className={`flex ${!isPreviewMode ? 'justify-start md:justify-between' : "justify-center"} flex-col-reverse md:flex-row h-full`}>
-                            <div className={`border bg-gray-50 h-[85%] md:h-[100%] ${isPreviewMode ? 'w-full sm:w-[100%] md:w-[50%]' : "w-full md:w-[70%]"} `}>
-                                <div className='justify-between flex p-3 border-b gap-4 md:gap-2'>
-                                    <div className='flex gap-2 flex-col'>
-                                        <div className={`flex-bold text-xl`}>{selectedSurvey.survey_title}</div>
-                                        <span className="text-sm text-muted-foreground line-clamp-2"
-                                            title={selectedSurvey.survey_description}
-                                        >
-                                            {selectedSurvey.survey_description}
-                                        </span>
-                                    </div>
-                                    {
-                                        !showSubmitButton &&
-                                        <div className='flex gap-2 justify-end items-center w-full h-20 sm:w-auto'>
-                                            <Edit className='cursor-pointer'
-                                                onClick={() => {
-                                                    setShowCreateSurveyModal({
-                                                        isModalVisible: true,
-                                                        data: {
-                                                            ...selectedSurvey
-                                                        },
-                                                        mode: "edit"
-                                                    })
-
-                                                }} />
-                                            <Button disabled={!surveyItems.survey_form.length || !surveyItems.is_editing} onClick={() => handlePublish(selectedSurvey)}>Publish</Button>
-                                            <Switch className='bg-black' disabled={!surveyItems.survey_form.length} checkedChildren="Edit" unCheckedChildren="Preview Mode" checked={isPreviewMode}
-                                                onChange={() => {
-                                                    setIsPreviewMode(prev => !prev)
-                                                }} />
+                    selectedSurvey ?
+                        <div className='survey__form__container h-screen border'>
+                            <div className={`flex ${!isPreviewMode ? 'justify-start md:justify-between' : "justify-center"} flex-col-reverse md:flex-row h-full`}>
+                                <div className={`border bg-gray-50 h-[85%] md:h-[100%] ${isPreviewMode ? 'w-full sm:w-[100%] md:w-[50%]' : "w-full md:w-[70%]"} `}>
+                                    <div className='justify-between flex p-3 border-b gap-4 md:gap-2'>
+                                        <div className='flex gap-2 flex-col'>
+                                            <div className={`flex-bold text-xl`}>{selectedSurvey.survey_title}</div>
+                                            <span className="text-sm text-muted-foreground line-clamp-2"
+                                                title={selectedSurvey.survey_description}
+                                            >
+                                                {selectedSurvey.survey_description}
+                                            </span>
                                         </div>
-                                    }
-                                    {
-                                        showSubmitButton &&
-                                        <Switch className='bg-black' disabled={!surveyItems.survey_form.length} checkedChildren="Edit" unCheckedChildren="Preview Mode" checked={isPreviewMode} onChange={() => {
-                                            setIsPreviewMode(prev => !prev)
-                                        }} />
-                                    }
-                                </div>
-                                <div className='p-2'>
-                                    <Form
-                                        name={selectedSurvey.survey_title}
-                                        form={surveyform}
-                                        layout="vertical"
-                                        onFinish={handleFormSubmission}
-                                        autoComplete="off"
-                                    >
                                         {
-                                            surveyItems.survey_form.map((survey: any) => <div className='flex gap-2 w-full justify-between' key={survey.input_type}>
-                                                <Form.Item
-                                                    className='w-full'
-                                                    label={survey.label}
-                                                    name={survey.input_type}
-                                                >
-                                                    {getDefaultComponents(survey)}
-                                                </Form.Item>
-                                            </div>)
+                                            !showSubmitButton &&
+                                            <div className='flex gap-2 justify-end items-center w-full h-20 sm:w-auto'>
+                                                <Edit className='cursor-pointer'
+                                                    onClick={() => {
+                                                        setShowCreateSurveyModal({
+                                                            isModalVisible: true,
+                                                            data: {
+                                                                ...selectedSurvey
+                                                            },
+                                                            mode: "edit"
+                                                        })
+
+                                                    }} />
+                                                <Button disabled={!surveyItems.survey_form.length || !surveyItems.is_editing} onClick={() => handlePublish(selectedSurvey)}>Publish</Button>
+                                                <Switch className='bg-black' disabled={!surveyItems.survey_form.length} checkedChildren="Edit" unCheckedChildren="Preview Mode" checked={isPreviewMode}
+                                                    onChange={() => {
+                                                        setIsPreviewMode(prev => !prev)
+                                                    }} />
+                                            </div>
                                         }
                                         {
                                             showSubmitButton &&
-                                            <div className='flex justify-end'>
-                                                <Form.Item>
-                                                    <Button className='bg-black' type='primary' htmlType='submit'>Submit</Button>
-                                                </Form.Item>
-                                            </div>
+                                            <Switch className='bg-black' disabled={!surveyItems.survey_form.length} checkedChildren="Edit" unCheckedChildren="Preview Mode" checked={isPreviewMode} onChange={() => {
+                                                setIsPreviewMode(prev => !prev)
+                                            }} />
                                         }
-                                    </Form>
-                                </div>
-                            </div>
-
-                            {
-                                !isPreviewMode &&
-
-                                <div className="border bg-gray-100 h-fit md:h-[100%] w-full  md:w-[30%] p-2 overflow-y-scroll ">
-                                    <div>
-                                        Form Elements
                                     </div>
-                                    <div className='border w-full my-2 grid grid-cols-2'>
-                                        {
-                                            components.map((component) => <div className='p-2 border cursor-pointer' key={component.value}>
-                                                <div onClick={() => {
-                                                    setFormDrawer({
-                                                        isDrawerOpen: true,
-                                                        component: component,
-                                                        mode: "create"
-                                                    })
+                                    <div className='p-2'>
+                                        <Form
+                                            name={selectedSurvey.survey_title}
+                                            form={surveyform}
+                                            layout="vertical"
+                                            onFinish={handleFormSubmission}
+                                            autoComplete="off"
+                                        >
+                                            {
+                                                surveyItems.survey_form.map((survey: any) => <div className='flex gap-2 w-full justify-between' key={survey.input_type}>
+                                                    <Form.Item
+                                                        className='w-full'
+                                                        label={survey.label}
+                                                        name={survey.input_type}
+                                                    >
+                                                        {getDefaultComponents(survey)}
+                                                    </Form.Item>
+                                                </div>)
+                                            }
+                                            {
+                                                showSubmitButton &&
+                                                <div className='flex justify-end'>
+                                                    <Form.Item>
+                                                        <Button className='bg-black' type='primary' htmlType='submit'>Submit</Button>
+                                                    </Form.Item>
+                                                </div>
+                                            }
+                                        </Form>
+                                    </div>
+                                </div>
 
+                                {
+                                    !isPreviewMode &&
 
-                                                    if (component.value === "select") {
-                                                        inputform.setFieldsValue({
-                                                            select_option_type: "single_select",
-                                                            input_type: component.value
+                                    <div className="border bg-gray-100 h-fit md:h-[100%] w-full  md:w-[30%] p-2 overflow-y-scroll ">
+                                        <div>
+                                            Form Elements
+                                        </div>
+                                        <div className='border w-full my-2 grid grid-cols-2'>
+                                            {
+                                                components.map((component) => <div className='p-2 border cursor-pointer' key={component.value}>
+                                                    <div onClick={() => {
+                                                        setFormDrawer({
+                                                            isDrawerOpen: true,
+                                                            component: component,
+                                                            mode: "create"
                                                         })
-                                                    }
 
-                                                    inputform.setFieldValue(
-                                                        "input_type", component.value
-                                                    )
-                                                }}>{component.label}</div>
-                                            </div>
-                                            )}
+
+                                                        if (component.value === "select") {
+                                                            inputform.setFieldsValue({
+                                                                select_option_type: "single_select",
+                                                                input_type: component.value
+                                                            })
+                                                        }
+
+                                                        inputform.setFieldValue(
+                                                            "input_type", component.value
+                                                        )
+                                                    }}>{component.label}</div>
+                                                </div>
+                                                )}
+                                        </div>
                                     </div>
-                                </div>
-                            }
+                                }
+                            </div>
                         </div>
-                    </div>
+                        : <div className='flex justify-center h-[90%] md:h-screen items-center flex-col gap-3'>
+                            {(failureReason as any)?.response?.data?.message}
+                            <div>
+                                <Button onClick={() => {
+                                    navigateTo("/surveys")
+                                }}>Go to Surveys</Button>
+                            </div>
+                        </div>
                 }
             </div>
             {
@@ -514,6 +521,61 @@ const SurveyBuilder = () => {
             <CreateSurveyForm showCreateSurveyModal={showCreateSurveyModal} setShowCreateSurveyModal={setShowCreateSurveyModal} survey={selectedSurvey} />
         </div>
     )
+}
+
+const SurveyBuilderSkeleton = () => {
+    return <div className="survey__form__container h-screen border">
+        <div className={`flex flex-col-reverse md:flex-row h-full animate-shimmer`}>
+            {/* Form Section Skeleton */}
+            <div className="border bg-gray-50 h-[85%] md:h-[100%] w-full md:w-[70%]">
+                <div className="flex justify-between p-3 border-b gap-4 md:gap-2">
+                    <div className="flex flex-col gap-2 w-full">
+                        <div className="h-6 bg-gray-200 rounded w-3/4"></div>
+                        <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+                    </div>
+                    <div className="flex gap-2 items-center w-full h-20 sm:w-auto">
+                        <div className="h-8 bg-gray-200 rounded w-8"></div>
+                        <div className="h-8 bg-gray-200 rounded w-20"></div>
+                        <div className="h-6 bg-gray-200 rounded w-12"></div>
+                    </div>
+                </div>
+
+                {/* Form Fields Skeleton */}
+                <div className="p-2">
+                    <div className="space-y-2">
+                        <div className="h-10 bg-gray-200 rounded w-full"></div>
+                        <div className="h-10 bg-gray-200 rounded w-full"></div>
+                        <div className="h-10 bg-gray-200 rounded w-full"></div>
+                    </div>
+                    <div className="space-y-2">
+                        <div className="h-10 bg-gray-200 rounded w-full"></div>
+                        <div className="h-10 bg-gray-200 rounded w-full"></div>
+                        <div className="h-10 bg-gray-200 rounded w-full"></div>
+                    </div>
+                    <div className="space-y-2">
+                        <div className="h-10 bg-gray-200 rounded w-full"></div>
+                        <div className="h-10 bg-gray-200 rounded w-full"></div>
+                        <div className="h-10 bg-gray-200 rounded w-full"></div>
+                    </div>
+                    <div className="flex justify-end mt-4">
+                        <div className="h-10 bg-gray-200 rounded w-1/4"></div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Sidebar Section Skeleton */}
+            <div className="border bg-gray-100 h-fit md:h-[100%] w-full md:w-[30%] p-2 overflow-y-scroll">
+                <div className="h-6 bg-gray-200 rounded w-1/3 mb-2"></div>
+                <div className="border w-full grid grid-cols-2 gap-2">
+                    <div className="p-2 border bg-gray-200 rounded h-10"></div>
+                    <div className="p-2 border bg-gray-200 rounded h-10"></div>
+                    <div className="p-2 border bg-gray-200 rounded h-10"></div>
+                    <div className="p-2 border bg-gray-200 rounded h-10"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 }
 
 export default SurveyBuilder
