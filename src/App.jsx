@@ -33,10 +33,10 @@ const PageNotFound = React.lazy(() => import('./components/PageNotFound/PageNotF
 
 import { Helmet } from 'react-helmet';
 import { MainLoader } from './components/Loader/MainLoader.tsx';
-import Survey from './components/Surveys/Survey/Survey.tsx';
 const SurveyList = React.lazy(() => import('./components/Surveys/SurveyList/SurveyList.tsx'));
 const SurveyBuilder = React.lazy(() => import('./components/Surveys/SurveyBuilder/SurveyBuilder.tsx'));
-
+const SurveySubmissions = React.lazy(() => import('./components/Surveys/SurveySubmissions/SurveySubmissions.tsx'));
+const Survey = React.lazy(() => import('./components/Surveys/Survey/Survey.tsx'));
 
 function App() {
   const loginResponse = useSelector((state) => state.login.loginResponse)
@@ -211,6 +211,16 @@ function App() {
             <Route path='/survey/:id' element={
               <Suspense fallback={<MainLoader />}>
                 <Survey />
+              </Suspense>
+            } />
+          </Route>
+
+          <Route element={<PrivateRoutes />}>
+            <Route path='/survey/submissions/:id' element={
+              <Suspense fallback={<MainLoader />}>
+                <PageWrapper bodyClass='w-full md:w-3/4 border border-slate-800'>
+                  <SurveySubmissions />
+                </PageWrapper>
               </Suspense>
             } />
           </Route>

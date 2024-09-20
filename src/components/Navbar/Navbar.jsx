@@ -38,8 +38,9 @@ export const Navbar = () => {
         },
         {
             title: "Surveys",
-            disable: true,
-            description: "Beta"
+            disable: false,
+            description: "Beta",
+            to: "/surveys"
         },
         {
             title: "Answer Link",
