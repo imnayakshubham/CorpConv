@@ -158,7 +158,9 @@ const SurveyBuilder = () => {
     }, [])
 
     const handleInputFinish = (formvalues: any) => {
-        const values = { ...formvalues }
+        const values = { ...formvalues, question_id: `question_${self.crypto.randomUUID()}`, is_unsaved: true }
+        console.log({ values })
+
         if (values?.user_select_options?.length) {
             values.user_select_options = values?.user_select_options.map((option: any, index: number) => {
                 return {
@@ -359,7 +361,7 @@ const SurveyBuilder = () => {
     });
 
     const handlePublish = (_: any) => {
-        setIsPreviewMode(true)
+        // setIsPreviewMode(true)
         const payload = {
             _id: surveyItems._id,
             survey_form: surveyItems.survey_form,
@@ -414,13 +416,10 @@ const SurveyBuilder = () => {
         {
             type: 'divider',
         },
-        {
-            label:
-                isSurveyPublished ? <div className='bg-transparent disabled:bg-none disabled:bg-transparent border-none' onClick={() => handleDraft(selectedSurvey)}>Move To Draft</div> :
-                    <Button className='bg-transparent disabled:bg-none disabled:bg-transparent border-none' disabled={!surveyItems.survey_form.length} onClick={() => handlePublish(selectedSurvey)}>Publish</Button>
-            ,
+        ...(isSurveyPublished ? [{
+            label: <div className='bg-transparent disabled:bg-none disabled:bg-transparent border-none' onClick={() => handleDraft(selectedSurvey)}>Move To Draft</div>,
             key: '3',
-        },
+        }] : []),
     ], [isSurveyPublished])
 
     const deleteSurvey = async (surveyId: any) => {
@@ -449,6 +448,23 @@ const SurveyBuilder = () => {
         }
     });
 
+    const handleDeleteSurveyQuestion = (surveyQuestionId: string, isUnsaved: boolean = false) => {
+        const survey_form = surveyItems.survey_form.filter((question: any) => question?.question_id !== surveyQuestionId)
+        console.log({ survey_form })
+        setSurveyItems((prev) => ({
+            ...prev,
+            survey_form
+        }))
+        if (!isUnsaved) {
+            const payload = {
+                _id: surveyId,
+                survey_form
+            }
+            editSurveyMutation.mutate(payload)
+        }
+
+    }
+
     if (isLoading) return <SurveyBuilderSkeleton />
 
     return (
@@ -471,9 +487,12 @@ const SurveyBuilder = () => {
                                         {
                                             !showSubmitButton &&
                                             <div className=' flex flex-col gap-2 justify-end items-end'>
-                                                <Dropdown menu={{ items }} trigger={['click']} className='cursor-pointer'>
-                                                    <EllipsisVertical />
-                                                </Dropdown>
+                                                <div className='flex gap-2 items-center'>
+                                                    <Button disabled={!surveyItems.survey_form.length || !surveyItems.is_editing} onClick={() => handlePublish(selectedSurvey)}>{!isSurveyPublished ? "Publish" : "Update"}</Button>
+                                                    <Dropdown menu={{ items }} trigger={['click']} className='cursor-pointer'>
+                                                        <EllipsisVertical />
+                                                    </Dropdown>
+                                                </div>
                                                 <div className=''>
                                                     {isSurveyPublished && <Badge >Published</Badge>}
                                                     {selectedSurvey?.status === "draft" && <Badge variant={"destructive"}>Draft</Badge>}
@@ -502,13 +521,18 @@ const SurveyBuilder = () => {
                                             autoComplete="off"
                                         >
                                             {
-                                                surveyItems.survey_form.map((survey: any) => <div className='flex gap-2 w-full justify-between' key={survey.input_type}>
+                                                surveyItems.survey_form.map((survey: any) => <div className='flex gap-2 w-full justify-between group' key={survey.input_type}>
                                                     <Form.Item
-                                                        className='w-full'
+                                                        className='w-full group-hover:bg-slate-100 p-2'
                                                         label={survey.label}
                                                         name={survey.input_type}
                                                     >
-                                                        {getDefaultComponents(survey)}
+                                                        <div className='flex justify-between items-center '>
+                                                            {getDefaultComponents(survey)}
+                                                            <div className='opacity-0 transition-all duration-200 ease-in group-hover:opacity-100'>
+                                                                <Trash className='text-red-500 cursor-pointer' onClick={() => handleDeleteSurveyQuestion(survey?.question_id, survey?.is_unsaved)} />
+                                                            </div>
+                                                        </div>
                                                     </Form.Item>
                                                 </div>)
                                             }
@@ -543,6 +567,8 @@ const SurveyBuilder = () => {
                                                                 mode: "create"
                                                             })
 
+                                                            console.log({ component })
+
                                                             if (component.value === "select") {
                                                                 inputform.setFieldsValue({
                                                                     select_option_type: "single_select",
@@ -552,6 +578,9 @@ const SurveyBuilder = () => {
 
                                                             inputform.setFieldValue(
                                                                 "input_type", component.value
+                                                            )
+                                                            inputform.setFieldValue(
+                                                                "is_required", false
                                                             )
                                                         }}>
                                                         <div className='flex items-center flex-col p-2'>
@@ -579,8 +608,7 @@ const SurveyBuilder = () => {
             {
                 formDrawer.component &&
                 <Drawer title={`Setting for ${formDrawer.component.label}`}
-                    height={"50%"}
-
+                    height={"500px"}
                     placement='bottom'
                     onClose={onClose} open={formDrawer.isDrawerOpen}>
                     <div className='setting__container' >
@@ -591,6 +619,21 @@ const SurveyBuilder = () => {
                             layout='vertical'
                             onFinish={handleInputFinish}
                         >
+                            <Form.Item
+                                label={"Is Required Filed"}
+                                name={"is_required"}
+                            >
+                                <Radio.Group className='w-full' options={[{
+                                    label: "Yes",
+                                    value: true,
+                                },
+                                {
+                                    label: "No",
+                                    value: false,
+                                }
+                                ]}
+                                />
+                            </Form.Item>
                             <div className='options__setting'>{getSettingComponents(formDrawer.component)}</div>
                             <div className="option__actions">
                                 <Form.Item>
