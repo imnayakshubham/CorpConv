@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
 import { useSelector } from "react-redux"
 import { Button } from "antd"
-import { PlusSquare } from "lucide-react"
+import { Plus } from "lucide-react"
 
 
 const SurveyList = () => {
@@ -40,7 +40,7 @@ const SurveyList = () => {
             <div className="py-4">
                 <h2 className="text-xl font-bold col-span-2 py-2">Your Surveys</h2>
                 {isError ? <p className="text-red-800 py-2">Error: {error?.message ?? "Failed To Load Surveys"}</p> : null}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
                     <Button
                         onClick={() => {
                             setShowCreateSurveyModal((prev) => ({
@@ -48,9 +48,9 @@ const SurveyList = () => {
                                 isModalVisible: true
                             }))
                         }}
-                        className="group border border-primary/20 h-[190px] items-center justify-center flex flex-col hover:border-primary hover:cursor-pointer border-dashed gap-4"
+                        className="group border border-primary/20 h-[250px] items-center justify-center flex flex-col hover:border-primary hover:cursor-pointer border-dashed gap-4"
                     >
-                        <PlusSquare className="h-8 w-8 text-muted-foreground group-hover:text-primary" />
+                        <Plus className="h-14 w-14 text-muted-foreground group-hover:text-primary" />
                         <p className="font-bold text-xl text-muted-foreground group-hover:text-primary">Create new Survey</p>
                     </Button>
                     {

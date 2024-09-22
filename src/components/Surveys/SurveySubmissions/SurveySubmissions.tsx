@@ -77,7 +77,7 @@ const SurveySubmissions = () => {
         <div>
             <div className='justify-between flex p-3 border-b gap-4 md:gap-2'>
                 <div className='flex gap-2 flex-col'>
-                    <div className={`flex-bold text-xl`}>{survey.survey_title}</div>
+                    <h1 className={`flex-bold font-bold text-2xl`}>{survey.survey_title}</h1>
                     <span className="text-sm text-muted-foreground line-clamp-2"
                         title={survey.survey_description}
                     >
@@ -85,36 +85,28 @@ const SurveySubmissions = () => {
                     </span>
                 </div>
                 <div className='flex gap-4'>
-
                     <Share2 className='cursor-pointer' onClick={() => {
                         const site = `${window.location.origin}/survey/${survey._id}`
                         navigator.clipboard.writeText(`${site}?ref=corpconv`)
                         message.info("Link Copied")
-                        // window.open(`${window.location.origin}/survey/${survey._id}`, '_blank', 'noopener,noreferrer');
                     }} />
 
                     <Edit2Icon className='cursor-pointer' onClick={() => {
-                        const site = `${window.location.origin}/survey/${survey._id}`
-                        navigator.clipboard.writeText(`${site}?ref=corpconv`)
-                        message.info("Link Copied")
-                        // window.open(`${window.location.origin}/survey/builder/${survey._id}`, '_blank', 'noopener,noreferrer');
+                        window.open(`${window.location.origin}/survey/builder/${survey._id}`, '_blank', 'noopener,noreferrer');
                     }} />
-
                 </div>
             </div>
 
-            <div className="">
-                <SubmissionsTable data={survey.submissions} />
+            <div className="py-4">
+                <SubmissionsCards data={survey.submissions} />
             </div>
         </div>
     )
 }
 
 
-function SubmissionsTable({ data }: any) {
+function SubmissionsCards({ data }: any) {
     const submissions = useMemo(() => data, [])
-    console.log({ submissions })
-
     return (
         <>
             <h1 className="text-2xl font-bold my-4">Submissions</h1>

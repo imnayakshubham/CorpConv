@@ -192,7 +192,7 @@ function App() {
           <Route element={<PrivateRoutes />}>
             <Route path='/surveys' element={
               <Suspense fallback={<MainLoader />}>
-                <PageWrapper bodyClass='w-full md:w-3/4 border border-slate-800'>
+                <PageWrapper bodyClass='w-full md:w-10/12 border border-slate-800'>
                   <SurveyList />
                 </PageWrapper>
               </Suspense>

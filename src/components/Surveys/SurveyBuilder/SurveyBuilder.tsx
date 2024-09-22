@@ -1,13 +1,15 @@
 
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { Button, Checkbox, Col, Drawer, Form, Input, InputNumber, Radio, Row, Select, Switch } from 'antd'
+import { Button, Checkbox, Col, Drawer, Dropdown, Form, Input, InputNumber, notification, Radio, Row, Select, Switch } from 'antd'
 import TextArea from 'antd/es/input/TextArea'
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Edit } from 'lucide-react';
+import { Edit, EllipsisVertical, Plus, Trash } from 'lucide-react';
 import { CreateSurveyForm } from '../CreateSurvey/CreateSurveyForm';
+import { Badge } from '@/components/ui/badge';
+import type { MenuProps } from 'antd';
 
 const SurveyBuilder = () => {
     const queryClient = useQueryClient();
@@ -43,6 +45,7 @@ const SurveyBuilder = () => {
         mode: "edit"
     })
 
+    const isSurveyPublished = useMemo(() => selectedSurvey?.status === "published", [selectedSurvey])
 
     const navigateTo = useNavigate()
 
@@ -334,18 +337,21 @@ const SurveyBuilder = () => {
             },
         };
         const surveyId = selectedSurvey._id
-        const response = await axios.put(`${import.meta.env.VITE_APP_API_URL} survey / edit / ${surveyId} `, updatedSurvey, config);
+        const response = await axios.put(`${import.meta.env.VITE_APP_API_URL}survey/edit/${surveyId} `, updatedSurvey, config);
         return response.data;
     };
 
 
     const editSurveyMutation = useMutation({
         mutationFn: editSurvey,  // Define your mutation function here
-        onSuccess: () => {
+        onSuccess: (data) => {
+            console.log({ data })
             const surveyId = selectedSurvey._id
 
             queryClient.invalidateQueries([`edit_survey_${surveyId}`] as any);
-            navigateTo(`/ survey / ${surveyId} `)
+            if (data.status === "published") {
+                navigateTo(`/survey/${surveyId}`)
+            }
         },
         onError: (error) => {
             console.log({ error })
@@ -362,12 +368,86 @@ const SurveyBuilder = () => {
         editSurveyMutation.mutate(payload)
     }
 
+    const handleDraft = (surveyData: any) => {
+        const payload = {
+            _id: surveyData._id,
+            status: "draft"
+        }
+        editSurveyMutation.mutate(payload)
+    }
+
     const handleFormSubmission = () => {
         // notification.success({
         //     message: "Your Survey is Submitted"
         // })
         // navigateTo("/")
     }
+
+    const items: MenuProps['items'] = useMemo(() => [
+        {
+            label: <div className='flex items-center gap-2'>
+                <Edit />
+                <div>Edit</div>
+            </div>,
+            key: '0',
+            onClick: () => {
+                setShowCreateSurveyModal({
+                    isModalVisible: true,
+                    data: {
+                        ...selectedSurvey
+                    },
+                    mode: "edit"
+                })
+            }
+        },
+        {
+            label: <div className='flex items-center gap-2 text-red-600'>
+                <Trash className='cursor-pointer' />
+                <div>Delete</div>
+            </div>,
+            onClick: () => {
+                deleteSurveyMutation.mutate(`${surveyId}`)
+            },
+
+            key: '1',
+        },
+        {
+            type: 'divider',
+        },
+        {
+            label:
+                isSurveyPublished ? <div className='bg-transparent disabled:bg-none disabled:bg-transparent border-none' onClick={() => handleDraft(selectedSurvey)}>Move To Draft</div> :
+                    <Button className='bg-transparent disabled:bg-none disabled:bg-transparent border-none' disabled={!surveyItems.survey_form.length} onClick={() => handlePublish(selectedSurvey)}>Publish</Button>
+            ,
+            key: '3',
+        },
+    ], [isSurveyPublished])
+
+    const deleteSurvey = async (surveyId: any) => {
+        const config = {
+            headers: {
+                token: `${loginResponse.token} `,
+            },
+        };
+        const response = await axios.delete(`${import.meta.env.VITE_APP_API_URL}survey/${surveyId} `, config);
+        return response.data;
+    };
+
+
+    const deleteSurveyMutation = useMutation({
+        mutationFn: deleteSurvey,  // Define your mutation function here
+        onSuccess: (apiResponse) => {
+            if (apiResponse.status === "Success") {
+                queryClient.invalidateQueries([`edit_survey_${apiResponse.data._id}`] as any);
+                navigateTo("/surveys")
+            }
+        },
+        onError: (error: any) => {
+            notification.error({
+                message: error?.response?.data?.message
+            })
+        }
+    });
 
     if (isLoading) return <SurveyBuilderSkeleton />
 
@@ -381,7 +461,7 @@ const SurveyBuilder = () => {
                                 <div className={`border bg-gray-50 h-[85%] md:h-[100%] ${isPreviewMode ? 'w-full sm:w-[100%] md:w-[50%]' : "w-full md:w-[70%]"} `}>
                                     <div className='justify-between flex p-3 border-b gap-4 md:gap-2'>
                                         <div className='flex gap-2 flex-col'>
-                                            <div className={`flex-bold text-xl`}>{selectedSurvey.survey_title}</div>
+                                            <h1 className={`flex-bold font-bold text-2xl`}>{selectedSurvey.survey_title}</h1>
                                             <span className="text-sm text-muted-foreground line-clamp-2"
                                                 title={selectedSurvey.survey_description}
                                             >
@@ -390,23 +470,20 @@ const SurveyBuilder = () => {
                                         </div>
                                         {
                                             !showSubmitButton &&
-                                            <div className='flex gap-2 justify-end items-center w-full h-20 sm:w-auto'>
-                                                <Edit className='cursor-pointer'
-                                                    onClick={() => {
-                                                        setShowCreateSurveyModal({
-                                                            isModalVisible: true,
-                                                            data: {
-                                                                ...selectedSurvey
-                                                            },
-                                                            mode: "edit"
-                                                        })
-
-                                                    }} />
-                                                <Button disabled={!surveyItems.survey_form.length || !surveyItems.is_editing} onClick={() => handlePublish(selectedSurvey)}>Publish</Button>
-                                                <Switch className='bg-black' disabled={!surveyItems.survey_form.length} checkedChildren="Edit" unCheckedChildren="Preview Mode" checked={isPreviewMode}
-                                                    onChange={() => {
-                                                        setIsPreviewMode(prev => !prev)
-                                                    }} />
+                                            <div className=' flex flex-col gap-2 justify-end items-end'>
+                                                <Dropdown menu={{ items }} trigger={['click']} className='cursor-pointer'>
+                                                    <EllipsisVertical />
+                                                </Dropdown>
+                                                <div className=''>
+                                                    {isSurveyPublished && <Badge >Published</Badge>}
+                                                    {selectedSurvey?.status === "draft" && <Badge variant={"destructive"}>Draft</Badge>}
+                                                </div>
+                                                <div className='flex gap-2 items-center'>
+                                                    <Switch className='bg-black' disabled={!surveyItems.survey_form.length} checkedChildren="Edit" unCheckedChildren="Preview" checked={isPreviewMode}
+                                                        onChange={() => {
+                                                            setIsPreviewMode(prev => !prev)
+                                                        }} />
+                                                </div>
                                             </div>
                                         }
                                         {
@@ -451,31 +528,37 @@ const SurveyBuilder = () => {
                                     !isPreviewMode &&
 
                                     <div className="border bg-gray-100 h-fit md:h-[100%] w-full  md:w-[30%] p-2 overflow-y-scroll ">
-                                        <div>
-                                            Form Elements
-                                        </div>
+                                        <h2 className='font-bold'>
+                                            Add Form Elements
+                                        </h2>
                                         <div className='border w-full my-2 grid grid-cols-2'>
                                             {
-                                                components.map((component) => <div className='p-2 border cursor-pointer' key={component.value}>
-                                                    <div onClick={() => {
-                                                        setFormDrawer({
-                                                            isDrawerOpen: true,
-                                                            component: component,
-                                                            mode: "create"
-                                                        })
-
-
-                                                        if (component.value === "select") {
-                                                            inputform.setFieldsValue({
-                                                                select_option_type: "single_select",
-                                                                input_type: component.value
+                                                components.map((component) => <div className='border cursor-pointer' key={component.value}>
+                                                    <div
+                                                        className='hover:bg-gray-200'
+                                                        onClick={() => {
+                                                            setFormDrawer({
+                                                                isDrawerOpen: true,
+                                                                component: component,
+                                                                mode: "create"
                                                             })
-                                                        }
 
-                                                        inputform.setFieldValue(
-                                                            "input_type", component.value
-                                                        )
-                                                    }}>{component.label}</div>
+                                                            if (component.value === "select") {
+                                                                inputform.setFieldsValue({
+                                                                    select_option_type: "single_select",
+                                                                    input_type: component.value
+                                                                })
+                                                            }
+
+                                                            inputform.setFieldValue(
+                                                                "input_type", component.value
+                                                            )
+                                                        }}>
+                                                        <div className='flex items-center flex-col p-2'>
+                                                            <Plus className="md:h-12 md:w-12 w-8 h-8 text-muted-foreground group-hover:text-primary" />
+                                                            <p className="font-bold text-xl text-muted-foreground group-hover:text-primary"> {component.label}</p>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 )}
                                         </div>

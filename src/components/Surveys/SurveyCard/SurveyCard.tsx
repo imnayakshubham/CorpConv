@@ -3,16 +3,45 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { useNavigate } from "react-router-dom"
 import { Badge } from "@/components/ui/badge"
 import { fromNow } from "@/utils/helperFn"
-import { EyeIcon } from "lucide-react"
+import { Edit, EyeIcon, Trash } from "lucide-react"
 import { useMemo } from "react"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { useSelector } from "react-redux"
+import axios from "axios"
 
 export const SurveyCard = ({ survey }: any) => {
     const navigateTo = useNavigate()
+    const queryClient = useQueryClient();
+    const loginResponse = useSelector((state: any) => state.login.loginResponse)
+
     const isSurveyPublished = useMemo(() => survey.status === "published", [survey])
+
+    const deleteSurvey = async (selectedSurvey: any) => {
+        const config = {
+            headers: {
+                token: `${loginResponse.token} `,
+            },
+        };
+        const surveyId = selectedSurvey._id
+        const response = await axios.delete(`${import.meta.env.VITE_APP_API_URL}survey/${surveyId} `, config);
+        return response.data;
+    };
+
+
+    const deleteSurveyMutation = useMutation({
+        mutationFn: deleteSurvey,  // Define your mutation function here
+        onSuccess: () => {
+            queryClient.invalidateQueries(['surveys'] as any);
+        },
+        onError: (error) => {
+            console.log({ error })
+        }
+    });
+
 
     return (
         <Card
-            className={isSurveyPublished ? "cursor-pointer" : ""}
+            className={`${isSurveyPublished ? "cursor-pointer" : ""}`}
             onClick={() => {
                 if (isSurveyPublished) {
                     navigateTo(`/survey/${survey._id}`)
@@ -21,7 +50,7 @@ export const SurveyCard = ({ survey }: any) => {
         >
             <CardHeader>
                 <CardTitle className="flex items-center gap-2 justify-between">
-                    <span className="truncate font-bold">{survey.survey_title}</span>
+                    <span className="truncate text-xl font-bold">{survey.survey_title}</span>
                     {isSurveyPublished && <Badge>Published</Badge>}
                     {survey.status === "draft" && <Badge variant={"destructive"}>Draft</Badge>}
                 </CardTitle>
@@ -38,27 +67,38 @@ export const SurveyCard = ({ survey }: any) => {
             <CardContent className="h-[20px] truncate text-sm text-muted-foreground">
                 {survey.survey_description || "No description"}
             </CardContent>
-            <CardFooter>
-                {isSurveyPublished && (
-                    <Button asChild className="w-full mt-2 text-md gap-4 cursor-pointer"
-                        onClick={(e) => {
-                            e.stopPropagation()
+            <CardFooter className="flex-col">
+                <Button className="w-full mt-2 text-md gap-4 cursor-pointer"
+                    disabled={!isSurveyPublished}
+                    onClick={(e) => {
+                        e.stopPropagation()
+                        if (isSurveyPublished) {
                             navigateTo(`/survey/submissions/${survey._id}`)
-                        }}
-                    >
-                        {`View submissions ${survey.submissions.length ? `(${survey.submissions.length})` : ""}`}
-                    </Button>
-                )}
-                {survey.status === "draft" && (
+                        }
+                    }}
+                >
+                    {`View Submissions ${survey.submissions.length ? `(${survey.submissions.length})` : ""}`}
+                </Button>
+                <div className="flex gap-2 justify-end w-full">
                     <Button asChild variant={"secondary"} className="w-full mt-2 text-md gap-4 cursor-pointer"
                         onClick={(e) => {
                             e.stopPropagation()
                             navigateTo(`/survey/builder/${survey._id}`)
                         }}
                     >
-                        Edit form
+                        <Edit />
                     </Button>
-                )}
+
+                    <Button asChild variant={"secondary"} className="w-full mt-2 text-md gap-4 cursor-pointer"
+                        onClick={(e) => {
+                            e.stopPropagation()
+                            console.log(survey._id)
+                            deleteSurveyMutation.mutate(survey)
+                        }}
+                    >
+                        <Trash className="text-red-500" />
+                    </Button>
+                </div>
             </CardFooter>
         </Card>
     )

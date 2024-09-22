@@ -32,8 +32,8 @@ export const CreateSurveyForm = ({ survey, showCreateSurveyModal, setShowCreateS
         } else {
             setShowCreateSurveyModal({
                 isModalVisible: false,
-                data: survey ?? null,
-                mode: survey ? "edit" : "create"
+                data: null,
+                mode: "create"
             })
         }
     }
