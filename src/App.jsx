@@ -8,7 +8,7 @@ import io from "socket.io-client"
 import { socketEndPoint } from "../constants/index.ts";
 import { socketSave } from "../store/action/common.js";
 import { logoutRequest } from '../store/action/login.js';
-import { StickyNote, MessageCircle, LogOut, Home, CircleUser, Users as UsersIcon } from 'lucide-react';
+import { StickyNote, MessageCircle, Home, CircleUser } from 'lucide-react';
 import {
   Tooltip,
   TooltipContent,
