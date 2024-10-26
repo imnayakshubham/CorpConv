@@ -33,6 +33,9 @@ const PageNotFound = React.lazy(() => import('./components/PageNotFound/PageNotF
 
 import { Helmet } from 'react-helmet';
 import { MainLoader } from './components/Loader/MainLoader.tsx';
+import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuTrigger } from './components/ui/navigation-menu.tsx';
+import { Avatar, AvatarFallback, AvatarImage } from './components/ui/avatar.tsx';
+import { cn } from './utils/utils.ts';
 const SurveyList = React.lazy(() => import('./components/Surveys/SurveyList/SurveyList.tsx'));
 const SurveyBuilder = React.lazy(() => import('./components/Surveys/SurveyBuilder/SurveyBuilder.tsx'));
 const SurveySubmissions = React.lazy(() => import('./components/Surveys/SurveySubmissions/SurveySubmissions.tsx'));
@@ -253,6 +256,26 @@ export const BottomNavigation = () => {
   const dispatch = useDispatch()
   const userInfo = useSelector((state) => state.login.loginResponse)
 
+  const components = [
+    {
+      title: <div className="nav-logo">Profile</div>,
+      to: `/user/${userInfo?._id}`,
+      key: "user-info"
+    },
+    {
+      title: "Update Profile",
+      key: "update-profile",
+      to: "/update-profile",
+    },
+    {
+      title: "Logout",
+      key: "logout",
+      onClick: () => {
+        dispatch(logoutRequest())
+      }
+    },
+  ]
+
 
   const navLinks = useMemo(() => {
     const links = [
@@ -281,28 +304,11 @@ export const BottomNavigation = () => {
         icon: <CircleUser aria-label='Community' />,
       },
     ]
-
-    if (userInfo) {
-      links.push(...[
-        {
-          title: <div className="nav-logo">Profile</div>,
-          to: `/user/${userInfo?._id}`,
-          icon: <UsersIcon />
-        },
-        {
-          title: "Logout",
-          id: "logout",
-          icon: <LogOut className='text-red-500' />,
-          onClick: () => {
-            dispatch(logoutRequest())
-          }
-        },
-      ])
-    }
     return links
-  }, [dispatch, userInfo])
+  }, [])
 
-  return <div className='fixed z-50 bottom-0 p-4 sm:hidden flex gap-2 w-screen justify-between bg-[#fff]'>
+
+  return <div className='fixed z-50 bottom-0 p-2 px-4 sm:hidden flex gap-2 w-screen justify-between bg-[#fff] border'>
     {
       navLinks.map((link, i) => {
         return <TooltipProvider key={i}>
@@ -319,5 +325,60 @@ export const BottomNavigation = () => {
         </TooltipProvider>
       })
     }
+    {console.log({ components })}
+    {userInfo?._id &&
+      <NavigationMenu className='list-none p-0'>
+        <NavigationMenuItem>
+          <NavigationMenuTrigger className='p-0'>
+            <div onClick={e => e.preventDefault()} className="cursor-pointer">
+              <Avatar>
+                <AvatarImage src={userInfo?.user_public_profile_pic} />
+                <AvatarFallback>{userInfo?.public_user_name}</AvatarFallback>
+              </Avatar>
+            </div>
+          </NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <ul className="w-full flex-start flex-col fixed right-0 z-50 bottom-20 shadow-sm bg-[#fff]	border rounded-sm list-none	">
+              {components.map((component) => (
+                <ListItem
+                  key={component.key}
+                  title={component.title}
+                  to={component.to}
+                  id={component.key}
+                  {...component}
+                >
+                  {component.description}
+                </ListItem>
+              ))}
+            </ul>
+          </NavigationMenuContent>
+        </NavigationMenuItem>
+      </NavigationMenu>
+    }
   </div>
 }
+
+
+const ListItem = React.forwardRef(({ className, title, children, id, ...props }, ref) => {
+  return (
+    <li>
+      <NavigationMenuLink asChild>
+        <Link
+          ref={ref}
+          className={cn(
+            `block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground ${id === "logout" ? "text-red-500 hover:bg-red-500 hover:text-white font-extrabold" : ""}`,
+            className
+          )}
+          {...props}
+        >
+          <div className="text-sm font-medium leading-none">{title}</div>
+          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+            {children}
+          </p>
+        </Link>
+      </NavigationMenuLink>
+    </li>
+  );
+});
+
+ListItem.displayName = "ListItem"

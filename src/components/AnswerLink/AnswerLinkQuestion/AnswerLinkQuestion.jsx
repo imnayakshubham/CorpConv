@@ -203,36 +203,36 @@ const AnswerLinkQuestion = () => {
                                 }
                             </div>
 
-                            {!!question?.data?.answers?.length &&
-                                <div className="flex-1 overflow-y-scroll">
-                                    {
-                                        question?.data?.answers?.map((answer) => {
-                                            return <div key={answer._id}
-                                                className="flex sm:justify-between md:gap-2 gap-1 flex-wrap p-2 border cursor-pointer"
-                                            >
-                                                <div>
-                                                    {/* {answer.answer?.answered_by?.public_profile_pic} */}
-                                                    <UserAvatar avatarImage={answer?.answered_by?.user_public_profile_pic}></UserAvatar>
-                                                </div>
-
-                                                <div className="sm:flex-1 flex-wrap">
-                                                    <div >
-                                                        <span className="font-extrabold text-xl">{answer.answer}</span>
-                                                    </div>
-                                                    <div className="flex gap-1 flex-wrap">
-                                                        <span className="text-gray-400 font-semibold text-clip text-sm">{fromNow(answer.answered_at)} | {answer.answered_by?.public_user_name ?? "Anonymous User"}</span>
-                                                    </div>
-                                                </div>
-                                                {
-                                                    loginResponse?._id && (answer.answered_by?._id === loginResponse?._id) &&
-                                                    <div className="w-full sm:w-auto"><Button onClick={(e) => handleDeleteAnswer(e, answer._id)} className="bg-red-500 w-full sm:w-auto">Delete</Button></div>
-                                                }
+                            {/* {!!question?.data?.answers?.length && */}
+                            <div className="flex-1 overflow-y-scroll">
+                                {
+                                    question?.data?.answers?.map((answer) => {
+                                        return <div key={answer._id}
+                                            className="flex sm:justify-between md:gap-2 gap-1 flex-wrap p-2 border cursor-pointer"
+                                        >
+                                            <div>
+                                                {/* {answer.answer?.answered_by?.public_profile_pic} */}
+                                                <UserAvatar avatarImage={answer?.answered_by?.user_public_profile_pic}></UserAvatar>
                                             </div>
 
-                                        })
-                                    }
-                                </div>
-                            }
+                                            <div className="sm:flex-1 flex-wrap">
+                                                <div >
+                                                    <span className="font-extrabold text-xl">{answer.answer}</span>
+                                                </div>
+                                                <div className="flex gap-1 flex-wrap">
+                                                    <span className="text-gray-400 font-semibold text-clip text-sm">{fromNow(answer.answered_at)} | {answer.answered_by?.public_user_name ?? "Anonymous User"}</span>
+                                                </div>
+                                            </div>
+                                            {
+                                                loginResponse?._id && (answer.answered_by?._id === loginResponse?._id) &&
+                                                <div className="w-full sm:w-auto"><Button onClick={(e) => handleDeleteAnswer(e, answer._id)} className="bg-red-500 w-full sm:w-auto">Delete</Button></div>
+                                            }
+                                        </div>
+
+                                    })
+                                }
+                            </div>
+                            {/* } */}
                             <div className="w-full md:pt-0 dark:border-white/20 md:border-transparent md:dark:border-transparent juice:w-full">
                                 <div className="border flex gap-1 items-center p-2 justify-center rounded">
                                     <textarea

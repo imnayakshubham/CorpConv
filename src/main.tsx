@@ -8,6 +8,7 @@ import { Provider } from 'react-redux';
 import { createBrowserHistory } from "history"
 import { HistoryRouter } from './HistoryRouter.jsx';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary.js';
 
 export const history = createBrowserHistory()
 
@@ -15,12 +16,14 @@ const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <Provider store={store} >
-    <PersistGate loading={null} persistor={persistor}>
-      <QueryClientProvider client={queryClient}>
-        <HistoryRouter history={history}>
-          <App />
-        </HistoryRouter>
-      </QueryClientProvider>
-    </PersistGate>
+    <ErrorBoundary>
+      <PersistGate loading={null} persistor={persistor}>
+        <QueryClientProvider client={queryClient}>
+          <HistoryRouter history={history}>
+            <App />
+          </HistoryRouter>
+        </QueryClientProvider>
+      </PersistGate>
+    </ErrorBoundary>
   </Provider >
 )

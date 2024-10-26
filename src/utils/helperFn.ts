@@ -1,4 +1,5 @@
-export const fromNow = (date: Date | string): string => {
+export const fromNow = (date: Date | string): string | null => {
+    if (!date) return null
     const inputDate = typeof date === 'string' ? new Date(date) : date;
     const currentDate = new Date();
 

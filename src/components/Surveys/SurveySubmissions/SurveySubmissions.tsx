@@ -28,7 +28,7 @@ const getDefaultComponents = (survey: any, disabled = false) => {
             return <Radio.Group className={className} options={survey.user_select_options} disabled value={value} />
 
         case "checkbox":
-            return <Checkbox.Group style={{ width: '100%' }}>
+            return <Checkbox.Group style={{ width: '100%' }} value={value}>
                 <Row>
                     {survey.user_select_options.map((surveyOption: any) => {
                         return <Col className='py-2' span={8} key={surveyOption.value}>
@@ -67,8 +67,6 @@ const SurveySubmissions = () => {
         queryFn: getSurvey,
     });
     const { data: survey } = data
-
-    console.log({ survey })
 
     if (isLoading) return <>Loading...</>
     if (isError) return <>{error}</>

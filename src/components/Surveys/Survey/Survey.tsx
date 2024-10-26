@@ -92,7 +92,7 @@ const Survey = () => {
             surveyform.resetFields()
         },
         onError: (error) => {
-            notification.success({
+            notification.error({
                 message: JSON.stringify(error)
             })
         }

@@ -11,7 +11,7 @@ const features = [
         name: "Anonymously Connect",
         description: "Anonymously connect with your corporate network. Exchange messages, thoughts, and ideas freely, with privacy as our priority.",
         href: "/chats",
-        cta: "Learn more",
+        cta: "View",
         ariaLabel: "Discover How to Connect Anonymously",
         className: "col-span-3 lg:col-span-1",
     },
@@ -20,7 +20,7 @@ const features = [
         name: "Prioritize Privacy",
         description: "At CorpConv, we emphasize privacy by offering a secure platform for anonymous communication among corporate employees.",
         href: "/posts",
-        cta: "Learn more",
+        cta: "View",
         ariaLabel: "Learn How We Prioritize Privacy",
         className: "col-span-3 lg:col-span-2",
     },
@@ -29,7 +29,7 @@ const features = [
         name: "Post Job Opportunities",
         description: "Share job openings and engage in private, one-on-one conversations while ensuring user anonymity.",
         href: "/jobs",
-        cta: "Learn more",
+        cta: "View",
         ariaLabel: "Explore Job Posting Options",
         className: "col-span-3 lg:col-span-2",
     },
@@ -38,7 +38,7 @@ const features = [
         name: "Stay Connected",
         description: "Maintain connections with CorpConv and discover new ways to interact with your corporate network.",
         href: "/",
-        cta: "Learn more",
+        cta: "View",
         ariaLabel: "Find Out How to Stay Connected",
         className: "col-span-3 lg:col-span-1",
     },
@@ -47,7 +47,7 @@ const features = [
         name: "AnswerLink: Your Ultimate Q&A Destination",
         description: "Welcome to AnswerLink, where you can ask questions and get expert answers from a dynamic community. Quick solutions and in-depth insights await you.",
         href: "/answerlink",
-        cta: "Learn more",
+        cta: "View",
         ariaLabel: "Explore AnswerLink for Q&A",
         className: "col-span-3 lg:col-span-1",
     },
@@ -63,17 +63,15 @@ const features = [
     }
 ];
 
-
-
 const LandingPage = () => {
     const navigateTo = useNavigate()
     const { loginResponse: userInfo } = useSelector(state => state.login)
 
     return (
-        <div>
+        <>
             <div className="mx-auto max-w-7xl px-3 lg:px-8 flex justify-center items-center flex-col" style={{ height: "calc(100vh - 60px)" }}>
-                <div className="relative mx-auto max-w-4xl text-center">
-                    <h1 className="bg-gradient-to-br from-zinc-500 to-black bg-clip-text text-4xl/[1.07] font-bold tracking-tight text-transparent md:text-7xl/[1.07]"
+                <div className="relative mx-auto max-w-7xl text-center">
+                    <h1 className="bg-gradient-to-br from-zinc-500 to-black bg-clip-text font-bold tracking-tight text-transparent text-4xl/[1.07] lg:text-7xl xl:text-8xl md:text-balance selection:bg-black selection:text-white"
                         style={{
                             opacity: 1, transform: "none"
                         }}>
@@ -88,8 +86,8 @@ const LandingPage = () => {
                             />
                         </span> Connect with Your Corporate Network
                     </h1>
-                    <p className="mt-6 text-lg font-medium text-zinc-500 md:text-xl" style={{ opacity: 1, transform: "none" }}>
-                        Stay connected with <span className="text-black	opacity-50 duration-300 hover:opacity-100 ease-in">CorpConv</span> and experience a new way of interacting with your corporate network. Exchange messages, thoughts, and ideas freely, knowing that your anonymity is our priority.
+                    <p className="mt-6 text-lg font-medium text-zinc-500 md:text-xl md:text-balance" style={{ opacity: 1, transform: "none" }}>
+                        Stay connected with <span className="text-black	opacity-50 duration-300 hover:opacity-100 ease-in tracking-tight">CorpConv</span> and experience a new way of interacting with your corporate network. Exchange messages, thoughts, and ideas freely, knowing that your anonymity is our priority.
                     </p>
                     <div className="mt-10 flex flex-col items-center justify-center gap-y-8">
                         <div style={{
@@ -117,7 +115,7 @@ const LandingPage = () => {
             <section className="mx-auto max-w-7xl px-3 lg:px-8 flex justify-center items-center flex-col">
                 <BentoDemo />
             </section>
-        </div >
+        </ >
     )
 }
 

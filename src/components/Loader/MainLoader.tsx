@@ -1,11 +1,11 @@
 
 export const MainLoader = () => {
     return (
-        <div
-            className="bg-transparent h-screen flex items-center justify-center"
-        >
-            <div className="pulsing-circle w-[50px] h-[50px] bg-[#000] "></div>
+        <div className="bg-transparent h-screen flex flex-col items-center justify-center space-y-4 text-center">
+            <div className="pulsing-circle w-[50px] h-[50px] bg-[#000] rounded-full animate-pulse"></div>
+            <div className="text-lg font-semibold text-gray-700 py-2">
+                Loading...
+            </div>
         </div>
-
-    )
+    );
 }

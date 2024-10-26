@@ -37,17 +37,6 @@ export const Navbar = () => {
             to: "/update-profile",
         },
         {
-            title: "Surveys",
-            disable: false,
-            description: "Beta",
-            to: "/surveys"
-        },
-        {
-            title: "Answer Link",
-            disable: false,
-            to: "/answerlink"
-        },
-        {
             title: "Logout",
             onClick: () => {
                 dispatch(logoutRequest())
@@ -61,11 +50,11 @@ export const Navbar = () => {
                 <div className="navbar__left">
                     <Link to="/" className="nav__logo__text">CorpConv</Link>
                 </div>
-                <div className="navbar__right">
+                <div className="navbar__right hidden sm:block">
                     {userInfo?.token ? <>
                         <NavigationMenu>
                             <NavigationMenuList className="flex gap-2 items-center align-middle">
-                                <NavigationMenuItem className="hidden sm:block">
+                                <NavigationMenuItem>
                                     <Link to={"/chats"}>
                                         <NavigationMenuLink>
                                             Chat
@@ -73,18 +62,41 @@ export const Navbar = () => {
                                     </Link>
                                 </NavigationMenuItem>
 
-                                <NavigationMenuItem className="hidden sm:block">
+                                <NavigationMenuItem>
                                     <Link to={"/posts"}>
                                         <NavigationMenuLink>
                                             Posts
                                         </NavigationMenuLink>
                                     </Link>
                                 </NavigationMenuItem>
-                                <NavigationMenuItem className="hidden sm:block">
+                                <NavigationMenuItem>
                                     <Link to={"/users"}>
                                         <NavigationMenuLink>
                                             Community
                                         </NavigationMenuLink>
+                                    </Link>
+                                </NavigationMenuItem>
+                                <NavigationMenuItem>
+                                    <Link
+                                        className={cn(
+                                            "block select-none space-y-1 rounded-md p-2 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+                                        )}
+                                        to={"/answerlink"}
+                                    >
+                                        <div className="text-sm font-medium leading-none">{"Answer Link"}</div>
+                                    </Link>
+                                </NavigationMenuItem>
+                                <NavigationMenuItem>
+                                    <Link
+                                        className={cn(
+                                            "block select-none space-y-1 rounded-md p-2 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+                                        )}
+                                        to={"/surveys"}
+                                    >
+                                        <div className="text-sm font-medium leading-none">{"Surveys"}</div>
+                                        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                                            {"Beta"}
+                                        </p>
                                     </Link>
                                 </NavigationMenuItem>
                                 <NavigationMenuItem>

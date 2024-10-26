@@ -347,9 +347,11 @@ const SurveyBuilder = () => {
     const editSurveyMutation = useMutation({
         mutationFn: editSurvey,  // Define your mutation function here
         onSuccess: (data) => {
-            console.log({ data })
             const surveyId = selectedSurvey._id
-
+            setSurveyItems((prev) => ({
+                ...prev,
+                is_editing: false
+            }))
             queryClient.invalidateQueries([`edit_survey_${surveyId}`] as any);
             if (data.status === "published") {
                 navigateTo(`/survey/${surveyId}`)
@@ -450,7 +452,6 @@ const SurveyBuilder = () => {
 
     const handleDeleteSurveyQuestion = (surveyQuestionId: string, isUnsaved: boolean = false) => {
         const survey_form = surveyItems.survey_form.filter((question: any) => question?.question_id !== surveyQuestionId)
-        console.log({ survey_form })
         setSurveyItems((prev) => ({
             ...prev,
             survey_form
@@ -462,7 +463,6 @@ const SurveyBuilder = () => {
             }
             editSurveyMutation.mutate(payload)
         }
-
     }
 
     if (isLoading) return <SurveyBuilderSkeleton />
@@ -488,7 +488,10 @@ const SurveyBuilder = () => {
                                             !showSubmitButton &&
                                             <div className=' flex flex-col gap-2 justify-end items-end'>
                                                 <div className='flex gap-2 items-center'>
-                                                    <Button disabled={!surveyItems.survey_form.length || !surveyItems.is_editing} onClick={() => handlePublish(selectedSurvey)}>{!isSurveyPublished ? "Publish" : "Update"}</Button>
+                                                    <Button
+                                                        disabled={!isSurveyPublished && !!surveyItems.survey_form.length ? false : !surveyItems.survey_form.length || !surveyItems.is_editing}
+                                                        loading={editSurveyMutation.isPending}
+                                                        onClick={() => handlePublish(selectedSurvey)}>{!isSurveyPublished ? "Publish" : "Update"}</Button>
                                                     <Dropdown menu={{ items }} trigger={['click']} className='cursor-pointer'>
                                                         <EllipsisVertical />
                                                     </Dropdown>
@@ -653,50 +656,50 @@ const SurveyBuilderSkeleton = () => {
     return <div className="survey__form__container h-screen border">
         <div className={`flex flex-col-reverse md:flex-row h-full animate-shimmer`}>
             {/* Form Section Skeleton */}
-            <div className="border bg-gray-50 h-[85%] md:h-[100%] w-full md:w-[70%]">
+            <div className="border bg-gray-50 h-[85%] md:h-[100%] w-full md:w-[70%]  ">
                 <div className="flex justify-between p-3 border-b gap-4 md:gap-2">
                     <div className="flex flex-col gap-2 w-full">
-                        <div className="h-6 bg-gray-200 rounded w-3/4"></div>
-                        <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+                        <div className="h-6 bg-gray-200 rounded w-3/4" ></div>
+                        <div className="h-4 bg-gray-200 rounded w-1/2" ></div>
                     </div>
                     <div className="flex gap-2 items-center w-full h-20 sm:w-auto">
-                        <div className="h-8 bg-gray-200 rounded w-8"></div>
-                        <div className="h-8 bg-gray-200 rounded w-20"></div>
-                        <div className="h-6 bg-gray-200 rounded w-12"></div>
+                        <div className="h-8 bg-gray-200 rounded w-8" ></div>
+                        <div className="h-8 bg-gray-200 rounded w-20" ></div>
+                        <div className="h-6 bg-gray-200 rounded w-12" ></div>
                     </div>
                 </div>
 
                 {/* Form Fields Skeleton */}
                 <div className="p-2">
                     <div className="space-y-2">
-                        <div className="h-10 bg-gray-200 rounded w-full"></div>
-                        <div className="h-10 bg-gray-200 rounded w-full"></div>
-                        <div className="h-10 bg-gray-200 rounded w-full"></div>
+                        <div className="h-10 bg-gray-200 rounded w-full" ></div>
+                        <div className="h-10 bg-gray-200 rounded w-full" ></div>
+                        <div className="h-10 bg-gray-200 rounded w-full" ></div>
                     </div>
                     <div className="space-y-2">
-                        <div className="h-10 bg-gray-200 rounded w-full"></div>
-                        <div className="h-10 bg-gray-200 rounded w-full"></div>
-                        <div className="h-10 bg-gray-200 rounded w-full"></div>
+                        <div className="h-10 bg-gray-200 rounded w-full" ></div>
+                        <div className="h-10 bg-gray-200 rounded w-full" ></div>
+                        <div className="h-10 bg-gray-200 rounded w-full" ></div>
                     </div>
                     <div className="space-y-2">
-                        <div className="h-10 bg-gray-200 rounded w-full"></div>
-                        <div className="h-10 bg-gray-200 rounded w-full"></div>
-                        <div className="h-10 bg-gray-200 rounded w-full"></div>
+                        <div className="h-10 bg-gray-200 rounded w-full" ></div>
+                        <div className="h-10 bg-gray-200 rounded w-full" ></div>
+                        <div className="h-10 bg-gray-200 rounded w-full" ></div>
                     </div>
                     <div className="flex justify-end mt-4">
-                        <div className="h-10 bg-gray-200 rounded w-1/4"></div>
+                        <div className="h-10 bg-gray-200 rounded w-1/4" ></div>
                     </div>
                 </div>
             </div>
 
             {/* Sidebar Section Skeleton */}
             <div className="border bg-gray-100 h-fit md:h-[100%] w-full md:w-[30%] p-2 overflow-y-scroll">
-                <div className="h-6 bg-gray-200 rounded w-1/3 mb-2"></div>
+                <div className="h-6 bg-gray-200 rounded w-1/3 mb-2" ></div>
                 <div className="border w-full grid grid-cols-2 gap-2">
-                    <div className="p-2 border bg-gray-200 rounded h-10"></div>
-                    <div className="p-2 border bg-gray-200 rounded h-10"></div>
-                    <div className="p-2 border bg-gray-200 rounded h-10"></div>
-                    <div className="p-2 border bg-gray-200 rounded h-10"></div>
+                    <div className="p-2 border bg-gray-200 rounded h-10" ></div>
+                    <div className="p-2 border bg-gray-200 rounded h-10" ></div>
+                    <div className="p-2 border bg-gray-200 rounded h-10" ></div>
+                    <div className="p-2 border bg-gray-200 rounded h-10" ></div>
                 </div>
             </div>
         </div>
