@@ -45,7 +45,7 @@ export const Navbar = () => {
     ]
 
     return (
-        <header className="header" id="navigation-menu">
+        <header className="header shadow-md" id="navigation-menu">
             <nav className="navbar">
                 <div className="navbar__left">
                     <Link to="/" className="nav__logo__text">CorpConv</Link>
@@ -94,13 +94,10 @@ export const Navbar = () => {
                                         to={"/surveys"}
                                     >
                                         <div className="text-sm font-medium leading-none">{"Surveys"}</div>
-                                        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                                            {"Beta"}
-                                        </p>
                                     </Link>
                                 </NavigationMenuItem>
                                 <NavigationMenuItem>
-                                    <NavigationMenuTrigger>
+                                    <NavigationMenuTrigger className="bg-transparent">
                                         <div onClick={e => e.preventDefault()} className="cursor-pointer">
                                             <Avatar>
                                                 <AvatarImage src={userInfo?.user_public_profile_pic} />
@@ -148,9 +145,9 @@ const ListItem = React.forwardRef(({ className, title, children, ...props }, ref
                     {...props}
                 >
                     <div className="text-sm font-medium leading-none">{title}</div>
-                    <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                    <span className="line-clamp-2 text-sm leading-snug text-muted-foreground">
                         {children}
-                    </p>
+                    </span>
                 </Link>
             </NavigationMenuLink>
         </li>

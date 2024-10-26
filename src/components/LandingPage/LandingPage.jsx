@@ -53,11 +53,11 @@ const features = [
     },
     {
         Icon: "CalendarIcon",
-        name: "Survey: Your Ultimate Survey Builder (Beta)",
-        description: "Introducing Survey, your go-to tool for creating, distributing, and analyzing surveys. Gather feedback and insights with ease. This feature is Beta.",
+        name: "Survey: Your Ultimate Survey Builder",
+        description: "Introducing Survey, your go-to tool for creating, distributing, and analyzing surveys. Gather feedback and insights with ease.",
         href: "/surveys",
-        cta: "Beta",
-        ariaLabel: "Stay Tuned for Survey Builder",
+        cta: "View",
+        ariaLabel: "Explore Survey Builder",
         className: "col-span-3 lg:col-span-2",
         disabled: false,
     }

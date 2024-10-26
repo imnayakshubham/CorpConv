@@ -19,8 +19,8 @@ Stay connected with CorpConv and experience a new way of interacting with your c
 ### [AnswerLink: Your Ultimate Q&A Destination](/answerlink)
 Welcome to AnswerLink, the ultimate destination for seeking and sharing knowledge. With AnswerLink, users can effortlessly ask questions and receive expert answers from a vibrant community.
 
-### [Survey: Your Ultimate Survey Builder (Beta)](/surveys)
-Welcome to Survey, your ultimate survey builder. Create, distribute, and analyze surveys effortlessly. **(Beta)**
+### [Survey: Your Ultimate Survey Builder](/surveys)
+Welcome to Survey, your ultimate survey builder. Create, distribute, and analyze surveys effortlessly.
 
 ## Demo
 
