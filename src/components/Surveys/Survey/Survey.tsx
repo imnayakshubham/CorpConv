@@ -14,16 +14,10 @@ const Survey = () => {
     const navigateTo = useNavigate()
 
 
-    const [surveyValues, setSurveyValues] = useState<{ [key: string]: any }>({
-    })
+    const [surveyValues, setSurveyValues] = useState<{ [key: string]: any }>({})
 
     const getSurvey = async () => {
-        const config = {
-            headers: {
-                token: `${loginResponse.token}`,
-            },
-        };
-        const response = await axios.get(`${import.meta.env.VITE_APP_API_URL}survey/${surveyId}`, config);
+        const response = await axios.get(`${import.meta.env.VITE_APP_API_URL}survey/${surveyId}`);
         return response.data;
     };
 
@@ -126,7 +120,7 @@ const Survey = () => {
                 selectedSurvey ?
                     <div className='survey__form__container h-screen border'>
                         <div className={`flex justify-center items-center h-full`}>
-                            <div className={`border bg-gray-50 h-[85%]  w-full sm:w-[100%] md:w-[50%] flex flex-col`}>
+                            <div className={`border bg-gray-50 h-[85%]  w-full sm:w-[100%] md:w-[75%] lg:w-[50%] flex flex-col transition-all duration-500 ease-in`}>
                                 <div className='justify-between flex p-3 border-b gap-4 md:gap-2'>
                                     <div className='flex gap-2 flex-col'>
                                         <div className={`flex-bold text-xl`}>{selectedSurvey.survey_title}</div>
@@ -178,8 +172,10 @@ const Survey = () => {
                             </div>
                         </div>
                     </div>
-                    : failureReason ? <div className='flex justify-center h-[90%] md:h-screen items-center flex-col gap-3'>
-                        {(failureReason as any)?.response?.data?.message}
+                    : failureReason ? <div className='flex justify-center h-[90vh] md:h-screen items-center flex-col gap-3'>
+                        <div className='text-red-500'>
+                            {(failureReason as any)?.response?.data?.message ?? "Failed To Load this Survey"}
+                        </div>
                         <div>
                             <Button onClick={() => {
                                 navigateTo("/surveys")

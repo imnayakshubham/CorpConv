@@ -210,13 +210,6 @@ function App() {
             } />
           </Route>
 
-          <Route element={<PrivateRoutes />}>
-            <Route path='/survey/:id' element={
-              <Suspense fallback={<MainLoader />}>
-                <Survey />
-              </Suspense>
-            } />
-          </Route>
 
           <Route element={<PrivateRoutes />}>
             <Route path='/survey/submissions/:id' element={
@@ -241,6 +234,14 @@ function App() {
             </Suspense>
           } />
         </Route>
+
+        <Route>
+          <Route path='/survey/:id' element={
+            <Suspense fallback={<MainLoader />}>
+              <Survey />
+            </Suspense>
+          } />
+        </Route>
       </Routes>
       <BottomNavigation />
     </>
@@ -257,6 +258,16 @@ export const BottomNavigation = () => {
   const userInfo = useSelector((state) => state.login.loginResponse)
 
   const components = [
+    {
+      title: <div className="nav-logo">Answer Link</div>,
+      to: `answerlink`,
+      key: "answerlink"
+    },
+    {
+      title: <div className="nav-logo">Surveys</div>,
+      to: `surveys`,
+      key: "surveys"
+    },
     {
       title: <div className="nav-logo">Profile</div>,
       to: `/user/${userInfo?._id}`,
