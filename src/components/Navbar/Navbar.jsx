@@ -78,26 +78,20 @@ export const Navbar = () => {
                                 </NavigationMenuItem>
                                 <NavigationMenuItem>
                                     <Link
-                                        className={cn(
-                                            "block select-none space-y-1 rounded-md p-2 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-                                        )}
                                         to={"/answerlink"}
                                     >
-                                        <div className="text-sm font-medium leading-none">{"Answer Link"}</div>
+                                        {"Answer Link"}
                                     </Link>
                                 </NavigationMenuItem>
                                 <NavigationMenuItem>
                                     <Link
-                                        className={cn(
-                                            "block select-none space-y-1 rounded-md p-2 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-                                        )}
                                         to={"/surveys"}
                                     >
-                                        <div className="text-sm font-medium leading-none">{"Surveys"}</div>
+                                        {"Surveys"}
                                     </Link>
                                 </NavigationMenuItem>
                                 <NavigationMenuItem>
-                                    <NavigationMenuTrigger className="bg-transparent">
+                                    <NavigationMenuTrigger className="bg-transparent p-0">
                                         <div onClick={e => e.preventDefault()} className="cursor-pointer">
                                             <Avatar>
                                                 <AvatarImage src={userInfo?.user_public_profile_pic} />
@@ -106,7 +100,7 @@ export const Navbar = () => {
                                         </div>
                                     </NavigationMenuTrigger>
                                     <NavigationMenuContent>
-                                        <ul className="mt-1 w-[200px] flex-start flex-col fixed right-3 z-50 top-16 shadow-sm bg-[#fff]	border rounded-sm">
+                                        <ul className="mt-1 w-[200px] flex-start flex-col fixed right-3 z-50 top-16 shadow-sm bg-[#fff] border rounded-sm">
                                             {components.map((component) => (
                                                 <ListItem
                                                     key={component.title}

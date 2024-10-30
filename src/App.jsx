@@ -36,6 +36,8 @@ import { MainLoader } from './components/Loader/MainLoader.tsx';
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuTrigger } from './components/ui/navigation-menu.tsx';
 import { Avatar, AvatarFallback, AvatarImage } from './components/ui/avatar.tsx';
 import { cn } from './utils/utils.ts';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
 const SurveyList = React.lazy(() => import('./components/Surveys/SurveyList/SurveyList.tsx'));
 const SurveyBuilder = React.lazy(() => import('./components/Surveys/SurveyBuilder/SurveyBuilder.tsx'));
 const SurveySubmissions = React.lazy(() => import('./components/Surveys/SurveySubmissions/SurveySubmissions.tsx'));
@@ -54,6 +56,21 @@ function App() {
       navigateTo("/update-profile")
     }
   }, [loginResponse, navigateTo])
+
+
+  const initApis = async () => {
+    const response = await axios.get(`${import.meta.env.VITE_APP_API_URL}init`);
+    return response.data;
+  };
+
+  const { isLoading } = useQuery({
+    queryKey: [`init`],
+    queryFn: initApis,
+  });
+
+  console.info("connecting...", isLoading)
+
+
 
   useEffect(() => {
     const socketInstance = io(socketEndPoint, {
@@ -336,7 +353,6 @@ export const BottomNavigation = () => {
         </TooltipProvider>
       })
     }
-    {console.log({ components })}
     {userInfo?._id &&
       <NavigationMenu className='list-none p-0'>
         <NavigationMenuItem>
