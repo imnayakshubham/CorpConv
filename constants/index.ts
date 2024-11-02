@@ -6,11 +6,11 @@ export const AsyncStates = {
 }
 
 export const defaultHeaders = {
-    "Content-Type": "application/json" || "multipart/form-data",
+    "Content-Type": "application/json",
     "Access-Control-Allow-Origin": "*",
 }
 
-export const appKey = "corpconv-root"
+export const appKey = `${import.meta.env.VITE_APP_ENV}:corpconv-root`
 
 export const socketEndPoint = import.meta.env.VITE_APP_SOCKET_ENDPOINT;
 

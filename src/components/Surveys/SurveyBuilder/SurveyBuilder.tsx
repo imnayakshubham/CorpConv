@@ -6,10 +6,11 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Edit, EllipsisVertical, Plus, Trash } from 'lucide-react';
+import { Edit, EllipsisVertical, Eye, Plus, Trash } from 'lucide-react';
 import { CreateSurveyForm } from '../CreateSurvey/CreateSurveyForm';
 import { Badge } from '@/components/ui/badge';
 import type { MenuProps } from 'antd';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 const SurveyBuilder = () => {
     const queryClient = useQueryClient();
@@ -496,10 +497,28 @@ const SurveyBuilder = () => {
                                                         <EllipsisVertical />
                                                     </Dropdown>
                                                 </div>
-                                                <div className=''>
-                                                    {isSurveyPublished && <Badge >Published</Badge>}
-                                                    {selectedSurvey?.status === "draft" && <Badge variant={"destructive"}>Draft</Badge>}
+                                                <div className='flex gap-2'>
+                                                    <div>
+                                                        {isSurveyPublished ? <div className='flex gap-2'>
+                                                            <div><Badge >Published</Badge></div>
+                                                            <div>
+                                                                <TooltipProvider>
+                                                                    <Tooltip>
+                                                                        <TooltipTrigger>
+                                                                            <Eye className='cursor-pointer' onClick={() => {
+                                                                                window.open(`${window.location.origin}/survey/${selectedSurvey._id}`, '_blank', 'noopener,noreferrer');
+                                                                            }} />
+                                                                        </TooltipTrigger>
+                                                                        <TooltipContent>
+                                                                            <p>View Published Survey</p>
+                                                                        </TooltipContent>
+                                                                    </Tooltip>
+                                                                </TooltipProvider>
+                                                            </div>
+                                                        </div> : <Badge variant={"destructive"}>Draft</Badge>}
+                                                    </div>
                                                 </div>
+
                                                 <div className='flex gap-2 items-center'>
                                                     <Switch className='bg-black' disabled={!surveyItems.survey_form.length} checkedChildren="Edit" unCheckedChildren="Preview" checked={isPreviewMode}
                                                         onChange={() => {

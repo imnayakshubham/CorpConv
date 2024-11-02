@@ -7,12 +7,12 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { useMutation, useQuery } from '@tanstack/react-query';
 // import { Edit } from 'lucide-react';
+import confetti from 'canvas-confetti';
 
 const Survey = () => {
     const { id: surveyId } = useParams()
     const loginResponse = useSelector((state: any) => state.login.loginResponse)
     const navigateTo = useNavigate()
-
 
     const [surveyValues, setSurveyValues] = useState<{ [key: string]: any }>({})
 
@@ -26,6 +26,16 @@ const Survey = () => {
         queryFn: getSurvey,
     });
     const { data: selectedSurvey } = data
+
+    // useEffect(() => {
+    //     if (selectedSurvey) {
+    //         if (selectedSurvey.created_by !== loginResponse._id) {
+    //             console.log("hello")
+    //         }
+    //     }
+    // }, [])
+
+
 
     const [surveyform] = Form.useForm();
 
@@ -77,12 +87,30 @@ const Survey = () => {
     };
 
 
+    const launchConfetti = () => {
+        const submitButton = document.getElementById("survey-submit-btn");
+        const rect = submitButton?.getBoundingClientRect();
+        if (rect) {
+            const viewportWidth = window.innerWidth;
+            const viewportHeight = window.innerHeight;
+
+            const origin = {
+                x: (rect.left + rect.width / 2) / viewportWidth,
+                y: (rect.top + rect.height / 2) / viewportHeight
+            }
+            confetti({
+                spread: 180,
+                particleCount: 500,
+                origin: origin,
+            });
+        }
+    };
+
+
     const sendSurveySubmissionMutation = useMutation({
         mutationFn: submitSurveySubmission,
-        onSuccess: (data) => {
-            notification.success({
-                message: data.message
-            })
+        onSuccess: () => {
+            launchConfetti()
             surveyform.resetFields()
         },
         onError: (error) => {
@@ -92,24 +120,35 @@ const Survey = () => {
         }
     });
 
-    const handleFormSubmission = () => {
-        const submissions = selectedSurvey?.survey_form.reduce((acc: any[], curr: any) => {
-            const updatedData = {
-                ...curr,
-                value: surveyValues?.[curr?.input_type] ?? null
-            }
+    const handleFormSubmission = async () => {
+        let validationError = false;
 
-            acc.push(updatedData)
-            return acc
-        }, [])
-
-
-        const payload = {
-            survey_id: selectedSurvey._id,
-            submissions
+        try {
+            await surveyform.validateFields();
+        } catch (errorInfo: any) {
+            validationError = !!errorInfo?.errorFields?.length;
         }
 
-        sendSurveySubmissionMutation.mutate(payload)
+
+        if (!validationError) {
+            const submissions = selectedSurvey?.survey_form.reduce((acc: any[], curr: any) => {
+                const updatedData = {
+                    ...curr,
+                    value: surveyValues?.[curr?._id] ?? null
+                }
+
+                acc.push(updatedData)
+                return acc
+            }, [])
+
+
+            const payload = {
+                survey_id: selectedSurvey._id,
+                submissions
+            }
+
+            sendSurveySubmissionMutation.mutate(payload)
+        }
     }
 
     if (isLoading) return <SurveySkeleton />
@@ -123,7 +162,7 @@ const Survey = () => {
                             <div className={`border bg-gray-50 h-[85%]  w-full sm:w-[100%] md:w-[75%] lg:w-[50%] flex flex-col transition-all duration-500 ease-in`}>
                                 <div className='justify-between flex p-3 border-b gap-4 md:gap-2'>
                                     <div className='flex gap-2 flex-col'>
-                                        <div className={`flex-bold text-xl`}>{selectedSurvey.survey_title}</div>
+                                        <div className={`flex-bold font-extrabold text-xl`}>{selectedSurvey.survey_title}</div>
                                         <span className="text-sm text-muted-foreground line-clamp-2"
                                             title={selectedSurvey.survey_description}
                                         >
@@ -149,11 +188,16 @@ const Survey = () => {
                                         autoComplete="off"
                                     >
                                         {
-                                            selectedSurvey?.survey_form?.map((survey: any) => <div className='flex gap-2 w-full justify-between' key={survey.input_type}>
+                                            selectedSurvey?.survey_form?.map((survey: any) => <div className='flex gap-2 w-full justify-between border-b last:border-b-0 py-3' key={survey._id}>
                                                 <Form.Item
+                                                    key={survey._id}
                                                     className='w-full'
-                                                    label={survey.label}
-                                                    name={survey.input_type}
+                                                    label={<h5 className='font-semibold'>{survey.label}</h5>}
+                                                    name={survey._id}
+                                                    rules={[{
+                                                        required: survey?.is_required ?? false,
+                                                        message: "Required"
+                                                    }]}
                                                 >
                                                     {getDefaultComponents(survey)}
                                                 </Form.Item>
@@ -164,6 +208,7 @@ const Survey = () => {
                                 <div className='flex justify-end border py-2'>
                                     <Form.Item>
                                         <Button className='bg-black' type='primary' htmlType='submit'
+                                            id="survey-submit-btn"
                                             loading={sendSurveySubmissionMutation.isPending}
                                             onClick={() => handleFormSubmission()}
                                         >Submit</Button>
