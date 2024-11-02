@@ -83,6 +83,13 @@
 body {
     background-color: #FFFFFF;
     font-family: 'Nunito', "Inter", sans-serif;
+    overscroll-behavior: none;
+    scroll-behavior: smooth;
+}
+
+html {
+    overscroll-behavior: none;
+    scroll-behavior: smooth;
 }
 
 
