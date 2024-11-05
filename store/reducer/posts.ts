@@ -132,7 +132,6 @@ const postsReducer = handleActions<any>({
         }
     },
     [CommentActionTypes.SUCCESS]: (state, action) => {
-        console.log(action.payload)
         return {
             ...state,
             commentStatus: AsyncStates.SUCCESS,

@@ -45,6 +45,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, disabled = false, loading = false, loadingContent = "Loading...", variant, size, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : "button"
     const is_disabled = loading ? loading : disabled
+
     return (
       <Comp
         className={cn(buttonVariants({ variant, size, className }))}
@@ -52,7 +53,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {...props}
         disabled={is_disabled}
       >
-        {loading ? <>{loadingContent}</> : <div className="flex gap-2 items-center justify-center">
+        {loading ? <>{loadingContent ?? props.icon ?? props.children}</> : <div className="flex gap-2 items-center justify-center">
           {props.icon}  {props.children}
         </div>}
       </Comp>

@@ -128,6 +128,7 @@ export const Comment = ({ comment }) => {
     const [viewedComments, setViewedComments] = useState(new Set());
     const { loginResponse: userInfo } = useSelector(state => state.login)
     const getCommentRepliesStatus = useSelector(state => state.posts.getCommentRepliesStatus)
+    const deleteCommentStatus = useSelector(state => state.posts.deleteCommentStatus)
 
     const handleReply = (comment) => {
         setViewedComments((prev) => {
@@ -208,7 +209,10 @@ export const Comment = ({ comment }) => {
                     e.stopPropagation()
                     handleDeleteComment(comment)
                 }
-                } variant={"ghost"}><Trash size={20} /></Button>
+                } variant={"ghost"}
+                    loading={deleteCommentStatus === AsyncStates.LOADING}
+                    loadingContent={null}
+                ><Trash size={20} /></Button>
             }
         </div>
         <div className="nested__comments ml-6 border-l-2">

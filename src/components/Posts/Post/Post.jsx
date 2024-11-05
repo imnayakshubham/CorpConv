@@ -31,6 +31,13 @@ const Post = ({ post = null }) => {
     const [postData, setPostData] = useState(post ?? null)
     const [viewedParentCommentsIds, setViewedParentCommentsIds] = useState(new Set())
 
+    const commentStatus = useSelector(state => state.posts.commentStatus)
+    const postUpvoteStatus = useSelector(state => state.posts.postUpvoteStatus)
+    const deletePostStatus = useSelector(state => state.posts.deletePostStatus)
+    const likeCommentStatus = useSelector(state => state.posts.likeCommentStatus)
+    const replyToCommentStatus = useSelector(state => state.posts.replyToCommentStatus)
+    const deleteCommentStatus = useSelector(state => state.posts.deleteCommentStatus)
+
     useEffect(() => {
         if (post) {
             setPostData(post)
@@ -63,18 +70,24 @@ const Post = ({ post = null }) => {
         dispatch(deletePostRequest({ _id: post?._id }))
     }
 
-    const fetchPost = useCallback(async (post_id) => {
-        setfetchPostStatus("Loading")
+    const fetchPost = useCallback(async (post_id, backgroundFetch = false) => {
+        if (!backgroundFetch) {
+            setfetchPostStatus("Loading")
+        }
         try {
             const apiResponse = await sendGet(`post/${post_id}`)
             const { data: { data, status, message } } = await apiResponse()
             if (status === "Success") {
-                setfetchPostStatus("Success")
+                if (!backgroundFetch) {
+                    setfetchPostStatus("Success")
+                }
                 setPostData(data)
             }
             else if (status === AsyncStates.ERROR) {
                 message.error(message)
-                setfetchPostStatus(AsyncStates.ERROR)
+                if (!backgroundFetch) {
+                    setfetchPostStatus(AsyncStates.ERROR)
+                }
             }
 
         } catch (error) {
@@ -89,6 +102,12 @@ const Post = ({ post = null }) => {
             fetchPost(params.id);
         }
     }, [fetchPost, postData, params?.id, fetchPostStatus]);
+
+    useEffect(() => {
+        if (!post && (commentStatus === AsyncStates.SUCCESS || postUpvoteStatus === AsyncStates.SUCCESS || deletePostStatus === AsyncStates.SUCCESS || likeCommentStatus === AsyncStates.SUCCESS || replyToCommentStatus === AsyncStates.SUCCESS || likeCommentStatus === AsyncStates.SUCCESS || deleteCommentStatus === AsyncStates.SUCCESS)) {
+            fetchPost(params.id, true)
+        }
+    }, [commentStatus, deletePostStatus, fetchPost, likeCommentStatus, params.id, post, postUpvoteStatus, replyToCommentStatus, deleteCommentStatus])
 
     if (fetchPostStatus === "Loading") return <PostSkeleton />
 
@@ -177,8 +196,7 @@ const Post = ({ post = null }) => {
                             onClick={(e) => {
                                 e.stopPropagation()
                                 handleParentComment(postData?._id)
-                            }
-                            }
+                            }}
                         >
                             <svg
                                 width="20"
