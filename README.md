@@ -33,7 +33,7 @@ Welcome to Survey, your ultimate survey builder. Create, distribute, and analyze
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/imnayakshubham/CorpConvFrontend
+    git clone https://github.com/imnayakshubham/CorpConv.git
     ```
 
 2. Navigate to the project directory:
