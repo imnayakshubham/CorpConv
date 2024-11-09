@@ -473,10 +473,10 @@ const SurveyBuilder = () => {
             <div>
                 {
                     selectedSurvey ?
-                        <div className='survey__form__container h-screen border'>
+                        <div className='survey__form__container h-screen border '>
                             <div className={`flex ${!isPreviewMode ? 'justify-start md:justify-between' : "justify-center"} flex-col-reverse md:flex-row h-full`}>
-                                <div className={`border bg-gray-50 h-[85%] md:h-[100%] ${isPreviewMode ? 'w-full sm:w-[100%] md:w-[50%]' : "w-full md:w-[70%]"} `}>
-                                    <div className='justify-between flex p-3 border-b gap-4 md:gap-2'>
+                                <div className={`border bg-gray-50 h-[85%] md:h-[100%] ${isPreviewMode ? 'w-full sm:w-[100%] md:w-[50%]' : "w-full md:w-[70%]"} overflow-y-scroll`}>
+                                    <div className=' sticky top-0 bg-gray-50 z-50 justify-between flex p-3 border-b gap-4 md:gap-2'>
                                         <div className='flex gap-2 flex-col'>
                                             <h1 className={`flex-bold font-bold text-2xl`}>{selectedSurvey.survey_title}</h1>
                                             <span className="text-sm text-muted-foreground line-clamp-2"
@@ -534,7 +534,7 @@ const SurveyBuilder = () => {
                                             }} />
                                         }
                                     </div>
-                                    <div className='p-2'>
+                                    <div className='p-2 overflow-y-scroll'>
                                         <Form
                                             name={selectedSurvey.survey_title}
                                             form={surveyform}
@@ -573,7 +573,7 @@ const SurveyBuilder = () => {
                                 {
                                     !isPreviewMode &&
 
-                                    <div className="border bg-gray-100 h-fit md:h-[100%] w-full  md:w-[30%] p-2 overflow-y-scroll ">
+                                    <div className="border bg-gray-100 h-fit md:h-[100%] w-full  md:w-[30%] p-2 overflow-y-scroll sticky top-0">
                                         <h2 className='font-bold'>
                                             Add Form Elements
                                         </h2>

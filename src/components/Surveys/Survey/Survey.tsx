@@ -158,8 +158,9 @@ const Survey = () => {
             {
                 selectedSurvey ?
                     <div className='survey__form__container h-screen border'>
-                        <div className={`flex justify-center items-center h-full`}>
-                            <div className={`border bg-gray-50 h-[85%]  w-full sm:w-[100%] md:w-[75%] lg:w-[50%] flex flex-col transition-all duration-500 ease-in`}>
+                        <div className={`flex justify-center md:items-center h-full`}>
+                            <div className={`border bg-gray-50 h-[92.5%] w-full sm:w-[100%] md:w-[75%] lg:w-[50%] flex flex-col transition-all duration-500 ease-in`}
+                            >
                                 <div className='justify-between flex p-3 border-b gap-4 md:gap-2'>
                                     <div className='flex gap-2 flex-col'>
                                         <div className={`flex-bold font-extrabold text-xl`}>{selectedSurvey.survey_title}</div>
@@ -238,7 +239,7 @@ const SurveySkeleton = () => {
         <div className="flex justify-center items-center h-full">
             <div className="border bg-gray-50 h-[85%] w-full sm:w-[100%] md:w-[50%] flex flex-col animate-shimmer">
                 {/* Header Skeleton */}
-                <div className="justify-between flex p-3 border-b gap-4 md:gap-2">
+                <div className="justify-between flex p-3 border-b gap-4 md:gap-2 sticky top-0">
                     <div className="flex gap-2 flex-col w-full">
                         <div className="h-6 bg-gray-200 rounded w-3/4"></div>
                         <div className="h-4 bg-gray-200 rounded w-1/2"></div>
