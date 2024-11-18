@@ -25,13 +25,13 @@ const AnswerLinkHome = () => {
         <main className="container mx-auto py-12 px-4">
             <section className="mb-12 text-center">
                 <h2 className="text-3xl font-semibold mb-4">Welcome to AnswerLink</h2>
-                <p className="text-gray-700 text-lg">Your go-to platform for asking questions and getting answers from a community of experts and enthusiasts.</p>
+                <p className="text-gray-700 text-lg">Your go-to Q&A  platform for asking questions and getting answers from a community of enthusiasts.</p>
             </section>
 
             <section className="mb-12">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <div className="bg-white p-6 rounded-lg border">
-                        <h4 className="text-xl font-bold mb-2">Ask Anything</h4>
+                        <h4 className="text-xl font-bold mb-2">Ask Anything anonymously</h4>
                         <p className="text-gray-700">Post your questions and get answers from knowledgeable community members.</p>
                     </div>
                     <div className="bg-white p-6 rounded-lg border">

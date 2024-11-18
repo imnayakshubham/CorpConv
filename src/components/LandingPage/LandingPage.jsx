@@ -115,7 +115,49 @@ const LandingPage = () => {
             <section className="mx-auto max-w-7xl px-3 lg:px-8 flex justify-center items-center flex-col">
                 <BentoDemo />
             </section>
-        </ >
+
+            <section className="py-16">
+                <div className="flex justify-center items-center align-middle flex-col h-full">
+                    <h2
+                        className="w-full h-full flex justify-center items-center tracking-tighter text-center text-5xl sm:text-7xl lg:text-9xl opacity-10 hover:opacity-100 transition-opacity duration-500 ease-in-out cursor-pointer customfont">
+                        CorpConv
+                    </h2>
+                </div>
+            </section>
+
+            <section className="max-w-7xl px-3 lg:px-8 flex justify-center items-center flex-col gap-4">
+                <div className="w-full">
+                    <div className="flex flex-wrap lg:items-center gap-4">
+                        <div>
+
+                            <a className=" font-semibold font-futura3 leading-none flex gap-2 my-auto items-center dark:text-gray-200">
+                                <div className=" my-auto font-bold ">
+                                    <h2 className="my-auto text-sm text-gray-600 font-rem2">developed by</h2>
+                                    <span className="my-auto">Nayak Shubham</span>
+                                </div>
+                            </a>
+                        </div>
+                        <div className="w-full md:w-1/2 py-3">
+                            <ul className="flex flex-wrap gap-5">
+                                <li>
+                                    <a target="_blank" rel="noreferrer" href="https://www.linkedin.com/in/imnayakshubham/">LinkedIn</a>
+                                </li>
+                                <li><a target="_blank" rel="noreferrer" href="https://github.com/imnayakshubham">Github</a></li>
+                                <li><a target="_blank" rel="noreferrer" href="https://www.x.com/imnayakshubham">X (Twitter)</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div className="py-3">
+                        <div className="border-b border-gray-800"></div>
+                    </div>
+                    <div className="flex flex-wrap items-center justify-between">
+                        <div className="w-auto">
+                            <p className="text-sm text-gray-500">© Copyright 2024. All Rights Reserved by Nayak Shubham.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </>
     )
 }
 

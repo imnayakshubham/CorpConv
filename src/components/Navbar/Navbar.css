@@ -7,6 +7,10 @@
     font-size: 1.5rem;
 }
 
+.customfont{
+    font-family: "Pacifico", cursive;
+}
+
 .navbar {
     display: flex;
     justify-content: space-between;
