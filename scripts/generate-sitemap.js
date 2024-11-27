@@ -20,7 +20,7 @@ const BASE_URL = process.env.VITE_APP_APP_URL || 'https://corpconv.vercel.app/';
 const API_URL = process.env.VITE_APP_API_URL;
 
 const routes = [
-    { path: '/', priority: '1.0', changefreq: 'daily' },
+    { path: '', priority: '1.0', changefreq: 'daily' },
     { path: 'posts', priority: '0.8', changefreq: 'daily' },
     { path: 'jobs', priority: '0.8', changefreq: 'daily' },
     { path: 'users', priority: '0.7', changefreq: 'daily' },
