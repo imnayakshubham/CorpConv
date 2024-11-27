@@ -16,11 +16,9 @@ if (process.env.VITE_APP_ENV !== 'production') {
     process.exit(0);
 }
 
-// Use environment variables
 const BASE_URL = process.env.VITE_APP_APP_URL || 'https://corpconv.vercel.app/';
 const API_URL = process.env.VITE_APP_API_URL;
 
-// Define your dynamic routes and their priorities
 const routes = [
     { path: '/', priority: '1.0', changefreq: 'daily' },
     { path: 'posts', priority: '0.8', changefreq: 'daily' },
@@ -32,27 +30,33 @@ const routes = [
 
 
 const getDynamicRoutes = async () => {
-    const data = await axios.get(`${API_URL}site_map/data`)
-    if (data.status === 200) {
+    try {
+        const data = await axios.get(`${API_URL}site_map/data`)
+        if (data.status === 200) {
 
-        const changefreqs = ['daily', 'weekly']
-        const randomChangefreq = changefreqs[Math.floor(Math.random() * changefreqs.length)]
+            const changefreqs = ['daily', 'weekly']
+            const randomChangefreq = changefreqs[Math.floor(Math.random() * changefreqs.length)]
 
-        const priorities = [0.7, 0.8]
-        const randomPriority = priorities[Math.floor(Math.random() * priorities.length)]
+            const priorities = [0.7, 0.8]
+            const randomPriority = priorities[Math.floor(Math.random() * priorities.length)]
 
-        const routes = data?.data?.data?.map((route) => ({
-            path: route,
-            priority: randomPriority,
-            changefreq: randomChangefreq// randomly select from daily, weekly, monthly, yearly  
-        }))
-        return routes
+            const routes = data?.data?.data?.map((route) => ({
+                path: route,
+                priority: randomPriority,
+                changefreq: randomChangefreq
+            }))
+            return routes
+        }
+        return []
+    } catch (error) {
+        console.error('Error fetching dynamic routes:', error);
+        return [];
     }
-    return []
+
+
 }
 
 const generateSitemap = async () => {
-    // dynamic routes
     const dynamicRoutes = await getDynamicRoutes();
 
     const allRoutes = [...routes, ...dynamicRoutes]
