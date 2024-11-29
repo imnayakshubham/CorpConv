@@ -8,7 +8,7 @@ export const UserAvatar = ({
         <div className="avatar__header" >
             <div className="avatar__img__container">
                 <Avatar>
-                    <AvatarImage src={avatarImage} alt={title ?? "img"} />
+                    <AvatarImage src={avatarImage} alt={title ?? "img"} loading="lazy" />
                     <AvatarFallback>{title}</AvatarFallback>
                 </Avatar>
                 {isUserVerified &&

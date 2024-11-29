@@ -29,11 +29,6 @@ const Posts = ({ from, user_id = null }) => {
                 dispatch(addPostSuccess(postData))
             }
         })
-        // socket.on("listen_job_edition", (jobData) => {
-        //     if (userInfo?._id !== jobData.job_posted_by._id) {
-        //         dispatch(editJobSuccess(jobData))
-        //     }
-        // })
         socket.on("listen_upvote", (postData) => {
             if (userInfo?._id !== postData.upvoted_by) {
                 if (postData.data) {
@@ -41,11 +36,6 @@ const Posts = ({ from, user_id = null }) => {
                 }
             }
         })
-        // socket.on("listen_job_bookmark", (jobData) => {
-        //     if (userInfo?._id !== jobData.job_posted_by._id) {
-        //         dispatch(createBookmarkSuccess(jobData))
-        //     }
-        // })
     }, [dispatch, socket, userInfo?._id])
 
     useEffect(() => {

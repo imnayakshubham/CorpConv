@@ -1,5 +1,3 @@
-// const  
-
 import { handleActions } from "redux-actions";
 import { AsyncStates } from "../../constants";
 import { AcceptInvitationActionTypes, FetchUsersActionTypes, FollowUserActionTypes, GetUserInfoActionTypes } from "../action/users";

@@ -27,7 +27,6 @@ Disallow: /*?source=
 
 # Slow down crawl rate for non-essential crawlers
 User-agent: *
-Crawl-delay: 10
 
 # Allow all crawlers access to images
 User-agent: *

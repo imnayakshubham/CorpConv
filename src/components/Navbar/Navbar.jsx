@@ -8,21 +8,6 @@ import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMe
 import { cn } from "@/utils/utils";
 import React from "react";
 
-// const apiPayload = {
-//     "actual_user_name": "Shubham Nayak",
-//     "is_email_verified": true,
-//     "email_id": "shane.henry@example.com",
-//     "is_anonymous": true,
-//     "user_phone_number": null,
-//     "actual_profile_pic": "https://lh3.googleusercontent.com/a/ACg8ocLo_puA6u6DrxZ-9ryLs59wzTPt1uTxPIIiFhxpZUEm=s96-c",
-//     "providerId": "firebase",
-//     "meta_data": {
-//         "createdAt": "1703058890617",
-//         "lastLoginAt": "1703059959133"
-//     },
-//     "provider": "google.com"
-// }
-
 export const Navbar = () => {
     const dispatch = useDispatch()
     const { loginResponse: userInfo } = useSelector(state => state.login)
@@ -94,7 +79,7 @@ export const Navbar = () => {
                                     <NavigationMenuTrigger className="bg-transparent p-0">
                                         <div onClick={e => e.preventDefault()} className="cursor-pointer">
                                             <Avatar>
-                                                <AvatarImage src={userInfo?.user_public_profile_pic} />
+                                                <AvatarImage src={userInfo?.user_public_profile_pic} alt="User Profile Pic" loading='lazy' />
                                                 <AvatarFallback>{userInfo?.public_user_name}</AvatarFallback>
                                             </Avatar>
                                         </div>

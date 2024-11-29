@@ -69,10 +69,10 @@ const LandingPage = () => {
         <>
             <div className="mx-auto max-w-7xl px-3 lg:px-8 flex justify-center items-center flex-col" style={{ height: "calc(100vh - 60px)" }}>
                 <div className="relative mx-auto max-w-7xl text-center">
-                    <h1 className="bg-clip-text font-bold tracking-tight text-4xl/[1.07] lg:text-7xl xl:text-8xl md:text-balance selection:bg-black selection:text-white">
+                    <h1 className="font-bold tracking-tight text-4xl/[1.07] lg:text-7xl xl:text-8xl md:text-balance selection:bg-black selection:text-white">
                         Anonymously Connect with Your Corporate Network
                     </h1>
-                    <p className="mt-6 text-lg font-medium text-zinc-500 md:text-xl md:text-balance">
+                    <p className="mt-6 text-md font-medium text-zinc-500 md:text-xl md:text-balance">
                         Stay connected with <strong>CorpConv</strong> and experience a new way of interacting with your corporate network. Exchange messages, thoughts, and ideas freely, knowing that your anonymity is our priority.
                     </p>
                     <div className="mt-10 flex flex-col items-center justify-center gap-y-8">

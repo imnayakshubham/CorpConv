@@ -35,7 +35,7 @@ const SurveyBuilder = () => {
     };
 
     const { data = {}, isLoading, failureReason } = useQuery({
-        queryKey: [`survey_${surveyId}`], // Unique key for caching
+        queryKey: [`survey_${surveyId}`],
         queryFn: getSurvey,
     });
     const { data: selectedSurvey } = data
@@ -249,7 +249,6 @@ const SurveyBuilder = () => {
                             mode="tags"
                             style={{ width: '100%' }}
                             placeholder="Tags Mode"
-                        // onChange={handleChange}
                         />
                     </Form.Item>
                 </div>
@@ -346,7 +345,7 @@ const SurveyBuilder = () => {
 
 
     const editSurveyMutation = useMutation({
-        mutationFn: editSurvey,  // Define your mutation function here
+        mutationFn: editSurvey,
         onSuccess: (data) => {
             const surveyId = selectedSurvey._id
             setSurveyItems((prev) => ({
@@ -364,7 +363,6 @@ const SurveyBuilder = () => {
     });
 
     const handlePublish = (_: any) => {
-        // setIsPreviewMode(true)
         const payload = {
             _id: surveyItems._id,
             survey_form: surveyItems.survey_form,
@@ -382,10 +380,7 @@ const SurveyBuilder = () => {
     }
 
     const handleFormSubmission = () => {
-        // notification.success({
-        //     message: "Your Survey is Submitted"
-        // })
-        // navigateTo("/")
+
     }
 
     const items: MenuProps['items'] = useMemo(() => [

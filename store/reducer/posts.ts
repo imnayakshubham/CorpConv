@@ -22,9 +22,6 @@ const defaultState = {
     likeCommentError: null,
     deleteCommentStatus: AsyncStates.INITIAL,
     deleteCommentError: null,
-    // bookmarkStatus: AsyncStates.INITIAL,
-    // bookmarkStatusError: null,
-
     getCommentRepliesStatus: {},
     getCommentRepliesError: {},
 };

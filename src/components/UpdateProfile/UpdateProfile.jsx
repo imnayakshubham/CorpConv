@@ -57,7 +57,6 @@ const UpdateProfile = () => {
                                     required: true,
                                     message: 'Please input your Current Company Name!',
                                     validator: (_, value) => {
-                                        // Custom validator to check if the trimmed value exists
                                         const trimmedValue = value && value.trim();
                                         if (trimmedValue && trimmedValue.length > 0) {
                                             return Promise.resolve();
@@ -79,7 +78,6 @@ const UpdateProfile = () => {
                                     required: true,
                                     message: 'Please input your Current Job Role!',
                                     validator: (_, value) => {
-                                        // Custom validator to check if the trimmed value exists
                                         const trimmedValue = value && value.trim();
                                         if (trimmedValue && trimmedValue.length > 0) {
                                             return Promise.resolve();

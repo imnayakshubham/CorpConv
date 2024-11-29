@@ -50,7 +50,7 @@ export const CreateSurveyForm = ({ survey, showCreateSurveyModal, setShowCreateS
     };
 
     const createSurveyMutation = useMutation({
-        mutationFn: createSurvey,  // Define your mutation function here
+        mutationFn: createSurvey,
         onSuccess: () => {
             setShowCreateSurveyModal({
                 isModalVisible: false,
@@ -77,7 +77,7 @@ export const CreateSurveyForm = ({ survey, showCreateSurveyModal, setShowCreateS
 
 
     const editSurveyMutation = useMutation({
-        mutationFn: editSurvey,  // Define your mutation function here
+        mutationFn: editSurvey,
         onSuccess: () => {
             setShowCreateSurveyModal({
                 isModalVisible: false,

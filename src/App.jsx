@@ -70,9 +70,6 @@ function App() {
     if (!socket) return
     socket.emit("setup", loginResponse);
     socket.on("connected", () => console.log("connected..."));
-    // socket.on("follow_request_send_notication", (payload) => {
-    //   console.log(payload)
-    // })
   }, [socket, loginResponse]);
 
   const googleAnalyticsTrackingId = import.meta.env.VITE_APP_ENV === "production" ? import.meta.env.VITE_APP_GOOGLE_ANALYTICS_ID : null
@@ -346,7 +343,7 @@ export const BottomNavigation = () => {
           <NavigationMenuTrigger className='p-0'>
             <div onClick={e => e.preventDefault()} className="cursor-pointer">
               <Avatar>
-                <AvatarImage src={userInfo?.user_public_profile_pic} />
+                <AvatarImage src={userInfo?.user_public_profile_pic} alt='User Profile Pic' loading='lazy' />
                 <AvatarFallback>{userInfo?.public_user_name}</AvatarFallback>
               </Avatar>
             </div>

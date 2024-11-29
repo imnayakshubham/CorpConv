@@ -11,7 +11,6 @@ import loginSaga from "./sagas/login";
 import usersSaga from "./sagas/users";
 import usersReducer from "./reducer/users"
 import chatsSaga from "./sagas/chats";
-// import commonSaga from "./sagas/common";
 import postsReducer from "./reducer/posts"
 import { axiosInstance } from "../src/utils/sendApiRequest"
 
@@ -30,7 +29,6 @@ const setTransform = createTransform(
         ...outboundState,
         status: AsyncStates.INITIAL,
     }),
-    // define which reducers this transform gets called for.
     { whitelist: ["login"] }
 )
 
@@ -66,7 +64,6 @@ const rootSagas = [
     chatsSaga,
     jobsSaga,
     postsSaga
-    // commonSaga
 ]
 
 rootSagas.forEach(sagaMiddleware.run)
@@ -101,14 +98,12 @@ axiosInstance.interceptors.response.use(
                 }); store.dispatch({ type: "LOGOUT_SUCCESS" });
             }
         } else {
-            // Handle errors without a response (e.g., network errors)
             notification.error({
                 message: "Network Error",
                 description: "An error occurred. Please check your connection and try again.",
             });
         }
 
-        // Pass the error to the next handler (if any)
         return Promise.reject(error);
     }
 );

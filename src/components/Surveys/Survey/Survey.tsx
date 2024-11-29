@@ -6,7 +6,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { useMutation, useQuery } from '@tanstack/react-query';
-// import { Edit } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 const Survey = () => {
@@ -22,20 +21,10 @@ const Survey = () => {
     };
 
     const { data = {}, isLoading, failureReason } = useQuery({
-        queryKey: [`survey_${surveyId}`], // Unique key for caching
+        queryKey: [`survey_${surveyId}`],
         queryFn: getSurvey,
     });
     const { data: selectedSurvey } = data
-
-    // useEffect(() => {
-    //     if (selectedSurvey) {
-    //         if (selectedSurvey.created_by !== loginResponse._id) {
-    //             console.log("hello")
-    //         }
-    //     }
-    // }, [])
-
-
 
     const [surveyform] = Form.useForm();
 

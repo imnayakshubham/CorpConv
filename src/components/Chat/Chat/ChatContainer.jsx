@@ -56,11 +56,6 @@ export const ChatContainer = () => {
         }
     }, [fetchMessages, selectedChat?._id]);
 
-    // useEffect(() => {
-    //     socket.on("typing", () => setIsTyping(true));
-    //     socket.on("stop typing", () => setIsTyping(false));
-    // }, [loginResponse, socket]);
-
     const sendMessage = async (event) => {
         if ((event.key === "Enter" || event.type === "click") && !!inputMessage.length) {
             socket.emit("stop typing", selectedChat._id);
@@ -104,15 +99,6 @@ export const ChatContainer = () => {
         })
     }, [dispatch, selectedChat, selectedChat?._id, socket])
 
-    // useEffect(() => {
-    //     if (typing) {
-    //         socket.emit("typing", selectedChat._id);
-    //     }
-    // }, [socket, selectedChat])
-
-
-
-
     return (
         <>
             {senderInfo ?
@@ -135,9 +121,6 @@ export const ChatContainer = () => {
                                     type="text"
                                     className='chat__input'
                                     value={inputMessage}
-                                    // onFocus={() => {
-                                    //     setTyping(true)
-                                    // }}
                                     onChange={(e) => setInputMessage(e.target.value)}
                                     onKeyDown={sendMessage}
                                 />
