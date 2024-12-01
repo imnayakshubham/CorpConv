@@ -25,7 +25,6 @@ const routes = [
     { path: 'jobs', priority: '0.8', changefreq: 'daily' },
     { path: 'users', priority: '0.7', changefreq: 'daily' },
     { path: 'answerlink', priority: '0.8', changefreq: 'daily' },
-    { path: 'surveys', priority: '0.7', changefreq: 'daily' },
 ];
 
 
