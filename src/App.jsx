@@ -5,41 +5,49 @@ import "./App.css";
 import React, { Suspense, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import io from "socket.io-client"
-import { socketEndPoint } from "../constants/index.ts";
+import { socketEndPoint, BLUR_FADE_DELAY } from "../constants/index.ts";
 import { socketSave } from "../store/action/common.js";
 import { logoutRequest } from '../store/action/login.js';
 import { StickyNote, MessageCircle, Home, CircleUser } from 'lucide-react';
+
+import { Helmet } from 'react-helmet';
+import { useLocation } from "react-router-dom";
+
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+
+
 import PrivateRoutes from './components/PrivateRoutes/PrivateRoutes.tsx';
+import { MainLoader } from './components/Loader/MainLoader.tsx';
+import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuTrigger } from './components/ui/navigation-menu.tsx';
+import { Avatar, AvatarFallback, AvatarImage } from './components/ui/avatar.tsx';
+import { cn } from './utils/utils.ts';
+import LandingPage from './components/LandingPage/LandingPage.jsx';
+import PageWrapper from './components/PageWrapper/PageWrapper.jsx';
+import { Navbar } from './components/Navbar/Navbar.jsx';
+import BlurFade from './components/BlurFadeContainer/blur-fade.tsx';
 
 const Jobs = React.lazy(() => import('./components/Jobs/Jobs.jsx'))
 const UserProfile = React.lazy(() => import('./components/UserProfile/UserProfile.jsx'))
-const PageWrapper = React.lazy(() => import('./components/PageWrapper/PageWrapper.jsx'))
 const UpdateProfile = React.lazy(() => import('./components/UpdateProfile/UpdateProfile.jsx'))
 const ChatWrapper = React.lazy(() => import('./components/ChatContainer/ChatWrapper.jsx'))
 const Users = React.lazy(() => import('./components/Users/Users.jsx'))
 const Posts = React.lazy(() => import('./components/Posts/Posts.jsx'))
-const LandingPage = React.lazy(() => import('./components/LandingPage/LandingPage.jsx'))
 const Post = React.lazy(() => import('./components/Posts/Post/Post.jsx'))
 const AnswerLinkHome = React.lazy(() => import('./components/AnswerLink/AnswerLinkHome.tsx'))
 const AnswerLinkQuestion = React.lazy(() => import('./components/AnswerLink/AnswerLinkQuestion/AnswerLinkQuestion.jsx'));
 const AnswerLinkQuestions = React.lazy(() => import('./components/AnswerLink/AnswerLinkQuestions.tsx'));
 const PageNotFound = React.lazy(() => import('./components/PageNotFound/PageNotFound.tsx'));
-
-import { Helmet } from 'react-helmet';
-import { MainLoader } from './components/Loader/MainLoader.tsx';
-import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuTrigger } from './components/ui/navigation-menu.tsx';
-import { Avatar, AvatarFallback, AvatarImage } from './components/ui/avatar.tsx';
-import { cn } from './utils/utils.ts';
 const SurveyList = React.lazy(() => import('./components/Surveys/SurveyList/SurveyList.tsx'));
 const SurveyBuilder = React.lazy(() => import('./components/Surveys/SurveyBuilder/SurveyBuilder.tsx'));
 const SurveySubmissions = React.lazy(() => import('./components/Surveys/SurveySubmissions/SurveySubmissions.tsx'));
 const Survey = React.lazy(() => import('./components/Surveys/Survey/Survey.tsx'));
+
+const hiddenNavbarRoutes = ["/chats", "/user/", "/survey/builder", "/survey/"];
 
 function App() {
   const loginResponse = useSelector((state) => state.login.loginResponse)
@@ -78,16 +86,22 @@ function App() {
     ReactGA.initialize(googleAnalyticsTrackingId);
   }
 
+  const location = useLocation();
+  const shouldHideNavbar = hiddenNavbarRoutes.some((route) => {
+    if (location.pathname.startsWith("/survey/submissions/")) return false
+    return location.pathname.startsWith(route)
+  }
+  );
+
   return (
     <>
       <div className="main-content pb-20 md:pb-0">
+        {!shouldHideNavbar && <Navbar />}
         <Routes>
           <Route path='/' element={
-            <Suspense fallback={<MainLoader />}>
-              <PageWrapper>
-                <LandingPage />
-              </PageWrapper>
-            </Suspense>
+            <PageWrapper>
+              <LandingPage />
+            </PageWrapper>
           } />
 
           <Route path='/posts' element={
@@ -119,7 +133,9 @@ function App() {
             <Route>
               <Route path='/user/:id' element={
                 <Suspense fallback={<MainLoader />}>
-                  <UserProfile />
+                  <BlurFade delay={BLUR_FADE_DELAY}>
+                    <UserProfile />
+                  </BlurFade>
                 </Suspense>
               } />
             </Route>
@@ -172,59 +188,71 @@ function App() {
           />
 
           <Route element={<PrivateRoutes />}>
-            <Route path='/answerlink/questions' element={
+            <Route path='/surveys' element={
               <Suspense fallback={<MainLoader />}>
-                <PageWrapper bodyClass={"lg:w-8/12 md:w-9/12"}>
-                  <Helmet>
-                    <title>AnswerLink - Your Go-To Q&A Platform to ask anonymous, real-time questions</title>
-                    <meta name="description" content="Welcome to AnswerLink by CorpConv, your go-to Q&A platform for asking questions and getting answers from a community of experts and enthusiasts. Engage in real-time discussions and connect with knowledgeable community members." />
-                    <meta name="keywords" content="Q&A platform, anonymous questions, real-time interaction, community knowledge, Ask Anything, AnswerLink,anonymous community, CorpConv" />
-                    <meta property="og:title" content="AnswerLink by CorpConv - Your Go-To Q&A Platform for Expert Answers" />
-                    <meta property="og:description" content="Welcome to AnswerLink by CorpConv, your go-to Q&A platform for asking questions anonymously and getting answers from a community enthusiasts. Engage in real-time discussions and connect with knowledgeable community members." />
-                    <meta property="og:type" content="website" />
-                    <meta name="twitter:title" content="AnswerLink by CorpConv - Your Go-To Q&A Platform for Expert Answers" />
-                    <meta name="twitter:description" content="Welcome to AnswerLink by CorpConv, your go-to platform for asking questions and getting answers from a community of experts and enthusiasts. Engage in real-time discussions and connect with knowledgeable community members." />
-                  </Helmet>
-                  <AnswerLinkQuestions />
+                <PageWrapper bodyClass='w-full md:w-10/12 border border-slate-800'>
+                  <SurveyList />
                 </PageWrapper>
               </Suspense>
-            }
-            />
-
-            <Route element={<PrivateRoutes />}>
-              <Route path='/surveys' element={
-                <Suspense fallback={<MainLoader />}>
-                  <PageWrapper bodyClass='w-full md:w-10/12 border border-slate-800'>
-                    <SurveyList />
-                  </PageWrapper>
-                </Suspense>
-              } />
-            </Route>
-
-            <Route element={<PrivateRoutes />}>
-              <Route path='/survey/builder/:id' element={
-                <Suspense fallback={<MainLoader />}>
-                  <SurveyBuilder />
-                </Suspense>
-              } />
-            </Route>
-
-
-            <Route element={<PrivateRoutes />}>
-              <Route path='/survey/submissions/:id' element={
-                <Suspense fallback={<MainLoader />}>
-                  <PageWrapper bodyClass='w-full md:w-3/4 border border-slate-800'>
-                    <SurveySubmissions />
-                  </PageWrapper>
-                </Suspense>
-              } />
-            </Route>
-
+            } />
           </Route>
+
+          <Route path='/answerlink/questions' element={
+            <Suspense fallback={<MainLoader />}>
+              <PageWrapper bodyClass={"lg:w-8/12 md:w-9/12"}>
+                <Helmet>
+                  <title>AnswerLink - Your Go-To Q&A Platform to ask anonymous, real-time questions</title>
+                  <meta name="description" content="Welcome to AnswerLink by CorpConv, your go-to Q&A platform for asking questions and getting answers from a community of experts and enthusiasts. Engage in real-time discussions and connect with knowledgeable community members." />
+                  <meta name="keywords" content="Q&A platform, anonymous questions, real-time interaction, community knowledge, Ask Anything, AnswerLink,anonymous community, CorpConv" />
+                  <meta property="og:title" content="AnswerLink by CorpConv - Your Go-To Q&A Platform for Expert Answers" />
+                  <meta property="og:description" content="Welcome to AnswerLink by CorpConv, your go-to Q&A platform for asking questions anonymously and getting answers from a community enthusiasts. Engage in real-time discussions and connect with knowledgeable community members." />
+                  <meta property="og:type" content="website" />
+                  <meta name="twitter:title" content="AnswerLink by CorpConv - Your Go-To Q&A Platform for Expert Answers" />
+                  <meta name="twitter:description" content="Welcome to AnswerLink by CorpConv, your go-to platform for asking questions and getting answers from a community of experts and enthusiasts. Engage in real-time discussions and connect with knowledgeable community members." />
+                </Helmet>
+                <AnswerLinkQuestions />
+              </PageWrapper>
+            </Suspense>
+          }
+          />
+
+          <Route element={<PrivateRoutes />}>
+            <Route path='/surveys' element={
+              <Suspense fallback={<MainLoader />}>
+                <PageWrapper bodyClass='w-full md:w-10/12 border border-slate-800'>
+                  <SurveyList />
+                </PageWrapper>
+              </Suspense>
+            } />
+          </Route>
+
+          <Route element={<PrivateRoutes />}>
+            <Route path='/survey/builder/:id' element={
+              <Suspense fallback={<MainLoader />}>
+                <BlurFade delay={BLUR_FADE_DELAY}>
+                  <SurveyBuilder />
+                </BlurFade>
+              </Suspense>
+            } />
+          </Route>
+
+
+          <Route element={<PrivateRoutes />}>
+            <Route path='/survey/submissions/:id' element={
+              <Suspense fallback={<MainLoader />}>
+                <PageWrapper bodyClass='w-full md:w-3/4 border border-slate-800'>
+                  <SurveySubmissions />
+                </PageWrapper>
+              </Suspense>
+            } />
+          </Route>
+
           <Route element={<PrivateRoutes />}>
             <Route path='/chats' element={
               <Suspense fallback={<MainLoader />}>
-                <ChatWrapper />
+                <BlurFade delay={BLUR_FADE_DELAY}>
+                  <ChatWrapper />
+                </BlurFade>
               </Suspense>
             } />
           </Route>
@@ -232,14 +260,18 @@ function App() {
           <Route>
             <Route path='/survey/:id' element={
               <Suspense fallback={<MainLoader />}>
-                <Survey />
+                <BlurFade delay={BLUR_FADE_DELAY}>
+                  <Survey />
+                </BlurFade>
               </Suspense>
             } />
           </Route>
 
           <Route path='*' element={
             <Suspense fallback={<MainLoader />}>
-              <PageNotFound />
+              <BlurFade delay={BLUR_FADE_DELAY}>
+                <PageNotFound />
+              </BlurFade>
             </Suspense>
           } />
         </Routes>

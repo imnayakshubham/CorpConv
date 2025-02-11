@@ -5,7 +5,8 @@ const PrivateRoutes = () => {
     const { loginResponse } = useSelector((state: any) => state.login)
     return (
         !!loginResponse?._id ?
-            <Outlet /> :
+            <Outlet />
+            :
             <Navigate to='/' />
     )
 }
