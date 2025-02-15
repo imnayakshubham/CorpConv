@@ -31,10 +31,6 @@
 }
 
 @media (max-width:481px) {
-    .container {
-        padding: 0rem 0.2rem 0rem 0.2rem;
-    }
-
     .show__side__bar {
         display: block;
     }

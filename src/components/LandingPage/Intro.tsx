@@ -7,12 +7,14 @@ const Intro = () => {
                 <BentoDemo />
             </section>
 
-            <section className="py-16">
+            <section className="py-20">
                 <div className="flex justify-center items-center align-middle flex-col h-full">
-                    <h2
-                        className="w-full h-full flex justify-center items-center tracking-tighter text-center text-5xl sm:text-7xl lg:text-9xl opacity-10 hover:opacity-100 transition-opacity duration-500 ease-in-out cursor-pointer customfont">
-                        CorpConv
-                    </h2>
+                    <div>
+                        <h2
+                            className="w-full h-full flex justify-center items-center tracking-tighter text-center text-5xl sm:text-7xl lg:text-9xl opacity-10 hover:opacity-100 transition-opacity duration-500 ease-in-out cursor-pointer customfont">
+                            CorpConv
+                        </h2>
+                    </div>
                 </div>
             </section>
 

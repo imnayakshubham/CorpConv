@@ -88,6 +88,7 @@ function App() {
 
   const location = useLocation();
   const shouldHideNavbar = hiddenNavbarRoutes.some((route) => {
+    if (location.pathname === "/") return true
     if (location.pathname.startsWith("/survey/submissions/")) return false
     return location.pathname.startsWith(route)
   }
@@ -95,13 +96,24 @@ function App() {
 
   return (
     <>
-      <div className="main-content pb-20 md:pb-0">
+      <div className="main-content pb-20 md:pb-0 container px-0 text-dynamic">
         {!shouldHideNavbar && <Navbar />}
         <Routes>
           <Route path='/' element={
-            <PageWrapper>
-              <LandingPage />
-            </PageWrapper>
+            <BlurFade delay={0.05}>
+              <section className="relative top-0 h-screen bg-[image:radial-gradient(80%_50%_at_50%_-20%,hsl(0, 0%, 0%, 0.7),rgba(0,0,0,0))]">
+                <div className="absolute inset-0 bg-[linear-gradient(to_right,#0f172a_0.5px,transparent_1px),linear-gradient(to_bottom,#0f172a_0.5px,transparent_1px)] bg-[size:2rem_2rem] [mask-image:radial-gradient(ellipse_50%_40%_at_50%_10%,#000_50%,transparent_100%)] transition-all duration-300 group-hover:bg-[linear-gradient(to_right,#000_1.5px,transparent_2px),linear-gradient(to_bottom,#ccc_2.0px,transparent_0.5px)] group-hover:shadow-[10_10_20px_10px_rgba(25,10,0,0.5)]" />
+                <div className="relative">
+                  <Navbar />
+                  <BlurFade delay={0.4}>
+                    <PageWrapper>
+                      <LandingPage />
+                    </PageWrapper>
+                  </BlurFade>
+                </div>
+              </section>
+            </BlurFade>
+
           } />
 
           <Route path='/posts' element={

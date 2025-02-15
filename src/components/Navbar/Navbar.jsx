@@ -30,7 +30,7 @@ export const Navbar = () => {
     ]
 
     return (
-        <header className="header shadow-md" id="navigation-menu">
+        <header className="header container" id="navigation-menu">
             <nav className="navbar">
                 <div className="navbar__left">
                     <Link to="/" className="nav__logo__text">CorpConv</Link>

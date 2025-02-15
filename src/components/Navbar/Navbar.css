@@ -7,7 +7,7 @@
     font-size: 1.5rem;
 }
 
-.customfont{
+.customfont {
     font-family: "Pacifico", cursive;
 }
 
@@ -23,7 +23,7 @@
     /* border-bottom: 1px solid #e2e8f0; */
     position: sticky;
     top: 0%;
-    backdrop-filter: blur(2px);
+    backdrop-filter: blur(4px);
     z-index: 50;
 }
 
