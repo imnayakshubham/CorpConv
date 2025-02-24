@@ -33,7 +33,7 @@ export const Navbar = () => {
         <header className="header container" id="navigation-menu">
             <nav className="navbar">
                 <div className="navbar__left">
-                    <Link to="/" className="nav__logo__text">CorpConv</Link>
+                    <Link to="/" className="nav__logo__text">Hushwork</Link>
                 </div>
                 <div className="navbar__right hidden sm:block">
                     {userInfo?.token ? <>

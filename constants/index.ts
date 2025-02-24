@@ -10,7 +10,7 @@ export const defaultHeaders = {
     "Access-Control-Allow-Origin": "*",
 }
 
-export const appKey = `${import.meta.env.VITE_APP_ENV}:corpconv-root`
+export const appKey = `${import.meta.env.VITE_APP_ENV}:hushwork-root`
 
 export const socketEndPoint = import.meta.env.VITE_APP_SOCKET_ENDPOINT;
 

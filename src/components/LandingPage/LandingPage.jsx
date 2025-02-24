@@ -9,7 +9,7 @@ const features = [
     {
         Icon: "NetworkIcon",
         name: "Anonymously Connect",
-        description: "Anonymously connect with your corporate network. Exchange messages, thoughts, and ideas freely, with privacy as our priority.",
+        description: "Anonymously connect with your   network. Exchange messages, thoughts, and ideas freely, with privacy as our priority.",
         href: "/chats",
         cta: "View",
         ariaLabel: "Discover How to Connect Anonymously",
@@ -18,7 +18,7 @@ const features = [
     {
         Icon: "PrivacyIcon",
         name: "Prioritize Privacy",
-        description: "At CorpConv, we emphasize privacy by offering a secure platform for anonymous communication among corporate employees.",
+        description: "At Hushwork, we prioritize privacy by providing a secure platform for anonymous communication within your network.",
         href: "/posts",
         cta: "View",
         ariaLabel: "Learn How We Prioritize Privacy",
@@ -36,7 +36,7 @@ const features = [
     {
         Icon: "CalendarIcon",
         name: "Stay Connected",
-        description: "Maintain connections with CorpConv and discover new ways to interact with your corporate network.",
+        description: "Maintain connections with Hushwork and discover new ways to interact with your   network.",
         href: "/",
         cta: "View",
         ariaLabel: "Find Out How to Stay Connected",
@@ -72,10 +72,10 @@ const LandingPage = () => {
             <section className="mx-auto max-w-7xl px-3 lg:px-8 flex justify-center items-center flex-col" style={{ height: "calc(100vh - 60px)" }}>
                 <div className="relative mx-auto max-w-7xl text-center">
                     <h1 className="font-bold tracking-tight text-4xl/[1.07] lg:text-7xl xl:text-8xl md:text-balance selection:bg-black selection:text-white">
-                        Anonymously Connect with Your Corporate Network
+                        Stay Connected with Your Network Anonymously
                     </h1>
                     <p className="mt-6 text-md font-medium text-zinc-500 md:text-xl md:text-balance">
-                        Stay connected with <strong>CorpConv</strong> and experience a new way of interacting with your corporate network. Exchange messages, thoughts, and ideas freely, knowing that your anonymity is our priority.
+                        Stay connected with <strong>Hushwork</strong> and experience a new way of interacting with your   network. Exchange messages, thoughts, and ideas freely, knowing that your anonymity is our priority.
                     </p>
                     <div className="mt-10 flex flex-col items-center justify-center gap-y-8">
                         <div style={{

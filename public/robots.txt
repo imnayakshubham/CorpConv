@@ -9,7 +9,7 @@ Disallow: /search?q=
 Allow: /
 
 # Sitemap location
-# Sitemap: https://corp-conv-frontend.vercel.app/sitemap.xml
+# Sitemap: https://hushwork.vercel.app/sitemap.xml
 
 # Allow crawling of all JS and CSS files
 User-agent: *

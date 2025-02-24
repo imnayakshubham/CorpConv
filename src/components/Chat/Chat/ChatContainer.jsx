@@ -130,10 +130,10 @@ export const ChatContainer = () => {
                     </>
                 </div >
                 : <div className='no_chat_selected'>
-                    <div>Anonymously Connect with Your Corporate Network</div>
-                    <p>At CorpConv, we prioritize your privacy and provide a secure space for corporate employees to exchange messages and thoughts anonymously. Whether you have ideas to share, questions to ask, or simply want to connect with your colleagues in a confidential manner, this is the platform for you.</p>
-                    <p>Stay connected with CorpConv and experience a new way of interacting with your corporate network. Exchange messages, thoughts, and ideas freely, knowing that your anonymity is our priority.</p>
-                    <p><em>CorpConv - Where Your Voice Matters Anonymously</em></p>
+                    <div>Stay Connected with Your Network Anonymously</div>
+                    <p>At Hushwork, we prioritize your privacy and provide a secure space for   employees to exchange messages and thoughts anonymously. Whether you have ideas to share, questions to ask, or simply want to connect with your colleagues in a confidential manner, this is the platform for you.</p>
+                    <p>Stay connected with Hushwork and discover a new way to interact with your network. Share messages, thoughts, and ideas freely, with the assurance that your anonymity is our top priority.</p>
+                    <p><em>Hushwork - Where Your Voice Matters Anonymously</em></p>
                 </div>
             }
         </>

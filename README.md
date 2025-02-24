@@ -1,20 +1,20 @@
-# CorpConv - Anonymously Connect with Your Corporate Network
+# Hushwork - Stay Connected with Your Network Anonymously
 
-Stay connected with CorpConv—exchange ideas and messages anonymously. Experience a new way of interacting with your corporate network.
+Stay connected with Hushwork — exchange ideas and messages anonymously. Experience a new way of interacting with your   network.
 
 ## Features
 
 ### [Anonymously Connect](/chats)
-Anonymously connect with your corporate network. Exchange messages, thoughts, and ideas freely, knowing that your anonymity is our priority.
+Anonymously connect with your   network. Exchange messages, thoughts, and ideas freely, knowing that your anonymity is our priority.
 
 ### [Prioritize Privacy](/posts)
-At CorpConv, we prioritize your privacy and provide a secure space for corporate employees to exchange messages and thoughts anonymously.
+At Hushwork, we prioritize your privacy and provide a secure space for   employees to exchange messages and thoughts anonymously.
 
 ### [Post Job Opportunities](/jobs)
 Post job opportunities and engage in one-on-one conversations while prioritizing user anonymity.
 
 ### [Stay Connected](/)
-Stay connected with CorpConv and experience a new way of interacting with your corporate network.
+Stay connected with Hushwork and experience a new way of interacting with your   network.
 
 ### [AnswerLink: Your Ultimate Q&A Destination](/answerlink)
 Welcome to AnswerLink, the ultimate destination for seeking and sharing knowledge. With AnswerLink, users can effortlessly ask questions and receive expert answers from a vibrant community.
@@ -24,7 +24,7 @@ Welcome to Survey, your ultimate survey builder. Create, distribute, and analyze
 
 ## Demo
 
-[Demo Link](corp-conv-frontend.vercel.app/)
+[Demo Link](https://hushwork.vercel.app/)
 [Backend Repo Link](https://github.com/imnayakshubham/CorpConvBackend)
 
 

@@ -12,7 +12,7 @@ const Intro = () => {
                     <div>
                         <h2
                             className="w-full h-full flex justify-center items-center tracking-tighter text-center text-5xl sm:text-7xl lg:text-9xl opacity-10 hover:opacity-100 transition-opacity duration-500 ease-in-out cursor-pointer customfont">
-                            CorpConv
+                            Hushwork
                         </h2>
                     </div>
                 </div>

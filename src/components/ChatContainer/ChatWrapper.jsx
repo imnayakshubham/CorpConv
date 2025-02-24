@@ -10,14 +10,14 @@ const ChatWrapper = () => {
     return (
         <section className='chat__wrapper__container'>
             <Helmet>
-                <title>CorpConv - Anonymous Corporate Networking & Privacy Focused</title>
-                <meta name="description" content="CorpConv offers a secure platform for corporate employees to connect, share ideas, and exchange messages anonymously. Prioritize your privacy and experience a new way of interacting with your corporate network." />
-                <meta name="keywords" content="anonymously connect, corporate network, privacy, secure messaging, anonymous communication, corporate interaction, confidential networking, CorpConv, anonymous ideas sharing, corporate messaging platform" />
-                <meta property="og:title" content="CorpConv - Anonymous Corporate Networking & Privacy Focused" />
-                <meta property="og:description" content="CorpConv provides a secure and anonymous platform for corporate employees to connect, share ideas, and exchange messages, prioritizing your privacy and confidentiality." />
+                <title>Hushwork - Anonymous Networking & Privacy Focused</title>
+                <meta name="description" content="Hushwork offers a secure platform for people to connect, share ideas, and exchange messages anonymously. Prioritize your privacy and experience a new way of interacting with your network." />
+                <meta name="keywords" content="anonymously connect, network, privacy, secure messaging, anonymous communication, interaction, confidential networking, Hushwork, anonymous ideas sharing, messaging platform" />
+                <meta property="og:title" content="Hushwork - Anonymous Networking & Privacy Focused" />
+                <meta property="og:description" content="Hushwork provides a secure and anonymous platform for people to connect, share ideas, and exchange messages, prioritizing your privacy and confidentiality." />
                 <meta property="og:type" content="website" />
-                <meta name="twitter:title" content="CorpConv - Anonymous Corporate Networking & Privacy Focused" />
-                <meta name="twitter:description" content="Connect and interact with your corporate network anonymously using CorpConv. Prioritize privacy while exchanging messages and ideas securely." />
+                <meta name="twitter:title" content="Hushwork - Anonymous Corporate Networking & Privacy Focused" />
+                <meta name="twitter:description" content="Connect and interact with your network anonymously using Hushwork. Prioritize privacy while exchanging messages and ideas securely." />
             </Helmet>
             <section className={`${selectedChat ? "chat__sidebar__selected__chat" : "chat__sidebar"} chat__sidebar`} >
                 <ChatSidebar />

@@ -84,16 +84,16 @@ const Jobs = ({ from, user_id = null }) => {
     return (
         <div>
             <Helmet>
-                <title>Post Job Opportunities Anonymously | CorpConv</title>
-                <meta name="description" content="Post job opportunities and engage in one-on-one conversations while prioritizing user anonymity. Discover how CorpConv allows you to manage job postings securely and confidentially." />
-                <meta name="keywords" content="Post Job Opportunities, Job Posting, Anonymously Post Jobs, Secure Job Posting, User Anonymity, CorpConv Job Board" />
+                <title>Post Job Opportunities Anonymously | Hushwork</title>
+                <meta name="description" content="Post job opportunities and engage in one-on-one conversations while prioritizing user anonymity. Discover how Hushwork allows you to manage job postings securely and confidentially." />
+                <meta name="keywords" content="Post Job Opportunities, Job Posting, Anonymously Post Jobs, Secure Job Posting, User Anonymity, Hushwork Job Board" />
 
-                <meta property="og:title" content="Post Job Opportunities Anonymously | CorpConv" />
-                <meta property="og:description" content="Post job opportunities and engage in one-on-one conversations while prioritizing user anonymity. Discover how CorpConv allows you to manage job postings securely and confidentially." />
+                <meta property="og:title" content="Post Job Opportunities Anonymously | Hushwork" />
+                <meta property="og:description" content="Post job opportunities and engage in one-on-one conversations while prioritizing user anonymity. Discover how Hushwork allows you to manage job postings securely and confidentially." />
                 <meta property="og:type" content="website" />
 
-                <meta name="twitter:title" content="Post Job Opportunities Anonymously | CorpConv" />
-                <meta name="twitter:description" content="Post job opportunities and engage in one-on-one conversations while prioritizing user anonymity. Discover how CorpConv allows you to manage job postings securely and confidentially." />
+                <meta name="twitter:title" content="Post Job Opportunities Anonymously | Hushwork" />
+                <meta name="twitter:description" content="Post job opportunities and engage in one-on-one conversations while prioritizing user anonymity. Discover how Hushwork allows you to manage job postings securely and confidentially." />
             </Helmet>
 
             <div className={from !== "user_profile" ? `pt-4` : ""}>

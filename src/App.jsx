@@ -176,7 +176,7 @@ function App() {
                 <Helmet>
                   <title>AnswerLink - Your Go-To Q&A Platform to ask anonymous, real-time questionss</title>
                   <meta name="description" content="Welcome to AnswerLink, your go-to Q&A platform for asking questions and getting answers from a community of enthusiasts/professionals. Engage in real-time discussions and connect with knowledgeable community members." />
-                  <meta name="keywords" content="Q&A platform, answers, real-time interaction, community knowledge, Ask Anything, AnswerLink, anonymous community, corporate, employee" />
+                  <meta name="keywords" content="Q&A platform, answers, real-time interaction, community knowledge, Ask Anything, AnswerLink, anonymous community,  , employee" />
                   <meta property="og:title" content="AnswerLink - Your Go-To Q&A Platform for Expert Answers" />
                   <meta property="og:description" content="Welcome to AnswerLink, your go-to Q&A platform for asking questions and getting answers from a community of enthusiasts/professionals. Engage in real-time discussions and connect with knowledgeable community members." />
                   <meta property="og:type" content="website" />
@@ -214,13 +214,13 @@ function App() {
               <PageWrapper bodyClass={"lg:w-8/12 md:w-9/12"}>
                 <Helmet>
                   <title>AnswerLink - Your Go-To Q&A Platform to ask anonymous, real-time questions</title>
-                  <meta name="description" content="Welcome to AnswerLink by CorpConv, your go-to Q&A platform for asking questions and getting answers from a community of experts and enthusiasts. Engage in real-time discussions and connect with knowledgeable community members." />
-                  <meta name="keywords" content="Q&A platform, anonymous questions, real-time interaction, community knowledge, Ask Anything, AnswerLink,anonymous community, CorpConv" />
-                  <meta property="og:title" content="AnswerLink by CorpConv - Your Go-To Q&A Platform for Expert Answers" />
-                  <meta property="og:description" content="Welcome to AnswerLink by CorpConv, your go-to Q&A platform for asking questions anonymously and getting answers from a community enthusiasts. Engage in real-time discussions and connect with knowledgeable community members." />
+                  <meta name="description" content="Welcome to AnswerLink by Hushwork, your go-to Q&A platform for asking questions and getting answers from a community of experts and enthusiasts. Engage in real-time discussions and connect with knowledgeable community members." />
+                  <meta name="keywords" content="Q&A platform, anonymous questions, real-time interaction, community knowledge, Ask Anything, AnswerLink,anonymous community, Hushwork" />
+                  <meta property="og:title" content="AnswerLink by Hushwork - Your Go-To Q&A Platform for Expert Answers" />
+                  <meta property="og:description" content="Welcome to AnswerLink by Hushwork, your go-to Q&A platform for asking questions anonymously and getting answers from a community enthusiasts. Engage in real-time discussions and connect with knowledgeable community members." />
                   <meta property="og:type" content="website" />
-                  <meta name="twitter:title" content="AnswerLink by CorpConv - Your Go-To Q&A Platform for Expert Answers" />
-                  <meta name="twitter:description" content="Welcome to AnswerLink by CorpConv, your go-to platform for asking questions and getting answers from a community of experts and enthusiasts. Engage in real-time discussions and connect with knowledgeable community members." />
+                  <meta name="twitter:title" content="AnswerLink by Hushwork - Your Go-To Q&A Platform for Expert Answers" />
+                  <meta name="twitter:description" content="Welcome to AnswerLink by Hushwork, your go-to platform for asking questions and getting answers from a community of experts and enthusiasts. Engage in real-time discussions and connect with knowledgeable community members." />
                 </Helmet>
                 <AnswerLinkQuestions />
               </PageWrapper>
