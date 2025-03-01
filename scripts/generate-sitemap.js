@@ -74,7 +74,7 @@ ${allRoutes
             )
             .join('\n')}
 </urlset>`;
-    console.log(BASE_URL)
+
     const publicDir = path.join(process.cwd(), 'public');
 
     // Create public directory if it doesn't exist
