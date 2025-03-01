@@ -30,6 +30,7 @@ const routes = [
 
 const getDynamicRoutes = async () => {
     try {
+
         const data = await axios.get(`${API_URL}site_map/data`)
         if (data.status === 200) {
 
@@ -73,7 +74,7 @@ ${allRoutes
             )
             .join('\n')}
 </urlset>`;
-
+    console.log(BASE_URL)
     const publicDir = path.join(process.cwd(), 'public');
 
     // Create public directory if it doesn't exist
