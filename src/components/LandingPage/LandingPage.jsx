@@ -107,7 +107,7 @@ const LandingPage = () => {
                                 transition={{ delay: 0.7, duration: 0.8 }}
                                 className="mx-auto max-w-[42rem] leading-normal text-muted-foreground sm:text-xl sm:leading-8 mb-8"
                             >
-                                Speak Freely, Stay Private: Create Surveys, Ask Questions, and Connect Anonymously.
+                                Speak Freely, Stay Private: Create Anonymous Surveys, Join Private Q&A, Chat and Connect Anonymously - Your Privacy Matters
                             </motion.p>
 
                             <motion.div
