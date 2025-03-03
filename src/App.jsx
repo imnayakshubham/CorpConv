@@ -26,7 +26,7 @@ import { MainLoader } from './components/Loader/MainLoader.tsx';
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuTrigger } from './components/ui/navigation-menu.tsx';
 import { Avatar, AvatarFallback, AvatarImage } from './components/ui/avatar.tsx';
 import { cn } from './utils/utils.ts';
-import LandingPage from './components/LandingPage/LandingPage.jsx';
+import LandingPage, { MouseMoveEffect } from './components/LandingPage/LandingPage.jsx';
 import PageWrapper from './components/PageWrapper/PageWrapper.jsx';
 import { Navbar } from './components/Navbar/Navbar.jsx';
 import BlurFade from './components/BlurFadeContainer/blur-fade.tsx';
@@ -96,24 +96,20 @@ function App() {
 
   return (
     <>
-      <div className="main-content pb-20 md:pb-0 container px-0 text-dynamic">
+      <div className="relative flex min-h-screen flex-col">
         {!shouldHideNavbar && <Navbar />}
+        <MouseMoveEffect />
         <Routes>
           <Route path='/' element={
-            <BlurFade delay={0.05}>
-              <section className="relative top-0 h-screen bg-[image:radial-gradient(80%_50%_at_50%_-20%,hsl(0, 0%, 0%, 0.7),rgba(0,0,0,0))]">
-                <div className="absolute inset-0 bg-[linear-gradient(to_right,#0f172a_0.5px,transparent_1px),linear-gradient(to_bottom,#0f172a_0.5px,transparent_1px)] bg-[size:2rem_2rem] [mask-image:radial-gradient(ellipse_50%_40%_at_50%_10%,#000_50%,transparent_100%)] transition-all duration-300 group-hover:bg-[linear-gradient(to_right,#000_1.5px,transparent_2px),linear-gradient(to_bottom,#ccc_2.0px,transparent_0.5px)] group-hover:shadow-[10_10_20px_10px_rgba(25,10,0,0.5)]" />
-                <div className="relative">
-                  <Navbar />
-                  <BlurFade delay={0.4}>
-                    <PageWrapper>
-                      <LandingPage />
-                    </PageWrapper>
-                  </BlurFade>
-                </div>
-              </section>
-            </BlurFade>
+            <div className="min-h-screen bg-gradient-to-b from-background to-background/95 overflow-hidden">
+              <div className="pointer-events-none fixed inset-0">
+                <div className="inset-0 bg-gradient-to-b from-background via-background/90 to-background" />
+                <div className="right-0 top-0 h-[250px] w-[250px] bg-blue-500/10 blur-[100px]" />
+                <div className="bottom-0 left-0 h-[250px] w-[250px] bg-purple-500/10 blur-[100px]" />
+              </div>
 
+              <LandingPage />
+            </div>
           } />
 
           <Route path='/posts' element={
@@ -287,7 +283,7 @@ function App() {
             </Suspense>
           } />
         </Routes>
-      </div>
+      </div >
       <BottomNavigation />
     </>
 
