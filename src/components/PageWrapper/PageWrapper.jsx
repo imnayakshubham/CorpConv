@@ -8,7 +8,7 @@ const PageWrapper = ({ children, bodyClass = defaultBodyStyle }) => {
     return (
         <>
             <BlurFade delay={0.2}>
-                <section className="flex justify-center items-center pt-4 md:py-4 md:px-2 md:pb-6">
+                <section className="flex justify-center md:px-2 py-20 min-h-screen">
                     <div className={cn("w-full px-3 md:px-6", bodyClass)}>
                         {children}
                     </div>

@@ -75,7 +75,7 @@ const LandingPage = () => {
             <div className="min-h-screen bg-gradient-to-b from-background to-background/95 overflow-hidden">
                 <Navbar />
                 <main className="pt-24">
-                    <section className="relative py-20 md:py-28 lg:py-36 overflow-hidden">
+                    <section className="relative py-24 md:py-28 lg:py-36 overflow-hidden min-h-[95vh]">
                         <div className="absolute inset-0 z-0 opacity-30">
                             <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/20 rounded-full filter blur-3xl"></div>
                             <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/20 rounded-full filter blur-3xl"></div>
@@ -132,15 +132,11 @@ const LandingPage = () => {
                                         </button>
                                 }
                             </motion.div>
-
-
-
-
                         </div>
                     </section>
 
                     <BlurFade delay={0.4}>
-                        <section id="features" className="py-20 relative">
+                        <section id="features" className="pb-24 sm:pt-24 sm:pb-4 relative">
                             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                                 <div className="text-center mb-16">
                                     <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4">Anonymous. Powerful.</h2>
@@ -148,13 +144,10 @@ const LandingPage = () => {
                                         Discover how Hushwork transforms the way people collaborate while maintaining complete privacy.
                                     </p>
                                 </div>
-
                                 <Intro />
-
                             </div>
                         </section>
                     </BlurFade>
-
                 </main>
             </div>
         </>

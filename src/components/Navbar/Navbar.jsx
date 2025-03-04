@@ -51,7 +51,7 @@ export const Navbar = () => {
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex h-16 items-center justify-between">
                     <div className="flex items-center">
-                        <Link href="/" className="flex items-center space-x-2">
+                        <Link to="/" className="flex items-center space-x-2">
                             <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/70 nav__logo__text">
                                 Hushwork
                             </span>
@@ -131,7 +131,7 @@ export const Navbar = () => {
                     </nav>
                 </div>
             </div>
-        </header>
+        </header >
     )
 }
 

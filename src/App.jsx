@@ -98,7 +98,6 @@ function App() {
     <>
       <div className="relative flex min-h-screen flex-col">
         {!shouldHideNavbar && <Navbar />}
-        <MouseMoveEffect />
         <Routes>
           <Route path='/' element={
             <div className="min-h-screen bg-gradient-to-b from-background to-background/95 overflow-hidden">
@@ -107,7 +106,7 @@ function App() {
                 <div className="right-0 top-0 h-[250px] w-[250px] bg-blue-500/10 blur-[100px]" />
                 <div className="bottom-0 left-0 h-[250px] w-[250px] bg-purple-500/10 blur-[100px]" />
               </div>
-
+              <MouseMoveEffect />
               <LandingPage />
             </div>
           } />
