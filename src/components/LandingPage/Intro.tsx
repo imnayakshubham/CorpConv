@@ -1,12 +1,7 @@
-import { BentoDemo } from './LandingPage'
 
 const Intro = () => {
     return (
         <>
-            <section className="mx-auto max-w-7xl px-3 lg:px-8 flex justify-center items-center flex-col">
-                <BentoDemo />
-            </section>
-
             <section className="py-20">
                 <div className="flex justify-center items-center align-middle flex-col h-full">
                     <div>
@@ -18,7 +13,7 @@ const Intro = () => {
                 </div>
             </section>
 
-            <section className="max-w-7xl px-3 lg:px-8 flex justify-center items-center flex-col gap-4">
+            <section className="max-w-7xl container px-3 lg:px-8 flex justify-center items-center flex-col gap-4">
                 <div className="w-full">
                     <div className="py-3">
                         <div className="border-b border-gray-800"></div>
@@ -27,6 +22,7 @@ const Intro = () => {
                         <div className="w-auto">
                             <strong className="my-auto text-sm text-gray-600 font-rem2">Developed by Nayak Shubham</strong>
                         </div>
+
                         <section className="flex justify-center items-center gap-2">
                             <a
                                 target="_blank" rel="noreferrer" href="https://github.com/imnayakshubham"
@@ -45,11 +41,6 @@ const Intro = () => {
                                         clipRule="evenodd"
                                     ></path>
                                 </svg>
-                                <span
-                                    className="absolute opacity-0 group-hover:opacity-100 group-hover:text-sm group-hover:-translate-y-10 duration-700"
-                                >
-                                    GitHub
-                                </span>
                             </a>
 
                             <a
@@ -58,23 +49,16 @@ const Intro = () => {
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
-                                    width="1em"
-                                    height="1.1em"
+                                    className="w-5 h-5"
                                     viewBox="0 0 512 512"
                                     strokeWidth="0"
                                     fill="currentColor"
                                     stroke="currentColor"
-                                    className="w-5 h-5"
                                 >
                                     <path
                                         d="M444.17 32H70.28C49.85 32 32 46.7 32 66.89v374.72C32 461.91 49.85 480 70.28 480h373.78c20.54 0 35.94-18.21 35.94-38.39V66.89C480.12 46.7 464.6 32 444.17 32zm-273.3 373.43h-64.18V205.88h64.18zM141 175.54h-.46c-20.54 0-33.84-15.29-33.84-34.43 0-19.49 13.65-34.42 34.65-34.42s33.85 14.82 34.31 34.42c-.01 19.14-13.31 34.43-34.66 34.43zm264.43 229.89h-64.18V296.32c0-26.14-9.34-44-32.56-44-17.74 0-28.24 12-32.91 23.69-1.75 4.2-2.22 9.92-2.22 15.76v113.66h-64.18V205.88h64.18v27.77c9.34-13.3 23.93-32.44 57.88-32.44 42.13 0 74 27.77 74 87.64z"
                                     ></path>
                                 </svg>
-                                <span
-                                    className="absolute opacity-0 group-hover:opacity-100 group-hover:text-sm group-hover:-translate-y-10 duration-700"
-                                >
-                                    Linkedin
-                                </span>
                             </a>
                             <a
                                 target="_blank" rel="noreferrer" href="https://www.x.com/imnayakshubham"
@@ -93,11 +77,6 @@ const Intro = () => {
                                         d="M8 2H1L9.26086 13.0145L1.44995 21.9999H4.09998L10.4883 14.651L16 22H23L14.3917 10.5223L21.8001 2H19.1501L13.1643 8.88578L8 2ZM17 20L5 4H7L19 20H17Z"
                                     ></path>
                                 </svg>
-                                <span
-                                    className="absolute opacity-0 group-hover:opacity-100 group-hover:text-sm group-hover:-translate-y-10 duration-700"
-                                >
-                                    X (Twitter)
-                                </span>
                             </a>
                         </section>
                     </div>

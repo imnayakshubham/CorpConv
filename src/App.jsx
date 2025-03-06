@@ -359,13 +359,13 @@ export const BottomNavigation = () => {
   }, [])
 
 
-  return <div className='fixed z-50 bottom-0 p-2 px-4 h-16 sm:hidden flex gap-2 w-screen justify-between bg-[#fff] border'>
+  return <div className='fixed z-50 bottom-0 p-2 px-4 h-16 sm:hidden flex gap-1 w-screen justify-between bg-[#fff] border'>
     {
       navLinks.map((link, i) => {
         return <TooltipProvider key={i}>
           <Tooltip>
             <TooltipTrigger>
-              <Link to={link.to} onClick={link.onClick} aria-label={link.label} className="flex flex-col items-center justify-center gap-1">
+              <Link to={link.to} onClick={link.onClick} aria-label={link.label} className="flex flex-col items-center justify-center gap-1 p-2">
                 {link.icon}
               </Link>
             </TooltipTrigger>

@@ -41,9 +41,7 @@ export const LoginWithGoogle = () => {
                 }}
                 loading={loginStatus === AsyncStates.LOADING}
                 loadingContent={"Signing up..."}
-                className="relative inline-flex h-10 overflow-hidden rounded-2xl  focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
-
-                <span className="absolute inset-[-100%] animate-login-btn" />
+            >
                 <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-2xl bg-transparent px-3 py-1 text-md font-medium backdrop-blur-sm gap-1">
                     <GoogleOutlined /> Login With Google
                 </span>
