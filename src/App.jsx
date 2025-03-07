@@ -96,193 +96,191 @@ function App() {
 
   return (
     <>
-      <div className="relative flex min-h-screen flex-col">
-        {!shouldHideNavbar && <Navbar />}
-        <Routes>
-          <Route path='/' element={
-            <div className="min-h-screen bg-gradient-to-b from-background to-background/95 overflow-hidden">
-              <div className="pointer-events-none fixed inset-0">
-                <div className="inset-0 bg-gradient-to-b from-background via-background/90 to-background" />
-                <div className="right-0 top-0 h-[250px] w-[250px] bg-blue-500/10 blur-[100px]" />
-                <div className="bottom-0 left-0 h-[250px] w-[250px] bg-purple-500/10 blur-[100px]" />
-              </div>
-              <MouseMoveEffect />
-              <LandingPage />
+      {!shouldHideNavbar && <Navbar />}
+      <Routes>
+        <Route path='/' element={
+          <div className="min-h-screen bg-gradient-to-b from-background to-background/95 overflow-hidden">
+            <div className="pointer-events-none fixed inset-0">
+              <div className="inset-0 bg-gradient-to-b from-background via-background/90 to-background" />
+              <div className="right-0 top-0 h-[250px] w-[250px] bg-blue-500/10 blur-[100px]" />
+              <div className="bottom-0 left-0 h-[250px] w-[250px] bg-purple-500/10 blur-[100px]" />
             </div>
-          } />
+            <MouseMoveEffect />
+            <LandingPage />
+          </div>
+        } />
 
-          <Route path='/posts' element={
+        <Route path='/posts' element={
+          <Suspense fallback={<MainLoader />}>
+            <PageWrapper bodyClass={"lg:w-8/12 md:w-9/12 "}>
+              <Posts />
+            </PageWrapper>
+          </Suspense>
+        } />
+        <Route>
+          <Route path='/jobs' element={
             <Suspense fallback={<MainLoader />}>
-              <PageWrapper bodyClass={"lg:w-8/12 md:w-9/12 "}>
-                <Posts />
+              <PageWrapper>
+                <Jobs from={"jobs"} />
               </PageWrapper>
             </Suspense>
           } />
+
           <Route>
-            <Route path='/jobs' element={
+            <Route path='/users' element={
               <Suspense fallback={<MainLoader />}>
                 <PageWrapper>
-                  <Jobs from={"jobs"} />
-                </PageWrapper>
-              </Suspense>
-            } />
-
-            <Route>
-              <Route path='/users' element={
-                <Suspense fallback={<MainLoader />}>
-                  <PageWrapper>
-                    <Users />
-                  </PageWrapper>
-                </Suspense>
-              } />
-            </Route>
-
-            <Route>
-              <Route path='/user/:id' element={
-                <Suspense fallback={<MainLoader />}>
-                  <BlurFade delay={BLUR_FADE_DELAY}>
-                    <UserProfile />
-                  </BlurFade>
-                </Suspense>
-              } />
-            </Route>
-
-            <Route>
-              <Route path='/post/:id' element={
-                <Suspense fallback={<MainLoader />}>
-                  <PageWrapper bodyClass={"lg:w-8/12 md:w-9/12"}>
-                    <Post />
-                  </PageWrapper>
-                </Suspense>
-              } />
-            </Route>
-
-            <Route element={<PrivateRoutes />}>
-              <Route path='/update-profile' element={
-                <Suspense fallback={<MainLoader />}>
-                  <PageWrapper bodyClass='w-full md:w-3/4 border border-slate-800'>
-                    <UpdateProfile />
-                  </PageWrapper>
-                </Suspense>
-              } />
-            </Route>
-            <Route path='/answerlink' element={
-              <Suspense fallback={<MainLoader />}>
-                <Helmet>
-                  <title>AnswerLink - Your Go-To Q&A Platform to ask anonymous, real-time questionss</title>
-                  <meta name="description" content="Welcome to AnswerLink, your go-to Q&A platform for asking questions and getting answers from a community of enthusiasts/professionals. Engage in real-time discussions and connect with knowledgeable community members." />
-                  <meta name="keywords" content="Q&A platform, answers, real-time interaction, community knowledge, Ask Anything, AnswerLink, anonymous community,  , employee" />
-                  <meta property="og:title" content="AnswerLink - Your Go-To Q&A Platform for Expert Answers" />
-                  <meta property="og:description" content="Welcome to AnswerLink, your go-to Q&A platform for asking questions and getting answers from a community of enthusiasts/professionals. Engage in real-time discussions and connect with knowledgeable community members." />
-                  <meta property="og:type" content="website" />
-                  <meta name="twitter:title" content="AnswerLink - Your Go-To Q&A Platform for Expert Answers" />
-                  <meta name="twitter:description" content="Welcome to AnswerLink, your go-to Q&A platform for asking questions and getting answers from a community of enthusiasts/professionals. Engage in real-time discussions and connect with knowledgeable community members." />
-                </Helmet>
-                <PageWrapper bodyClass={"lg:w-8/12 md:w-9/12"}>
-                  <AnswerLinkHome />
+                  <Users />
                 </PageWrapper>
               </Suspense>
             } />
           </Route>
 
-          <Route path='/answerlink/question/:id' element={
-            <Suspense fallback={<MainLoader />}>
-              <PageWrapper bodyClass={"lg:w-8/12 md:w-9/12"}>
-                <AnswerLinkQuestion />
-              </PageWrapper>
-            </Suspense>
-          }
-          />
-
-          <Route element={<PrivateRoutes />}>
-            <Route path='/surveys' element={
-              <Suspense fallback={<MainLoader />}>
-                <PageWrapper bodyClass='w-full md:w-10/12 border border-slate-800'>
-                  <SurveyList />
-                </PageWrapper>
-              </Suspense>
-            } />
-          </Route>
-
-          <Route path='/answerlink/questions' element={
-            <Suspense fallback={<MainLoader />}>
-              <PageWrapper bodyClass={"lg:w-8/12 md:w-9/12"}>
-                <Helmet>
-                  <title>AnswerLink - Your Go-To Q&A Platform to ask anonymous, real-time questions</title>
-                  <meta name="description" content="Welcome to AnswerLink by Hushwork, your go-to Q&A platform for asking questions and getting answers from a community of experts and enthusiasts. Engage in real-time discussions and connect with knowledgeable community members." />
-                  <meta name="keywords" content="Q&A platform, anonymous questions, real-time interaction, community knowledge, Ask Anything, AnswerLink,anonymous community, Hushwork" />
-                  <meta property="og:title" content="AnswerLink by Hushwork - Your Go-To Q&A Platform for Expert Answers" />
-                  <meta property="og:description" content="Welcome to AnswerLink by Hushwork, your go-to Q&A platform for asking questions anonymously and getting answers from a community enthusiasts. Engage in real-time discussions and connect with knowledgeable community members." />
-                  <meta property="og:type" content="website" />
-                  <meta name="twitter:title" content="AnswerLink by Hushwork - Your Go-To Q&A Platform for Expert Answers" />
-                  <meta name="twitter:description" content="Welcome to AnswerLink by Hushwork, your go-to platform for asking questions and getting answers from a community of experts and enthusiasts. Engage in real-time discussions and connect with knowledgeable community members." />
-                </Helmet>
-                <AnswerLinkQuestions />
-              </PageWrapper>
-            </Suspense>
-          }
-          />
-
-          <Route element={<PrivateRoutes />}>
-            <Route path='/surveys' element={
-              <Suspense fallback={<MainLoader />}>
-                <PageWrapper bodyClass='w-full md:w-10/12 border border-slate-800'>
-                  <SurveyList />
-                </PageWrapper>
-              </Suspense>
-            } />
-          </Route>
-
-          <Route element={<PrivateRoutes />}>
-            <Route path='/survey/builder/:id' element={
+          <Route>
+            <Route path='/user/:id' element={
               <Suspense fallback={<MainLoader />}>
                 <BlurFade delay={BLUR_FADE_DELAY}>
-                  <SurveyBuilder />
-                </BlurFade>
-              </Suspense>
-            } />
-          </Route>
-
-
-          <Route element={<PrivateRoutes />}>
-            <Route path='/survey/submissions/:id' element={
-              <Suspense fallback={<MainLoader />}>
-                <PageWrapper bodyClass='w-full md:w-3/4 border border-slate-800'>
-                  <SurveySubmissions />
-                </PageWrapper>
-              </Suspense>
-            } />
-          </Route>
-
-          <Route element={<PrivateRoutes />}>
-            <Route path='/chats' element={
-              <Suspense fallback={<MainLoader />}>
-                <BlurFade delay={BLUR_FADE_DELAY}>
-                  <ChatWrapper />
+                  <UserProfile />
                 </BlurFade>
               </Suspense>
             } />
           </Route>
 
           <Route>
-            <Route path='/survey/:id' element={
+            <Route path='/post/:id' element={
               <Suspense fallback={<MainLoader />}>
-                <BlurFade delay={BLUR_FADE_DELAY}>
-                  <Survey />
-                </BlurFade>
+                <PageWrapper bodyClass={"lg:w-8/12 md:w-9/12"}>
+                  <Post />
+                </PageWrapper>
               </Suspense>
             } />
           </Route>
 
-          <Route path='*' element={
+          <Route element={<PrivateRoutes />}>
+            <Route path='/update-profile' element={
+              <Suspense fallback={<MainLoader />}>
+                <PageWrapper bodyClass='w-full md:w-3/4 border border-slate-400'>
+                  <UpdateProfile />
+                </PageWrapper>
+              </Suspense>
+            } />
+          </Route>
+          <Route path='/answerlink' element={
+            <Suspense fallback={<MainLoader />}>
+              <Helmet>
+                <title>AnswerLink - Your Go-To Q&A Platform to ask anonymous, real-time questionss</title>
+                <meta name="description" content="Welcome to AnswerLink, your go-to Q&A platform for asking questions and getting answers from a community of enthusiasts/professionals. Engage in real-time discussions and connect with knowledgeable community members." />
+                <meta name="keywords" content="Q&A platform, answers, real-time interaction, community knowledge, Ask Anything, AnswerLink, anonymous community,  , employee" />
+                <meta property="og:title" content="AnswerLink - Your Go-To Q&A Platform for Expert Answers" />
+                <meta property="og:description" content="Welcome to AnswerLink, your go-to Q&A platform for asking questions and getting answers from a community of enthusiasts/professionals. Engage in real-time discussions and connect with knowledgeable community members." />
+                <meta property="og:type" content="website" />
+                <meta name="twitter:title" content="AnswerLink - Your Go-To Q&A Platform for Expert Answers" />
+                <meta name="twitter:description" content="Welcome to AnswerLink, your go-to Q&A platform for asking questions and getting answers from a community of enthusiasts/professionals. Engage in real-time discussions and connect with knowledgeable community members." />
+              </Helmet>
+              <PageWrapper bodyClass={"lg:w-8/12 md:w-9/12"}>
+                <AnswerLinkHome />
+              </PageWrapper>
+            </Suspense>
+          } />
+        </Route>
+
+        <Route path='/answerlink/question/:id' element={
+          <Suspense fallback={<MainLoader />}>
+            <PageWrapper bodyClass={"lg:w-8/12 md:w-9/12"}>
+              <AnswerLinkQuestion />
+            </PageWrapper>
+          </Suspense>
+        }
+        />
+
+        <Route element={<PrivateRoutes />}>
+          <Route path='/surveys' element={
+            <Suspense fallback={<MainLoader />}>
+              <PageWrapper bodyClass='w-full md:w-10/12 border border-slate-400'>
+                <SurveyList />
+              </PageWrapper>
+            </Suspense>
+          } />
+        </Route>
+
+        <Route path='/answerlink/questions' element={
+          <Suspense fallback={<MainLoader />}>
+            <PageWrapper bodyClass={"lg:w-8/12 md:w-9/12"}>
+              <Helmet>
+                <title>AnswerLink - Your Go-To Q&A Platform to ask anonymous, real-time questions</title>
+                <meta name="description" content="Welcome to AnswerLink by Hushwork, your go-to Q&A platform for asking questions and getting answers from a community of experts and enthusiasts. Engage in real-time discussions and connect with knowledgeable community members." />
+                <meta name="keywords" content="Q&A platform, anonymous questions, real-time interaction, community knowledge, Ask Anything, AnswerLink,anonymous community, Hushwork" />
+                <meta property="og:title" content="AnswerLink by Hushwork - Your Go-To Q&A Platform for Expert Answers" />
+                <meta property="og:description" content="Welcome to AnswerLink by Hushwork, your go-to Q&A platform for asking questions anonymously and getting answers from a community enthusiasts. Engage in real-time discussions and connect with knowledgeable community members." />
+                <meta property="og:type" content="website" />
+                <meta name="twitter:title" content="AnswerLink by Hushwork - Your Go-To Q&A Platform for Expert Answers" />
+                <meta name="twitter:description" content="Welcome to AnswerLink by Hushwork, your go-to platform for asking questions and getting answers from a community of experts and enthusiasts. Engage in real-time discussions and connect with knowledgeable community members." />
+              </Helmet>
+              <AnswerLinkQuestions />
+            </PageWrapper>
+          </Suspense>
+        }
+        />
+
+        <Route element={<PrivateRoutes />}>
+          <Route path='/surveys' element={
+            <Suspense fallback={<MainLoader />}>
+              <PageWrapper bodyClass='w-full md:w-10/12 border border-slate-400'>
+                <SurveyList />
+              </PageWrapper>
+            </Suspense>
+          } />
+        </Route>
+
+        <Route element={<PrivateRoutes />}>
+          <Route path='/survey/builder/:id' element={
             <Suspense fallback={<MainLoader />}>
               <BlurFade delay={BLUR_FADE_DELAY}>
-                <PageNotFound />
+                <SurveyBuilder />
               </BlurFade>
             </Suspense>
           } />
-        </Routes>
-      </div >
+        </Route>
+
+
+        <Route element={<PrivateRoutes />}>
+          <Route path='/survey/submissions/:id' element={
+            <Suspense fallback={<MainLoader />}>
+              <PageWrapper bodyClass='w-full md:w-3/4 border border-slate-400'>
+                <SurveySubmissions />
+              </PageWrapper>
+            </Suspense>
+          } />
+        </Route>
+
+        <Route element={<PrivateRoutes />}>
+          <Route path='/chats' element={
+            <Suspense fallback={<MainLoader />}>
+              <BlurFade delay={BLUR_FADE_DELAY}>
+                <ChatWrapper />
+              </BlurFade>
+            </Suspense>
+          } />
+        </Route>
+
+        <Route>
+          <Route path='/survey/:id' element={
+            <Suspense fallback={<MainLoader />}>
+              <BlurFade delay={BLUR_FADE_DELAY}>
+                <Survey />
+              </BlurFade>
+            </Suspense>
+          } />
+        </Route>
+
+        <Route path='*' element={
+          <Suspense fallback={<MainLoader />}>
+            <BlurFade delay={BLUR_FADE_DELAY}>
+              <PageNotFound />
+            </BlurFade>
+          </Suspense>
+        } />
+      </Routes>
       <BottomNavigation />
     </>
 
@@ -359,7 +357,7 @@ export const BottomNavigation = () => {
   }, [])
 
 
-  return <div className='fixed z-50 bottom-0 p-2 px-4 h-16 sm:hidden flex gap-1 w-screen justify-between bg-[#fff] border'>
+  return <div className='fixed z-50 bottom-0 p-2 px-4 h-16 sm:hidden flex gap-1 w-screen justify-between bg-[#fff] border sm:bg-red-500'>
     {
       navLinks.map((link, i) => {
         return <TooltipProvider key={i}>

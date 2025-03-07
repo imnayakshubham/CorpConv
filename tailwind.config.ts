@@ -1,7 +1,7 @@
-import type { Config } from "tailwindcss"
+import tailwindcssAnimate from "tailwindcss-animate";
 
 const config = {
-  darkMode: 'class',
+  darkMode: ["class"],
   content: [
     './pages/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',
@@ -10,7 +10,6 @@ const config = {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
-  prefix: "",
   theme: {
     container: {
       center: true,
@@ -82,14 +81,10 @@ const config = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "shimmer": "shimmer 2s linear infinite"
-
-      },
-      fontSize: {
-        dynamic: 'clamp(0.875rem, 1vw, 1.125rem)',
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
-} satisfies Config
+  plugins: [tailwindcssAnimate],
+};
 
-export default config
+export default config;

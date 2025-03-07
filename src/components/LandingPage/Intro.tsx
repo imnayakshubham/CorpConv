@@ -13,7 +13,7 @@ const Intro = () => {
                 </div>
             </section>
 
-            <section className="max-w-7xl container px-3 lg:px-8 flex justify-center items-center flex-col gap-4">
+            <section className="container px-3 lg:px-8 flex justify-center items-center flex-col gap-4">
                 <div className="w-full">
                     <div className="py-3">
                         <div className="border-b border-gray-800"></div>

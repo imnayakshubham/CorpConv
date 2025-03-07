@@ -32,8 +32,8 @@ const features = [
     },
     {
         Icon: NetworkIcon,
-        name: "Anonymous Chats: Connect Privately with Your Network",
-        description: "Engage in private, one-on-one conversations with your network, ensuring your identity remains confidential.",
+        name: "Anonymous Chats: Connect anonymously with Your Network",
+        description: "Engage in anonymous, one-on-one conversations with your network, ensuring your identity remains confidential.",
         href: "/chats",
         cta: "Start Chat",
         ariaLabel: "Connect Anonymously via Chats",
@@ -42,7 +42,7 @@ const features = [
     {
         Icon: CommunityIcon,
         name: "Community Posts: Share and Discuss Anonymously",
-        description: "Share thoughts, ideas, and discussions with the community while keeping your identity private.",
+        description: "Share thoughts, ideas, and discussions with the community while keeping your identity Anonymous.",
         href: "/posts",
         cta: "View Posts",
         ariaLabel: "Explore Anonymous Community Posts",
@@ -52,7 +52,7 @@ const features = [
         Icon: PrivacyIcon,
         name: "Prioritize Privacy: Your Profile, Your Choice",
         description: "At Hushwork, we prioritize your privacy by giving you complete control over your profile and communications.",
-        href: "/privacy",
+        href: "#",
         cta: "Learn More",
         ariaLabel: "Understand Our Privacy Commitment",
         className: "col-span-3 lg:col-span-2",
@@ -61,7 +61,7 @@ const features = [
         Icon: StayConnectedIcon,
         name: "Stay Connected: Engage with Your Network Anonymously",
         description: "Maintain and strengthen connections within your network through anonymous interactions.",
-        href: "/stay-connected",
+        href: "/users",
         cta: "Discover How",
         ariaLabel: "Learn How to Stay Connected Anonymously",
         className: "col-span-3 lg:col-span-1",
@@ -71,8 +71,6 @@ const features = [
 const LandingPage = () => {
     const navigateTo = useNavigate()
     const { loginResponse: userInfo } = useSelector(state => state.login)
-
-
 
     return (
         <div className="min-h-screen bg-gradient-to-b from-background to-background/95">
@@ -112,7 +110,7 @@ const LandingPage = () => {
                             transition={{ delay: 0.7, duration: 0.8 }}
                             className="mx-auto max-w-[42rem] leading-normal text-muted-foreground text-lg sm:text-xl sm:leading-8 mb-8"
                         >
-                            Speak Freely, Stay Private: Create Anonymous Surveys, Join Private Q&A, Chat and Connect Anonymously - Your Privacy Matters
+                            Speak Freely, Stay Anonymous: Create Anonymous Surveys, Q&A, Chat and Connect Anonymously - Your Privacy Matters
                         </motion.p>
 
                         <motion.div
@@ -184,7 +182,7 @@ const LandingPage = () => {
                                         <h3 className="text-xl font-semibold mb-2">{feature.name}</h3>
                                         <p className="text-muted-foreground mb-4">{feature.description}</p>
                                         <Link
-                                            href={feature.href}
+                                            to={feature.href}
                                             className="inline-flex items-center text-sm font-medium text-primary hover:underline"
                                             aria-label={feature.ariaLabel}
                                         >
@@ -197,8 +195,17 @@ const LandingPage = () => {
                     </section>
                 </motion.div>
 
-                <Intro />
             </main>
+            <motion.div
+                key={"info"}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 1.3 }}
+            >
+                <Intro />
+            </motion.div>
+
         </div>
     )
 }

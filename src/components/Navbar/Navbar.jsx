@@ -11,6 +11,7 @@ import React, { useEffect, useState } from "react";
 export const Navbar = () => {
     const dispatch = useDispatch()
     const { loginResponse: userInfo } = useSelector(state => state.login)
+    const [isScrolled, setIsScrolled] = useState(false)
 
     const components = [
         {
@@ -29,7 +30,6 @@ export const Navbar = () => {
         },
     ]
 
-    const [isScrolled, setIsScrolled] = useState(false)
 
     useEffect(() => {
         const handleScroll = () => {
@@ -46,11 +46,11 @@ export const Navbar = () => {
 
     return (
         <header
-            className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? " backdrop-blur-sm border-b shadow-sm" : "bg-transparent"}`}
+            className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? "bg-background/80 backdrop-blur-md border-b shadow-sm" : "bg-transparent"}`}
         >
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex h-16 items-center justify-between">
-                    <div className="flex items-center">
+                    <div className="flex h-16 items-center justify-between">
                         <Link to="/" className="flex items-center space-x-2">
                             <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/70 nav__logo__text">
                                 Hushwork
