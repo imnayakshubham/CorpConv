@@ -82,11 +82,11 @@ const LandingPage = () => {
                         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/20 rounded-full filter blur-3xl"></div>
                     </div>
 
-                    <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                    <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8 text-center py-4">
                         <motion.div
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
-                            transition={{ delay: 0.3 }}
+                            transition={{ delay: 0.15 }}
                             className="inline-flex gap-1 items-center rounded-full bg-muted px-4 py-1.5 text-sm font-medium mb-6"
                         >
                             <span role="img" aria-label="Celebration">
@@ -98,25 +98,24 @@ const LandingPage = () => {
                         <motion.h1
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.5, duration: 0.8 }}
-                            className="bg-gradient-to-br from-foreground from-30% via-foreground/90 to-foreground/70 bg-clip-text text-4xl font-bold tracking-tight text-transparent sm:text-5xl md:text-6xl lg:text-7xl mb-6"
+                            transition={{ delay: 0.25, duration: 0.4 }}
+                            className="text-balance bg-gradient-to-br from-foreground from-30% via-foreground/90 to-foreground/70 bg-clip-text text-3xl font-bold tracking-tight text-transparent sm:text-4xl md:text-5xl lg:text-6xl mb-6"
                         >
-                            Connect, Communicate, Create Anonymously with Hushwork
+                            Create, Connect, Communicate & Share 100% Anonymously with Hushwork
                         </motion.h1>
 
                         <motion.p
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.7, duration: 0.8 }}
-                            className="mx-auto max-w-[42rem] leading-normal text-muted-foreground text-lg sm:text-xl sm:leading-8 mb-8"
+                            transition={{ delay: 0.35, duration: 0.4 }}
+                            className="mx-auto text-balance leading-normal text-muted-foreground text-lg sm:text-xl sm:leading-8 mb-8"
                         >
-                            Speak Freely, Stay Anonymous: Create Anonymous Surveys, Q&A, Chat and Connect Anonymously - Your Privacy Matters
+                            Speak freely and stay anonymous with Hushwork. Create Anonymous surveys, anonymous Q&A, Chat and Connect Anonymously—where your privacy always comes first.
                         </motion.p>
-
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.9, duration: 0.8 }}
+                            transition={{ delay: 0.45, duration: 0.4 }}
                             className="flex flex-col sm:flex-row gap-4 justify-center mt-8"
                         >
                             {
@@ -155,9 +154,9 @@ const LandingPage = () => {
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: 1 }}
+                    transition={{ duration: 0.25, delay: 0.5 }}
                 >
-                    <section id="features" className="py-24 relative">
+                    <section id="features" className="py-28 relative">
                         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                             <div className="text-center mb-16">
                                 <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4">Anonymous. Powerful.</h2>
@@ -201,11 +200,10 @@ const LandingPage = () => {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 1.3 }}
+                transition={{ duration: 0.3, delay: 0.6 }}
             >
                 <Intro />
             </motion.div>
-
         </div>
     )
 }

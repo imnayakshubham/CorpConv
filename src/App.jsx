@@ -99,7 +99,7 @@ function App() {
       {!shouldHideNavbar && <Navbar />}
       <Routes>
         <Route path='/' element={
-          <div className="min-h-screen bg-gradient-to-b from-background to-background/95 overflow-hidden">
+          <div className="min-h-screen bg-gradient-to-b from-background to-background/95 overflow-hidden mb-20 md:mb-8">
             <div className="pointer-events-none fixed inset-0">
               <div className="inset-0 bg-gradient-to-b from-background via-background/90 to-background" />
               <div className="right-0 top-0 h-[250px] w-[250px] bg-blue-500/10 blur-[100px]" />
@@ -357,13 +357,14 @@ export const BottomNavigation = () => {
   }, [])
 
 
-  return <div className='fixed z-50 bottom-0 p-2 px-4 h-16 sm:hidden flex gap-1 w-screen justify-between bg-[#fff] border sm:bg-red-500'>
+  return <div className='fixed z-50 bottom-0 p-2 px-4 h-16 sm:hidden flex w-screen justify-between bg-[#fff] border sm:bg-red-500'>
     {
       navLinks.map((link, i) => {
         return <TooltipProvider key={i}>
           <Tooltip>
             <TooltipTrigger>
-              <Link to={link.to} onClick={link.onClick} aria-label={link.label} className="flex flex-col items-center justify-center gap-1 p-2">
+              <Link to={link.to} onClick={link.onClick} aria-label={link.label}
+                className="flex flex-col items-center justify-center gap-1 p-3 min-w-[48px] min-h-[48px] rounded-md hover:bg-accent focus:bg-accent">
                 {link.icon}
               </Link>
             </TooltipTrigger>
@@ -375,11 +376,11 @@ export const BottomNavigation = () => {
       })
     }
     {userInfo?._id &&
-      <NavigationMenu className='list-none p-0'>
+      <NavigationMenu className='list-none p-0 w-[48px] h-[48px]'>
         <NavigationMenuItem>
-          <NavigationMenuTrigger className='p-0'>
+          <NavigationMenuTrigger className='p-0 w-[48px] h-[48px]'>
             <div onClick={e => e.preventDefault()} className="cursor-pointer">
-              <Avatar>
+              <Avatar className='w-[30px] h-[30px]'>
                 <AvatarImage src={userInfo?.user_public_profile_pic} alt='User Profile Pic' loading='lazy' />
                 <AvatarFallback>{userInfo?.public_user_name}</AvatarFallback>
               </Avatar>

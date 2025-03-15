@@ -25,7 +25,9 @@ const Intro = () => {
 
                         <section className="flex justify-center items-center gap-2">
                             <a
-                                target="_blank" rel="noreferrer" href="https://github.com/imnayakshubham"
+                                target="_blank" rel="noreferrer"
+                                aria-label="Follow me on Github @imnayakshubham"
+                                href="https://github.com/imnayakshubham"
                                 className="group flex justify-center p-2 rounded-md drop-shadow-xlfont-semibold transition-all duration-500 border"
                             >
                                 <svg
@@ -44,7 +46,9 @@ const Intro = () => {
                             </a>
 
                             <a
-                                target="_blank" rel="noreferrer" href="https://www.linkedin.com/in/imnayakshubham/"
+                                target="_blank" rel="noreferrer"
+                                aria-label="Follow me on Linkedin @imnayakshubham"
+                                href="https://www.linkedin.com/in/imnayakshubham/"
                                 className="group flex justify-center p-2 rounded-md drop-shadow-xl from-gray-800 font-semibold transition-all duration-500 border"
                             >
                                 <svg
@@ -61,7 +65,9 @@ const Intro = () => {
                                 </svg>
                             </a>
                             <a
-                                target="_blank" rel="noreferrer" href="https://www.x.com/imnayakshubham"
+                                target="_blank" rel="noreferrer"
+                                aria-label="Follow me on Twitter(X) @imnayakshubham"
+                                href="https://www.x.com/imnayakshubham"
                                 className="group flex justify-center p-2 rounded-md drop-shadow-xlfont-semibold transition-all duration-500 border"
                             >
                                 <svg
