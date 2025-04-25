@@ -30,5 +30,5 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": ["src/**/*.ts", "src/**/*.tsx","src/**/*.js", "src/**/*.jsx"],
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules","src/components/form-builder","src/components/FormBuilderV2/FormBuilderV2.tsx","dist"],
 }
