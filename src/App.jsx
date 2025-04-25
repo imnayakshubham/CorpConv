@@ -30,6 +30,7 @@ import LandingPage, { MouseMoveEffect } from './components/LandingPage/LandingPa
 import PageWrapper from './components/PageWrapper/PageWrapper.jsx';
 import { Navbar } from './components/Navbar/Navbar.jsx';
 import BlurFade from './components/BlurFadeContainer/blur-fade.tsx';
+import BuilderPage from './components/FormBuilderV2/FormBuilderV2.tsx';
 
 const Jobs = React.lazy(() => import('./components/Jobs/Jobs.jsx'))
 const UserProfile = React.lazy(() => import('./components/UserProfile/UserProfile.jsx'))
@@ -47,7 +48,7 @@ const SurveyBuilder = React.lazy(() => import('./components/Surveys/SurveyBuilde
 const SurveySubmissions = React.lazy(() => import('./components/Surveys/SurveySubmissions/SurveySubmissions.tsx'));
 const Survey = React.lazy(() => import('./components/Surveys/Survey/Survey.tsx'));
 
-const hiddenNavbarRoutes = ["/chats", "/user/", "/survey/builder", "/survey/"];
+const hiddenNavbarRoutes = ["/chats", "/user/", "/survey/builder", "/survey/", "/builder"];
 
 function App() {
   const loginResponse = useSelector((state) => state.login.loginResponse)
@@ -189,6 +190,13 @@ function App() {
             <PageWrapper bodyClass={"lg:w-8/12 md:w-9/12"}>
               <AnswerLinkQuestion />
             </PageWrapper>
+          </Suspense>
+        }
+        />
+
+        <Route path='/builder' element={
+          <Suspense fallback={<MainLoader />}>
+            <BuilderPage />
           </Suspense>
         }
         />
